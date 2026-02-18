@@ -31,10 +31,30 @@ const server = http.createServer((req, res) => {
     return res.end('Invalid credentials');
   }
 
-  // Serve files
-  let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+  // Strip query strings from URL
+  const urlPath = req.url.split('?')[0];
+  let filePath = path.join(__dirname, urlPath === '/' ? 'index.html' : urlPath);
   const ext = path.extname(filePath);
-  
+
+  // PUT handler — save JSON files (ideas, etc.)
+  if (req.method === 'PUT' && ext === '.json') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        JSON.parse(body); // validate
+        fs.writeFileSync(filePath, body);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end('{"ok":true}');
+      } catch(e) {
+        res.writeHead(400);
+        res.end('Invalid JSON');
+      }
+    });
+    return;
+  }
+
+  // Serve files
   fs.readFile(filePath, (err, data) => {
     if (err) {
       res.writeHead(404);

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💡 Ideas Board — Jay-C</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: #0a0a0f;
+    color: #e5e7eb;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    padding: 32px 24px 16px;
+    text-align: center;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; }
+  .header-sub { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
+
+  /* Filter bar */
+  .filters {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 6px 14px; border-radius: 20px; border: 1px solid #1f2937;
+    background: transparent; color: #6b7280; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: #374151; color: #9ca3af; }
+  .filter-btn.active { background: #1f2937; color: #f3f4f6; border-color: #374151; }
+
+  /* Idea tiles grid */
+  .ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .idea-tile {
+    background: #111118;
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .idea-tile:hover {
+    border-color: #374151;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .tile-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .tile-title { font-size: 15px; font-weight: 600; line-height: 1.3; flex: 1; }
+  .tile-summary { font-size: 12px; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
+
+  .tile-footer { display: flex; justify-content: space-between; align-items: center; }
+
+  .badge {
+    font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 12px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-new { background: rgba(251,191,36,0.12); color: #fbbf24; }
+  .badge-in-progress { background: rgba(59,130,246,0.12); color: #60a5fa; }
+  .badge-done { background: rgba(52,211,153,0.12); color: #34d399; }
+  .badge-paused { background: rgba(156,163,175,0.12); color: #9ca3af; }
+
+  .cat-tag {
+    font-size: 10px; color: #4b5563; background: rgba(255,255,255,0.04);
+    padding: 2px 8px; border-radius: 8px;
+  }
+
+  .action-count {
+    font-size: 11px; color: #4b5563; margin-top: 10px;
+  }
+  .action-count span { color: #60a5fa; font-weight: 600; }
+
+  /* Add idea tile */
+  .add-tile {
+    background: transparent;
+    border: 2px dashed #1f2937;
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    transition: all 0.2s;
+  }
+  .add-tile:hover { border-color: #374151; background: rgba(255,255,255,0.02); }
+  .add-icon { font-size: 32px; margin-bottom: 8px; opacity: 0.4; }
+  .add-text { font-size: 12px; color: #4b5563; }
+
+  /* Slide panel */
+  .slide-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .slide-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .slide-panel {
+    position: fixed; top: 0; right: -100%; width: min(520px, 100%); height: 100%;
+    background: #0f0f17; z-index: 101; transition: right 0.35s ease;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-left: 1px solid #1f2937;
+  }
+  .slide-panel.open { right: 0; }
+
+  .slide-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #1f2937;
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .slide-back {
+    background: none; border: none; color: #6b7280; font-size: 14px;
+    cursor: pointer; padding: 4px;
+  }
+  .slide-back:hover { color: #e5e7eb; }
+  .slide-title { font-size: 18px; font-weight: 600; flex: 1; }
+  .slide-status { margin-left: auto; }
+
+  .slide-body {
+    flex: 1; overflow-y: auto; padding: 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Detail sections */
+  .detail-section {
+    margin-bottom: 24px;
+  }
+  .detail-label {
+    font-size: 11px; font-weight: 600; color: #4b5563;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .detail-desc {
+    font-size: 14px; color: #9ca3af; line-height: 1.7;
+  }
+
+  /* Suggestions */
+  .suggestion {
+    background: #111118;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .suggestion-text {
+    flex: 1; font-size: 13px; color: #9ca3af; line-height: 1.5;
+  }
+  .suggestion-text.done { text-decoration: line-through; color: #4b5563; }
+
+  .approve-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #22c55e40;
+    background: rgba(34,197,94,0.08);
+    color: #22c55e;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .approve-btn:hover {
+    background: rgba(34,197,94,0.18);
+    border-color: #22c55e80;
+  }
+  .approve-btn.approved {
+    background: rgba(34,197,94,0.12);
+    color: #34d399;
+    border-color: transparent;
+    cursor: default;
+  }
+
+  .done-badge-sm {
+    flex-shrink: 0;
+    font-size: 11px; color: #34d399; font-weight: 600;
+  }
+
+  /* New idea form in panel */
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; display: block; }
+  .form-input, .form-textarea {
+    width: 100%; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid #1f2937; background: #111118; color: #e5e7eb;
+    font-size: 14px; font-family: inherit;
+  }
+  .form-input:focus, .form-textarea:focus {
+    outline: none; border-color: #374151;
+  }
+  .form-textarea { min-height: 100px; resize: vertical; }
+
+  .form-select {
+    padding: 8px 12px; border-radius: 10px;
+    border: 1px solid #1f2937; background: #111118; color: #e5e7eb;
+    font-size: 13px; font-family: inherit;
+  }
+
+  .submit-btn {
+    padding: 10px 24px; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .or-text {
+    text-align: center; color: #374151; font-size: 12px;
+    margin: 20px 0; position: relative;
+  }
+  .or-text::before, .or-text::after {
+    content: ''; position: absolute; top: 50%;
+    width: 40%; height: 1px; background: #1f2937;
+  }
+  .or-text::before { left: 0; }
+  .or-text::after { right: 0; }
+
+  .telegram-hint {
+    text-align: center; font-size: 12px; color: #4b5563; line-height: 1.6;
+    padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px;
+  }
+  .telegram-hint strong { color: #6b7280; }
+
+  /* Meta info */
+  .meta-row {
+    display: flex; gap: 16px; font-size: 11px; color: #374151;
+  }
+
+  @media (max-width: 640px) {
+    .ideas-grid { grid-template-columns: 1fr; }
+    .slide-panel { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-overlay" id="overlay" onclick="closePanel()"></div>
+
+<div class="slide-panel" id="slidePanel">
+  <div class="slide-header">
+    <button class="slide-back" onclick="closePanel()">← Back</button>
+    <div class="slide-title" id="slideTitle"></div>
+    <div class="slide-status" id="slideStatus"></div>
+  </div>
+  <div class="slide-body" id="slideBody"></div>
+</div>
+
+<div class="header">
+  <h1>💡 Ideas Board</h1>
+  <div class="header-sub">Tap an idea to expand · Text Jay-C to add new ones</div>
+</div>
+
+<div class="container">
+  <div class="filters" id="filters"></div>
+  <div class="ideas-grid" id="grid"></div>
+</div>
+
+<script>
+let ideas = [];
+let activeFilter = 'all';
+
+async function loadIdeas() {
+  try {
+    const res = await fetch('/ideas.json?' + Date.now());
+    ideas = await res.json();
+  } catch(e) {
+    ideas = [];
+  }
+  render();
+}
+
+function getStatusBadge(status) {
+  const map = {
+    'new': ['💡 New', 'badge-new'],
+    'in-progress': ['🔨 In Progress', 'badge-in-progress'],
+    'done': ['✅ Done', 'badge-done'],
+    'paused': ['⏸ Paused', 'badge-paused']
+  };
+  const [label, cls] = map[status] || ['💡 New', 'badge-new'];
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function getCategories() {
+  const cats = new Set(ideas.map(i => i.category).filter(Boolean));
+  return ['all', ...cats];
+}
+
+function render() {
+  // Filters
+  const cats = getCategories();
+  document.getElementById('filters').innerHTML = cats.map(c =>
+    `<button class="filter-btn ${c === activeFilter ? 'active' : ''}" onclick="setFilter('${c}')">${c === 'all' ? '🔍 All' : c}</button>`
+  ).join('');
+
+  // Grid
+  const filtered = activeFilter === 'all' ? ideas : ideas.filter(i => i.category === activeFilter);
+  let html = filtered.map(idea => {
+    const proposed = (idea.suggestions || []).filter(s => s.status === 'proposed').length;
+    const actionText = proposed > 0
+      ? `<div class="action-count">🦞 <span>${proposed}</span> suggested action${proposed > 1 ? 's' : ''}</div>`
+      : '';
+    return `
+      <div class="idea-tile" onclick="openIdea('${idea.id}')">
+        <div class="tile-top">
+          <div class="tile-title">${idea.title}</div>
+        </div>
+        <div class="tile-summary">${idea.summary}</div>
+        ${actionText}
+        <div class="tile-footer">
+          ${getStatusBadge(idea.status)}
+          <span class="cat-tag">${idea.category || ''}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Add tile
+  html += `
+    <div class="add-tile" onclick="openNewIdea()">
+      <div class="add-icon">+</div>
+      <div class="add-text">Add an idea</div>
+    </div>
+  `;
+
+  document.getElementById('grid').innerHTML = html;
+}
+
+function setFilter(cat) {
+  activeFilter = cat;
+  render();
+}
+
+function openIdea(id) {
+  const idea = ideas.find(i => i.id === id);
+  if (!idea) return;
+
+  document.getElementById('slideTitle').textContent = idea.title;
+  document.getElementById('slideStatus').innerHTML = getStatusBadge(idea.status);
+
+  let suggestionsHtml = (idea.suggestions || []).map(s => {
+    if (s.status === 'done') {
+      return `
+        <div class="suggestion">
+          <div class="suggestion-text done">${s.text}</div>
+          <div class="done-badge-sm">✅ Done</div>
+        </div>`;
+    } else if (s.status === 'approved') {
+      return `
+        <div class="suggestion">
+          <div class="suggestion-text">${s.text}</div>
+          <div class="approve-btn approved">Approved ✓</div>
+        </div>`;
+    }
+    return `
+      <div class="suggestion">
+        <div class="suggestion-text">${s.text}</div>
+        <button class="approve-btn" onclick="approveAction('${idea.id}','${s.id}')">Approve →</button>
+      </div>`;
+  }).join('');
+
+  if (!idea.suggestions || idea.suggestions.length === 0) {
+    suggestionsHtml = `<div style="font-size:13px;color:#374151;text-align:center;padding:20px;">No suggestions yet — Jay-C will add some!</div>`;
+  }
+
+  document.getElementById('slideBody').innerHTML = `
+    <div class="detail-section">
+      <div class="detail-label">Description</div>
+      <div class="detail-desc">${idea.description || '<em style="color:#374151;">No description yet</em>'}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">🦞 Jay-C Suggests</div>
+      ${suggestionsHtml}
+    </div>
+
+    <div class="detail-section">
+      <div class="meta-row">
+        <span>Created: ${idea.created}</span>
+        <span>Updated: ${idea.updated}</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('slidePanel').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function openNewIdea() {
+  document.getElementById('slideTitle').textContent = 'New Idea';
+  document.getElementById('slideStatus').innerHTML = '';
+  document.getElementById('slideBody').innerHTML = `
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input class="form-input" id="newTitle" placeholder="What's the idea?">
+    </div>
+    <div class="form-group">
+      <label class="form-label">One-line summary</label>
+      <input class="form-input" id="newSummary" placeholder="Quick summary...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Full description (optional)</label>
+      <textarea class="form-textarea" id="newDesc" placeholder="More detail..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="newCategory">
+        <option value="tools">🛠 Tools</option>
+        <option value="health">❤️ Health</option>
+        <option value="business">💼 Business</option>
+        <option value="family">👨‍👩‍👧 Family</option>
+        <option value="fun">🎉 Fun</option>
+        <option value="other">📦 Other</option>
+      </select>
+    </div>
+    <button class="submit-btn" onclick="submitIdea()">Add to Board →</button>
+
+    <div class="or-text">or</div>
+
+    <div class="telegram-hint">
+      💬 Just text Jay-C on Telegram:<br>
+      <strong>"New idea: [your idea here]"</strong><br>
+      and I'll add it to the board for you
+    </div>
+  `;
+
+  document.getElementById('slidePanel').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+
+  setTimeout(() => document.getElementById('newTitle')?.focus(), 400);
+}
+
+async function submitIdea() {
+  const title = document.getElementById('newTitle').value.trim();
+  const summary = document.getElementById('newSummary').value.trim();
+  const desc = document.getElementById('newDesc').value.trim();
+  const category = document.getElementById('newCategory').value;
+
+  if (!title) { alert('Give it a title!'); return; }
+
+  const today = new Date().toISOString().split('T')[0];
+  const newIdea = {
+    id: 'idea-' + String(ideas.length + 1).padStart(3, '0'),
+    title, summary: summary || title, status: 'new', category,
+    description: desc || '', suggestions: [],
+    created: today, updated: today
+  };
+
+  ideas.push(newIdea);
+
+  // Save to server
+  try {
+    await fetch('/ideas.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ideas, null, 2)
+    });
+  } catch(e) {
+    console.log('Save failed — Jay-C will pick it up');
+  }
+
+  closePanel();
+  render();
+}
+
+async function approveAction(ideaId, suggestionId) {
+  const idea = ideas.find(i => i.id === ideaId);
+  if (!idea) return;
+  const sug = (idea.suggestions || []).find(s => s.id === suggestionId);
+  if (!sug) return;
+
+  sug.status = 'approved';
+  idea.updated = new Date().toISOString().split('T')[0];
+
+  // Save
+  try {
+    await fetch('/ideas.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ideas, null, 2)
+    });
+  } catch(e) {}
+
+  openIdea(ideaId); // re-render panel
+  render();
+}
+
+function closePanel() {
+  document.getElementById('slidePanel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+loadIdeas();
+</script>
+</body>
+</html>

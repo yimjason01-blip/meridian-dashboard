@@ -1,0 +1,41 @@
+[
+  {
+    "id": "idea-001",
+    "title": "Ideas Tracking App",
+    "summary": "This app — meta! A two-layer board for capturing and advancing ideas.",
+    "status": "in-progress",
+    "category": "tools",
+    "description": "A web app where Jason shares ideas, they become tiles, and Jay-C proposes concrete next steps. Each step can be approved with one tap. The first idea in the system is the system itself.",
+    "suggestions": [
+      {
+        "id": "s1",
+        "text": "Add ability to submit new ideas via Telegram (text me an idea, I add it to the board)",
+        "status": "proposed"
+      },
+      {
+        "id": "s2",
+        "text": "Add categories/filters (health, business, tools, family, etc.)",
+        "status": "proposed"
+      }
+    ],
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  },
+  {
+    "id": "idea-002",
+    "title": "Permanent Dashboard URL",
+    "summary": "Set up named Cloudflare tunnel so the dashboard URL never changes.",
+    "status": "new",
+    "category": "tools",
+    "description": "Currently the tunnel URL changes every time cloudflared restarts. A named tunnel with a Cloudflare account would give a permanent URL. Could also use a custom domain.",
+    "suggestions": [
+      {
+        "id": "s1",
+        "text": "Walk Jason through Cloudflare account signup and named tunnel setup",
+        "status": "proposed"
+      }
+    ],
+    "created": "2026-02-18",
+    "updated": "2026-02-18"
+  }
+]
