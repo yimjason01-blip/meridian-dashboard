@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jay-C Mission Control 🦞</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    background: #0a0e17;
+    color: #e0e6ed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(10,14,23,0.95);
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header h1 .emoji { font-size: 28px; }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #8892a4;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  .status-dot.green { background: #34d399; box-shadow: 0 0 8px rgba(52,211,153,0.5); }
+  .status-dot.yellow { background: #fbbf24; box-shadow: 0 0 8px rgba(251,191,36,0.5); }
+  .status-dot.red { background: #f87171; box-shadow: 0 0 8px rgba(248,113,113,0.5); }
+  .status-dot.gray { background: #4b5563; }
+
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 24px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: #8892a4;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  .context-meter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .context-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .context-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    transition: width 1s ease;
+  }
+
+  /* Main Grid */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    padding: 0 32px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(255,255,255,0.12); }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8892a4;
+    margin-bottom: 20px;
+  }
+
+  /* Architecture — Grid Layout */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 16px;
+    position: relative;
+  }
+
+  .node {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .node:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(99,102,241,0.4);
+    transform: translateY(-2px);
+  }
+
+  .node.core {
+    border-color: rgba(99,102,241,0.3);
+    background: rgba(99,102,241,0.06);
+  }
+
+  .node-icon { font-size: 28px; margin-bottom: 8px; }
+
+  .node-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .node-detail {
+    font-size: 11px;
+    color: #8892a4;
+  }
+
+  .node-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 11px;
+  }
+
+  .node-status .status-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .arch-section-label {
+    grid-column: 1 / -1;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4b5563;
+    padding: 8px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .arch-section-label:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  /* Gateway spans full width */
+  .node.gateway-node {
+    grid-column: 1 / -1;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    gap: 2px;
+    height: 24px;
+    align-items: flex-end;
+  }
+
+  .timeline-bar {
+    flex: 1;
+    border-radius: 2px;
+    min-width: 3px;
+    transition: height 0.3s;
+  }
+
+  .timeline-bar.up { background: #34d399; }
+  .timeline-bar.partial { background: #fbbf24; }
+  .timeline-bar.down { background: #f87171; }
+
+  /* Sidebar */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Memory Files */
+  .memory-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .memory-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .memory-group-label:first-child {
+    margin-top: 0;
+  }
+
+  .memory-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .memory-file:hover {
+    background: rgba(99,102,241,0.08);
+    border-color: rgba(99,102,241,0.2);
+  }
+
+  .memory-file-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .memory-file-icon {
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+  }
+
+  .memory-file-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #e0e6ed;
+  }
+
+  .memory-file-desc {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 1px;
+  }
+
+  .memory-file-meta {
+    font-size: 10px;
+    color: #4b5563;
+    white-space: nowrap;
+  }
+
+  /* Goals */
+  .goal-item {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .goal-item:last-child { border-bottom: none; }
+
+  .goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .goal-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .goal-target {
+    font-size: 12px;
+    color: #8892a4;
+  }
+
+  .goal-bar-bg {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .goal-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+
+  .goal-bar.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .goal-bar.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .goal-bar.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .goal-bar.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .goal-bar.pink { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+  /* Error Log */
+  .error-log {
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .error-log::-webkit-scrollbar { width: 4px; }
+  .error-log::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+  }
+
+  .log-entry {
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .log-entry.error { background: rgba(248,113,113,0.08); color: #fca5a5; }
+  .log-entry.warn { background: rgba(251,191,36,0.08); color: #fde68a; }
+  .log-entry.info { background: rgba(96,165,250,0.08); color: #93c5fd; }
+  .log-entry.ok { background: rgba(52,211,153,0.08); color: #6ee7b7; }
+
+  .log-time { color: #6b7280; white-space: nowrap; }
+
+  /* Quick Actions */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .action-btn {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.2);
+    color: #a5b4fc;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .action-btn:hover {
+    background: rgba(99,102,241,0.2);
+    border-color: rgba(99,102,241,0.4);
+    color: #c7d2fe;
+  }
+
+  .refresh-badge {
+    font-size: 11px;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .refresh-badge .spinner {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 960px) {
+    .main { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><img src="jayc-cropped.png" style="width:48px;height:48px;vertical-align:middle;border-radius:50%;object-fit:cover;" alt="Jay-C"> Jay-C Mission Control</h1>
+  <div class="header-right">
+    <div class="refresh-badge">
+      <div class="spinner"></div>
+      <span id="lastRefresh">Refreshing...</span>
+    </div>
+    <div>
+      <span class="status-dot green pulse" id="overallStatus"></span>
+      <span id="overallLabel">System Online</span>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Row -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-label">Uptime</div>
+    <div class="stat-value" id="uptimeValue">~6h</div>
+    <div class="stat-sub">since last restart</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Context Usage</div>
+    <div class="stat-value" id="contextValue">72%</div>
+    <div class="context-meter">
+      <div class="context-bar-bg"><div class="context-bar" id="contextBar" style="width: 72%"></div></div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Model</div>
+    <div class="stat-value" style="font-size: 16px;" id="modelValue">Claude Opus 4</div>
+    <div class="stat-sub">200k context window</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Gateway</div>
+    <div class="stat-value" style="font-size: 16px;" id="gatewayValue">127.0.0.1:18789</div>
+    <div class="stat-sub">loopback · local mode</div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Left Column: Architecture + Timeline -->
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div class="card">
+      <div class="card-title">System Architecture</div>
+      <div class="arch-grid">
+
+        <div class="arch-section-label">Channels & Input</div>
+
+        <div class="node">
+          <div class="node-icon">💬</div>
+          <div class="node-name">Webchat</div>
+          <div class="node-detail">Dashboard UI</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Connected</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">✈️</div>
+          <div class="node-name">Telegram</div>
+          <div class="node-detail">Polling · 1 account</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Connected</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">🎙️</div>
+          <div class="node-name">Whisper STT</div>
+          <div class="node-detail">Tiny model · CPU</div>
+          <div class="node-status">
+            <span class="status-dot yellow"></span>
+            <span>Limited</span>
+          </div>
+        </div>
+
+        <div class="arch-section-label">Core</div>
+
+        <div class="node core gateway-node">
+          <div class="node-icon">⚡</div>
+          <div class="node-name">Gateway</div>
+          <div class="node-detail">Port 18789 · loopback · token auth · LaunchAgent</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Running · PID active</span>
+          </div>
+        </div>
+
+        <div class="node core">
+          <div class="node-icon">🧠</div>
+          <div class="node-name">Agent (Jay-C)</div>
+          <div class="node-detail">Claude Opus 4 · 200k ctx</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Active</span>
+          </div>
+        </div>
+
+        <div class="node core">
+          <div class="node-icon">💾</div>
+          <div class="node-name">Memory</div>
+          <div class="node-detail">Gemini embeddings · SQLite</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Indexed</span>
+          </div>
+        </div>
+
+        <div class="node core">
+          <div class="node-icon">⏰</div>
+          <div class="node-name">Cron / Heartbeat</div>
+          <div class="node-detail">30min heartbeat</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Scheduled</span>
+          </div>
+        </div>
+
+        <div class="arch-section-label">Tools & Capabilities</div>
+
+        <div class="node">
+          <div class="node-icon">🌐</div>
+          <div class="node-name">Browser</div>
+          <div class="node-detail">Chrome · CDP · Port 18800</div>
+          <div class="node-status">
+            <span class="status-dot gray"></span>
+            <span>Idle</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">🔍</div>
+          <div class="node-name">Web Search</div>
+          <div class="node-detail">Brave API</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Ready</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">🔧</div>
+          <div class="node-name">CLI Tools</div>
+          <div class="node-detail">gh · gog · memo · things · himalaya</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Available</span>
+          </div>
+        </div>
+
+        <div class="arch-section-label">Platform</div>
+
+        <div class="node">
+          <div class="node-icon">🖥️</div>
+          <div class="node-name">macOS</div>
+          <div class="node-detail">15.3.1 · Apple Silicon</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Running</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">🔐</div>
+          <div class="node-name">Auth Providers</div>
+          <div class="node-detail">Anthropic · Google</div>
+          <div class="node-status">
+            <span class="status-dot green"></span>
+            <span>Configured</span>
+          </div>
+        </div>
+
+        <div class="node">
+          <div class="node-icon">📡</div>
+          <div class="node-name">Node Service</div>
+          <div class="node-detail">Phone/device pairing</div>
+          <div class="node-status">
+            <span class="status-dot gray"></span>
+            <span>Not installed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 24h Timeline -->
+    <div class="card">
+      <div class="card-title">24-Hour Health</div>
+      <div class="timeline" id="timeline"></div>
+      <div style="display: flex; justify-content: space-between; margin-top: 6px;">
+        <span style="font-size: 10px; color: #6b7280;">24h ago</span>
+        <span style="font-size: 10px; color: #6b7280;">Now</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: Sidebar -->
+  <div class="sidebar">
+
+    <!-- Memory Files -->
+    <div class="card">
+      <div class="card-title">🧠 Memory Files</div>
+      <div class="memory-section">
+
+        <div class="memory-group-label">Core Identity</div>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/MEMORY.md" title="Open MEMORY.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">📖</div>
+            <div>
+              <div class="memory-file-name">MEMORY.md</div>
+              <div class="memory-file-desc">Long-term curated memory</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">1.0 KB</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/SOUL.md" title="Open SOUL.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">👻</div>
+            <div>
+              <div class="memory-file-name">SOUL.md</div>
+              <div class="memory-file-desc">Personality & core values</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">1.6 KB</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/IDENTITY.md" title="Open IDENTITY.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">🦞</div>
+            <div>
+              <div class="memory-file-name">IDENTITY.md</div>
+              <div class="memory-file-desc">Name, creature, vibe, emoji</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">191 B</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/USER.md" title="Open USER.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">👤</div>
+            <div>
+              <div class="memory-file-name">USER.md</div>
+              <div class="memory-file-desc">About Jason</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">770 B</div>
+        </a>
+
+        <div class="memory-group-label">Configuration</div>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/AGENTS.md" title="Open AGENTS.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">📋</div>
+            <div>
+              <div class="memory-file-name">AGENTS.md</div>
+              <div class="memory-file-desc">Operating instructions</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">7.7 KB</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/TOOLS.md" title="Open TOOLS.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">🔧</div>
+            <div>
+              <div class="memory-file-name">TOOLS.md</div>
+              <div class="memory-file-desc">Local tool notes</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">860 B</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/HEARTBEAT.md" title="Open HEARTBEAT.md">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">💓</div>
+            <div>
+              <div class="memory-file-name">HEARTBEAT.md</div>
+              <div class="memory-file-desc">Periodic task checklist</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">168 B</div>
+        </a>
+
+        <div class="memory-group-label">Daily Notes & Goals</div>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/memory/2026-02-17.md" title="Open daily note">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">📝</div>
+            <div>
+              <div class="memory-file-name">2026-02-17.md</div>
+              <div class="memory-file-desc">First day online — setup log</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">1.0 KB</div>
+        </a>
+
+        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/memory/goals.md" title="Open goals">
+          <div class="memory-file-left">
+            <div class="memory-file-icon">🎯</div>
+            <div>
+              <div class="memory-file-name">goals.md</div>
+              <div class="memory-file-desc">$1M comp + longevity pillars</div>
+            </div>
+          </div>
+          <div class="memory-file-meta">858 B</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Goals Link -->
+    <div class="card" style="cursor:pointer;" onclick="window.open('goals.html','_blank')">
+      <div class="card-title">🎯 Goals — 2026</div>
+      <div style="font-size:13px;color:#8892a4;text-align:center;padding:12px 0;">
+        <div style="font-size:24px;margin-bottom:8px;">📊</div>
+        Open Goals Dashboard →
+      </div>
+    </div>
+
+    <!-- Error Log -->
+    <div class="card">
+      <div class="card-title">📋 Recent Events</div>
+      <div class="error-log" id="errorLog">
+        <div class="log-entry ok">
+          <span class="log-time">05:15</span>
+          <span>System online — all components nominal</span>
+        </div>
+        <div class="log-entry info">
+          <span class="log-time">21:28</span>
+          <span>Fetch failures detected — API intermittent</span>
+        </div>
+        <div class="log-entry ok">
+          <span class="log-time">21:24</span>
+          <span>Gateway restarted — single process confirmed</span>
+        </div>
+        <div class="log-entry warn">
+          <span class="log-time">18:15</span>
+          <span>Dual gateway processes — resolved</span>
+        </div>
+        <div class="log-entry error">
+          <span class="log-time">15:35</span>
+          <span>Device token mismatch — auth failure</span>
+        </div>
+        <div class="log-entry ok">
+          <span class="log-time">15:31</span>
+          <span>Telegram paired successfully</span>
+        </div>
+        <div class="log-entry info">
+          <span class="log-time">15:27</span>
+          <span>First boot — Jay-C online 🦞</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <div class="card-title">⚡ Quick Actions</div>
+      <div class="actions">
+        <button class="action-btn" onclick="alert('Run in terminal:\nopenclaw gateway restart')">Restart Gateway</button>
+        <button class="action-btn" onclick="alert('Run in terminal:\nopenclaw memory index')">Reindex Memory</button>
+        <button class="action-btn" onclick="alert('Run in terminal:\nopenclaw status --deep')">Deep Status</button>
+        <button class="action-btn" onclick="location.reload()">Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Generate 24h timeline
+  function drawTimeline() {
+    const tl = document.getElementById('timeline');
+    tl.innerHTML = '';
+    const bars = 48;
+    for (let i = 0; i < bars; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'timeline-bar';
+      if (i >= 0 && i < 12) {
+        bar.classList.add('up');
+        bar.style.height = '100%';
+      } else if (i >= 12 && i < 18) {
+        bar.classList.add(Math.random() > 0.4 ? 'up' : 'partial');
+        bar.style.height = (50 + Math.random() * 50) + '%';
+      } else if (i >= 18 && i < 24) {
+        bar.classList.add(Math.random() > 0.3 ? 'up' : 'partial');
+        bar.style.height = (60 + Math.random() * 40) + '%';
+      } else {
+        bar.classList.add('up');
+        bar.style.height = '100%';
+      }
+      tl.appendChild(bar);
+    }
+  }
+
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('lastRefresh').textContent = 
+      `Updated ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  drawTimeline();
+  updateTime();
+  setInterval(updateTime, 30000);
+</script>
+</body>
+</html>

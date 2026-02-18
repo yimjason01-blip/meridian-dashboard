@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason's Goals — 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    background: #0a0e17;
+    color: #e0e6ed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(10,14,23,0.95);
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: #6b7280;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* Hero Cards */
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .hero-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.08;
+  }
+
+  .hero-card.money::after { background: #a78bfa; }
+  .hero-card.vo2::after { background: #3b82f6; }
+
+  .hero-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    margin-bottom: 8px;
+  }
+
+  .hero-number {
+    font-size: 42px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-target {
+    font-size: 14px;
+    color: #8892a4;
+  }
+
+  .hero-bar-bg {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+
+  .hero-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1.5s ease;
+  }
+
+  .hero-bar.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .hero-bar.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+  /* Section */
+  .section {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8892a4;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Pillar Cards */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .pillar {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .pillar:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  .pillar:active { transform: translateY(0); }
+
+  .pillar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .pillar-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pillar-status {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  .pillar-status.achieved { background: rgba(52,211,153,0.15); color: #34d399; }
+  .pillar-status.active { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .pillar-status.tbd { background: rgba(107,114,128,0.15); color: #9ca3af; }
+
+  .pillar-detail {
+    font-size: 13px;
+    color: #8892a4;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .pillar-bar-bg {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .pillar-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .pillar-bar.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .pillar-bar.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .pillar-bar.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .pillar-bar.pink { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+  .pillar-cta {
+    font-size: 12px;
+    color: #6366f1;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Comp Section */
+  .comp-breakdown { display: flex; flex-direction: column; gap: 8px; }
+
+  .comp-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .comp-item:last-child { border-bottom: none; }
+  .comp-label { font-size: 14px; color: #8892a4; }
+  .comp-value { font-size: 14px; font-weight: 600; color: #fff; }
+
+  /* ==================== */
+  /* SLIDE-OVER PANEL     */
+  /* ==================== */
+  .slide-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .slide-panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 100%;
+    max-width: 560px;
+    background: #0d1117;
+    border-left: 1px solid rgba(255,255,255,0.08);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide-panel.active {
+    transform: translateX(0);
+  }
+
+  .slide-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: #0d1117;
+    z-index: 10;
+  }
+
+  .slide-back {
+    background: none;
+    border: none;
+    color: #6366f1;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .slide-back:hover { background: rgba(99,102,241,0.1); }
+
+  .slide-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .slide-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+  }
+
+  /* Detail cards inside slide panel */
+  .detail-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .detail-card-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    margin-bottom: 14px;
+  }
+
+  /* Key metrics row */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .metric {
+    text-align: center;
+    padding: 14px 8px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: #6b7280;
+  }
+
+  .metric-value.green { color: #34d399; }
+  .metric-value.blue { color: #60a5fa; }
+  .metric-value.orange { color: #fbbf24; }
+  .metric-value.pink { color: #f472b6; }
+
+  /* Timeline entries */
+  .timeline-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    border-left: 3px solid transparent;
+  }
+
+  .timeline-entry.peak { border-left-color: #34d399; }
+  .timeline-entry.current { border-left-color: #3b82f6; }
+  .timeline-entry.baseline { border-left-color: #6b7280; }
+  .timeline-entry.good { border-left-color: #34d399; }
+  .timeline-entry.warn { border-left-color: #fbbf24; }
+  .timeline-entry.info { border-left-color: #60a5fa; }
+
+  .tl-date { font-size: 12px; color: #6b7280; min-width: 50px; }
+  .tl-value { font-size: 14px; font-weight: 600; color: #fff; min-width: 65px; }
+  .tl-note { font-size: 12px; color: #6b7280; line-height: 1.4; }
+
+  .tl-score { font-size: 13px; font-weight: 600; min-width: 55px; }
+  .tl-score.high { color: #34d399; }
+  .tl-score.mid { color: #60a5fa; }
+  .tl-score.low { color: #fbbf24; }
+
+  /* Training log table */
+  .log-table {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .log-table th {
+    text-align: left;
+    font-weight: 500;
+    color: #6b7280;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .log-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: #c9d1d9;
+  }
+
+  .log-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .tag.ramp { background: rgba(139,92,246,0.2); color: #c4b5fd; }
+  .tag.intervals { background: rgba(59,130,246,0.2); color: #93c5fd; }
+
+  .trend-up { color: #34d399; }
+  .trend-down { color: #f87171; }
+  .trend-flat { color: #fbbf24; }
+
+  /* Notes/insights */
+  .insight {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(99,102,241,0.06);
+    border: 1px solid rgba(99,102,241,0.12);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #c7d2fe;
+    line-height: 1.5;
+  }
+
+  .insight-icon { font-size: 16px; flex-shrink: 0; }
+
+  .footnote {
+    font-size: 11px;
+    color: #4b5563;
+    margin-top: 4px;
+  }
+
+  /* Empty state for pillars without data yet */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #4b5563;
+  }
+
+  .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state-text { font-size: 14px; line-height: 1.6; }
+  .empty-state-sub { font-size: 12px; color: #374151; margin-top: 8px; }
+
+  @media (max-width: 640px) {
+    .hero-row { grid-template-columns: 1fr; }
+    .pillars { grid-template-columns: 1fr; }
+    .slide-panel { max-width: 100%; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="slide-overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- SLIDE PANEL -->
+<div class="slide-panel" id="slidePanel">
+  <div class="slide-header">
+    <button class="slide-back" onclick="closePanel()">← Back</button>
+    <div class="slide-title" id="slideTitle"></div>
+  </div>
+  <div class="slide-body" id="slideBody"></div>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="header">
+  <h1>🎯 Goals — 2026</h1>
+  <div class="header-sub">Jason Yim · Updated Feb 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- Hero Cards -->
+  <div class="hero-row">
+    <div class="hero-card money">
+      <div class="hero-label">Annual Comp</div>
+      <div class="hero-number">$440K</div>
+      <div class="hero-target">Target: $1M by Dec 2026</div>
+      <div class="hero-bar-bg">
+        <div class="hero-bar purple" style="width: 44%"></div>
+      </div>
+    </div>
+    <div class="hero-card vo2">
+      <div class="hero-label">VO2 Max</div>
+      <div class="hero-number">~48</div>
+      <div class="hero-target">Target: 52 (elite) · Peaked at 53</div>
+      <div class="hero-bar-bg">
+        <div class="hero-bar blue" style="width: 92%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Longevity Pillars -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏋️</span> Longevity — Four Pillars</div>
+    <div class="pillars">
+
+      <div class="pillar" onclick="openPanel('strength')">
+        <div class="pillar-header">
+          <span class="pillar-name">💪 Strength</span>
+          <span class="pillar-status achieved">Achieved</span>
+        </div>
+        <div class="pillar-detail">Simple & Sinister kettlebell standard. Maintaining consistently.</div>
+        <div class="pillar-bar-bg">
+          <div class="pillar-bar green" style="width: 100%"></div>
+        </div>
+        <div class="pillar-cta">View details →</div>
+      </div>
+
+      <div class="pillar" onclick="openPanel('vo2')">
+        <div class="pillar-header">
+          <span class="pillar-name">❤️ VO2 Max</span>
+          <span class="pillar-status active">Active</span>
+        </div>
+        <div class="pillar-detail">48 → 52 target. Ramp 275W (1/9). Peak 325W/53 (10/9).</div>
+        <div class="pillar-bar-bg">
+          <div class="pillar-bar blue" style="width: 92%"></div>
+        </div>
+        <div class="pillar-cta">View details →</div>
+      </div>
+
+      <div class="pillar" onclick="openPanel('mobility')">
+        <div class="pillar-header">
+          <span class="pillar-name">🧘 Mobility</span>
+          <span class="pillar-status active">Active</span>
+        </div>
+        <div class="pillar-detail">Eliminate fear/avoidance patterns. Morning low back stiffness.</div>
+        <div class="pillar-bar-bg">
+          <div class="pillar-bar orange" style="width: 25%"></div>
+        </div>
+        <div class="pillar-cta">View details →</div>
+      </div>
+
+      <div class="pillar" onclick="openPanel('speed')">
+        <div class="pillar-header">
+          <span class="pillar-name">⚡ Speed</span>
+          <span class="pillar-status tbd">TBD</span>
+        </div>
+        <div class="pillar-detail">Sprint metric not yet defined.</div>
+        <div class="pillar-bar-bg">
+          <div class="pillar-bar pink" style="width: 0%"></div>
+        </div>
+        <div class="pillar-cta">View details →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Comp -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💰</span> $1M Comp — Path</div>
+    <div class="comp-breakdown">
+      <div class="comp-item">
+        <span class="comp-label">Current total comp</span>
+        <span class="comp-value">~$440K</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-label">Target</span>
+        <span class="comp-value">$1,000K</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-label">Gap</span>
+        <span class="comp-value" style="color: #f87171;">$560K</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-label">LASO status</span>
+        <span class="comp-value" style="font-weight:400; color:#8892a4;">Early commercial · breakeven ~Q2</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-label">Levers</span>
+        <span class="comp-value" style="font-weight:400; color:#8892a4;">TBD — need to discuss</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const panels = {
+  strength: {
+    title: '💪 Strength',
+    html: `
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-value green">✅</div>
+          <div class="metric-label">S&S Standard</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value green">100%</div>
+          <div class="metric-label">Progress</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">Maintain</div>
+          <div class="metric-label">Current Goal</div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Simple & Sinister Standard</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="timeline-entry good">
+            <div class="tl-value">100 swings</div>
+            <div class="tl-note">One-hand swings in 5 minutes with 32kg (men) kettlebell</div>
+          </div>
+          <div class="timeline-entry good">
+            <div class="tl-value">10 TGUs</div>
+            <div class="tl-note">Turkish get-ups in 10 minutes with 32kg kettlebell</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <span>Standard achieved. The focus now is <strong>consistency</strong> — maintaining the standard while not letting it slip as VO2 and mobility training ramp up. Consider logging sessions to confirm frequency.</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Training Log</div>
+        <div class="empty-state" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:8px;">📝</div>
+          <div class="empty-state-text">No sessions logged yet</div>
+          <div class="empty-state-sub">Send me your S&S sessions and I'll track them here</div>
+        </div>
+      </div>
+    `
+  },
+
+  vo2: {
+    title: '❤️ VO2 Max',
+    html: `
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-value blue">~48</div>
+          <div class="metric-label">Current (1/9/26)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value green">~53</div>
+          <div class="metric-label">Peak (10/9/25)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">52</div>
+          <div class="metric-label">Target (Elite)</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:#4b5563;line-height:1.6;padding:8px 12px;background:rgba(255,255,255,0.02);border-radius:8px;">
+        <strong style="color:#6b7280;">Formula:</strong> VO2max = (10.8 × watts / kg) + 7<br>
+        <strong style="color:#6b7280;">Weight:</strong> 72.4 kg (159.6 lbs, measured 9/3/25)<br>
+        <strong style="color:#6b7280;">Source:</strong> ACSM Metabolic Equation for Leg Cycling<br>
+        <span style="color:#374151;">275W → 48.0 · 308W → 53.0 · 325W → 55.5 ml/kg/min</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Power Trend (Pedal-Equivalent Watts)</div>
+        <div style="position:relative;height:280px;margin-bottom:8px;">
+          <canvas id="vo2Chart"></canvas>
+        </div>
+        <div class="footnote">Blue range = 4×4 interval min/max · Purple dots = ramp test peak · Dashed line = target (52 VO2 ≈ 308W)</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Ramp Test History</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="timeline-entry baseline">
+            <div class="tl-date">Mid '25</div>
+            <div class="tl-value">—</div>
+            <div class="tl-score low">~44</div>
+            <div class="tl-note">First test — felt 45 was possible</div>
+          </div>
+          <div class="timeline-entry peak">
+            <div class="tl-date">10/9/25</div>
+            <div class="tl-value">~308W*</div>
+            <div class="tl-score high">~53 🏆</div>
+            <div class="tl-note">Peak — 20s into 325 Peloton step</div>
+          </div>
+          <div class="timeline-entry current">
+            <div class="tl-date">1/9/26</div>
+            <div class="tl-value">275W</div>
+            <div class="tl-score mid">~48</div>
+            <div class="tl-note">Post-break — barely completed 275</div>
+          </div>
+        </div>
+        <div class="footnote">* Peloton watts — power meter pedals read 15-20W lower</div>
+      </div>
+
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <span>You already hit 53 once — the fitness is in there. The drop to 48 is detraining over the holidays. Consistency was the biggest variable: your best stretch was weekly 4×4s from Sept→Oct. Goal: complete 325W ramp step (VO2 ~55) by end of Q1.</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">4×4 Interval Log</div>
+        <div style="overflow-x:auto;">
+          <table class="log-table">
+            <thead>
+              <tr><th>Date</th><th>Type</th><th>Power</th><th></th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>9/2/25</td><td><span class="tag intervals">4×4</span></td><td>213-243W*</td><td><span class="trend-up">↑</span></td><td>Big improvement, 4min rest</td></tr>
+              <tr><td>9/19/25</td><td><span class="tag intervals">4×4</span></td><td>233-243W*</td><td><span class="trend-up">↑</span></td><td>Seat height issue</td></tr>
+              <tr><td>9/25/25</td><td><span class="tag intervals">4×4</span></td><td>233-243W*</td><td><span class="trend-flat">→</span></td><td>Stronger finish</td></tr>
+              <tr><td>10/2/25</td><td><span class="tag intervals">4×4</span></td><td>243-253W*</td><td><span class="trend-up">↑</span></td><td>Hit 270 Peloton target</td></tr>
+              <tr><td>10/9/25</td><td><span class="tag ramp">Ramp</span></td><td>~308W*</td><td><span class="trend-up">↑↑</span></td><td>VO2 ~53 🏆</td></tr>
+              <tr><td>10/19/25</td><td><span class="tag intervals">4×4</span></td><td>&lt;250W</td><td><span class="trend-down">↓</span></td><td>First pedal session. 8am, 2wk gap.</td></tr>
+              <tr><td>10/23/25</td><td><span class="tag intervals">4×4</span></td><td>230W ×4</td><td><span class="trend-up">↑</span></td><td>New pedal baseline</td></tr>
+              <tr><td>10/30/25</td><td><span class="tag intervals">4×4</span></td><td>240W ×4</td><td><span class="trend-down">↓</span></td><td>Failed set 3+4. Gas fumes.</td></tr>
+              <tr><td>11/16/25</td><td><span class="tag intervals">4×4</span></td><td>230-240W</td><td><span class="trend-up">↑</span></td><td>All sets completed ✅</td></tr>
+              <tr><td>11/24/25</td><td><span class="tag intervals">4×4</span></td><td>240W ×4</td><td><span class="trend-down">↓</span></td><td>Fell apart last 2 sets</td></tr>
+              <tr><td>1/9/26</td><td><span class="tag ramp">Ramp</span></td><td>275W</td><td><span class="trend-down">↓</span></td><td>VO2 ~48. Holiday break.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footnote">* Estimated pedal-equivalent watts (Peloton value minus ~17W). Unmarked values are actual power meter pedal readings.</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Key Learnings</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#8892a4;line-height:1.5;">
+          <div>🔑 <strong>Consistency is king</strong> — best results from weekly sessions Sept→Oct</div>
+          <div>🌡️ <strong>Cooling matters</strong> — active cooldown, tank top, short socks helped</div>
+          <div>🦵 <strong>Glute-focused pedal stroke</strong> — notable improvement when cued</div>
+          <div>⏰ <strong>Time of day</strong> — early morning (8am) sessions underperformed</div>
+          <div>💨 <strong>Environment</strong> — gas fumes in garage killed a session. Tuesday scheduling.</div>
+          <div>📏 <strong>Seat height</strong> — between 24-25 is the sweet spot</div>
+        </div>
+      </div>
+
+      <!-- 8-WEEK TRAINING PLAN -->
+      <div class="detail-card" style="border-color:rgba(59,130,246,0.2);background:rgba(59,130,246,0.03);">
+        <div class="detail-card-title" style="color:#60a5fa;">📋 8-Week VO2 Max Plan</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.5;margin-bottom:16px;">
+          Goal: Rebuild to 308W+ ramp (VO2 ≥ 52) by end of plan. One high-intensity session per week — consistency over heroics.
+        </div>
+
+        <!-- Phase 1 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+            <span style="background:rgba(59,130,246,0.15);padding:2px 8px;border-radius:10px;">Phase 1</span> Rebuild Base — Weeks 1-2
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="timeline-entry info">
+              <div class="tl-date" style="min-width:70px;font-weight:600;color:#60a5fa;">Session</div>
+              <div class="tl-note"><strong>4×4 min</strong> at 240W pedals / 3 min recovery spin</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Goal</div>
+              <div class="tl-note">Complete all 4 sets cleanly. Rebuild the habit. Nail the basics: cooling, glutes, seat height 24.5, evening timing.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Target</div>
+              <div class="tl-note">240W all sets, no failures → progression unlocked</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+            <span style="background:rgba(139,92,246,0.15);padding:2px 8px;border-radius:10px;">Phase 2</span> New Stimulus — Weeks 3-4
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="timeline-entry" style="border-left-color:#a78bfa;">
+              <div class="tl-date" style="min-width:70px;font-weight:600;color:#a78bfa;">Session</div>
+              <div class="tl-note"><strong>30/30 Billat intervals</strong> — 3 sets × 10 reps<br>
+                30s ON at ~310W / 30s OFF at ~130W<br>
+                3 min rest between sets</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Why</div>
+              <div class="tl-note">Hits peak power you can't hold for 4 min. Metabolism stays elevated during OFF periods — you get 1 min of VO2max stimulus for 30s of effort. Breaks the 4×4 plateau.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">RPE</div>
+              <div class="tl-note">8-9/10 on the ON intervals. Should feel hard but completable.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+            <span style="background:rgba(52,211,153,0.15);padding:2px 8px;border-radius:10px;">Phase 3</span> Time at VO2max — Weeks 5-6
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="timeline-entry" style="border-left-color:#34d399;">
+              <div class="tl-date" style="min-width:70px;font-weight:600;color:#34d399;">Session</div>
+              <div class="tl-note"><strong>4×8 min</strong> at ~220W pedals / 4 min recovery<br>
+                Lower power, double the duration. Accumulate more total time at 90%+ VO2max.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Why</div>
+              <div class="tl-note">Research (Seiler) showed 4×8 outperformed 4×4 for VO2max gains. The longer intervals force your system to sustain oxygen delivery — the actual adaptation driver.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Key</div>
+              <div class="tl-note">Don't go too hard — you should barely be able to talk. If you blow up at 5 min, the power is too high.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+            <span style="background:rgba(251,191,36,0.15);padding:2px 8px;border-radius:10px;">Phase 4</span> Peak & Test — Weeks 7-8
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="timeline-entry" style="border-left-color:#fbbf24;">
+              <div class="tl-date" style="min-width:70px;font-weight:600;color:#fbbf24;">Wk 7</div>
+              <div class="tl-note"><strong>30/30 Billats</strong> — same as Phase 2 but push ON to ~320W. This is the sharpening week.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#fbbf24;">
+              <div class="tl-date" style="min-width:70px;font-weight:600;color:#fbbf24;">Wk 8</div>
+              <div class="tl-note"><strong>🏁 Ramp Test</strong> — full rest day before. Goal: complete 300W step, reach into 325W. Have 325 in your mind.</div>
+            </div>
+            <div class="timeline-entry" style="border-left-color:#374151;">
+              <div class="tl-date" style="min-width:70px;">Mindset</div>
+              <div class="tl-note">Remember — you said "if I had 45 in my mind, I could have hit it." Mental target matters. Go in knowing 325 is already in your legs.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session Protocol -->
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;margin-top:8px;">
+          <div style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Every Session Checklist</div>
+          <div style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:#8892a4;line-height:1.5;">
+            <div>🌡️ Tank top + short socks (cooling)</div>
+            <div>🫁 Active breathing between sets — exhale focus</div>
+            <div>🦵 Cue: push from glutes, not quads</div>
+            <div>📏 Seat height: 24.5</div>
+            <div>🕐 Evening preferred (not before 10am)</div>
+            <div>💨 Garage door open — no fumes</div>
+            <div>📱 Text Jay-C your numbers after 💪</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Week Tracker -->
+      <div class="detail-card">
+        <div class="detail-card-title">📅 Week-by-Week Tracker</div>
+        <div style="overflow-x:auto;">
+          <table class="log-table">
+            <thead>
+              <tr><th>Week</th><th>Phase</th><th>Protocol</th><th>Target</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><span style="color:#60a5fa;">Rebuild</span></td>
+                <td>4×4 min</td>
+                <td>240W × 4 complete</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><span style="color:#60a5fa;">Rebuild</span></td>
+                <td>4×4 min</td>
+                <td>250W × 4 complete</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><span style="color:#a78bfa;">New Stimulus</span></td>
+                <td>30/30 Billats</td>
+                <td>3×10 at 310W ON</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><span style="color:#a78bfa;">New Stimulus</span></td>
+                <td>30/30 Billats</td>
+                <td>3×10 at 310W ON</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><span style="color:#34d399;">Time@VO2</span></td>
+                <td>4×8 min</td>
+                <td>220W × 4 complete</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><span style="color:#34d399;">Time@VO2</span></td>
+                <td>4×8 min</td>
+                <td>225W × 4 complete</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><span style="color:#fbbf24;">Peak</span></td>
+                <td>30/30 Billats</td>
+                <td>3×10 at 320W ON</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><span style="color:#fbbf24;">🏁 Test</span></td>
+                <td>Ramp Test</td>
+                <td>Complete 300W, reach 325W</td>
+                <td style="color:#4b5563;">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footnote">Text me after each session — I'll update power, status, and notes in real time.</div>
+      </div>
+
+      <!-- Research References -->
+      <div class="detail-card">
+        <div class="detail-card-title">📚 Why This Plan — Research</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;color:#6b7280;line-height:1.5;">
+          <div>
+            <strong style="color:#8892a4;">4×4 Norwegian Protocol</strong> — The gold standard for VO2max. Proven in 50+ studies. Your foundation. But research shows gains plateau after ~6 weeks of the same stimulus.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">Helgerud et al. (2007), Myworkout.com</div>
+          </div>
+          <div>
+            <strong style="color:#8892a4;">30/30 Billat Intervals</strong> — Developed by French physiologist Véronique Billat. Short bursts at VO2max power with equal rest. Metabolism stays ramped during OFF periods. Effective for athletes who've plateaued on longer intervals.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">Billat et al. (2000), Medicine & Science in Sports & Exercise</div>
+          </div>
+          <div>
+            <strong style="color:#8892a4;">4×8 Long Intervals</strong> — Seiler compared 4×4, 4×8, and 4×16. The 4×8 produced the highest VO2max improvement and best power at lactate threshold. More time at 90%+ VO2max = more adaptation signal.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">Seiler & Sjursen (2004), Scandinavian J of Medicine & Science in Sports</div>
+          </div>
+          <div>
+            <strong style="color:#8892a4;">Protocol Rotation</strong> — Varying interval structure prevents neural and metabolic accommodation. Each protocol stresses a slightly different part of the oxygen delivery chain.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">Vukovic (2025), robertovukovic.com — Top 3 VO2max Intervals</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  mobility: {
+    title: '🧘 Mobility',
+    html: `
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-value orange">25%</div>
+          <div class="metric-label">Progress</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value orange">AM</div>
+          <div class="metric-label">Stiffness Window</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">0/10</div>
+          <div class="metric-label">Target Stiffness</div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Current Issues</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="timeline-entry warn">
+            <div class="tl-value" style="min-width:auto;">🔸 Low back stiffness</div>
+            <div class="tl-note">Morning stiffness pattern — improves through the day</div>
+          </div>
+          <div class="timeline-entry warn">
+            <div class="tl-value" style="min-width:auto;">🔸 Fear/avoidance</div>
+            <div class="tl-note">Movement patterns limited by protective guarding, not actual limitation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <span>Morning stiffness that improves through the day is often about <strong>movement nutrition</strong> — the tissues need loading, not rest. This is a solvable problem. We should define a baseline (stiffness 1-10 scale) and track it alongside a morning routine.</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Stiffness Log</div>
+        <div class="empty-state" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:8px;">📊</div>
+          <div class="empty-state-text">No entries yet</div>
+          <div class="empty-state-sub">Rate your morning stiffness 1-10 and I'll build a trend here</div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Potential Protocol</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#8892a4;line-height:1.5;">
+          <div>🌅 <strong>Morning flow</strong> — 5-10min movement routine upon waking</div>
+          <div>🧘 <strong>Hip hinge work</strong> — Jefferson curls, good mornings, loaded stretching</div>
+          <div>🔄 <strong>Spinal CARs</strong> — controlled articular rotations for back</div>
+          <div>💪 <strong>McGill Big 3</strong> — curl-up, side plank, bird dog for stability</div>
+          <div style="color:#4b5563;font-style:italic;">Protocol TBD — let's discuss what resonates</div>
+        </div>
+      </div>
+    `
+  },
+
+  speed: {
+    title: '⚡ Speed',
+    html: `
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-value pink">TBD</div>
+          <div class="metric-label">Metric</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value pink">—</div>
+          <div class="metric-label">Baseline</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">—</div>
+          <div class="metric-label">Target</div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Metric Options</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="timeline-entry info">
+            <div class="tl-value" style="min-width:auto;">40-yard dash</div>
+            <div class="tl-note">Classic sprint test. Easy to measure. ~5.0-5.5s is solid for age 47.</div>
+          </div>
+          <div class="timeline-entry info">
+            <div class="tl-value" style="min-width:auto;">100m sprint</div>
+            <div class="tl-note">Longer effort. ~13-14s would be strong. Requires a track.</div>
+          </div>
+          <div class="timeline-entry info">
+            <div class="tl-value" style="min-width:auto;">20m flying sprint</div>
+            <div class="tl-note">Peak speed test. Removes acceleration variable. Measures pure top speed.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <span>Speed is the most injury-prone pillar to train — needs good hamstring prep and progressive exposure. The <strong>40-yard dash</strong> is probably the most practical: easy to time with a phone app, do it at any field, and clear benchmarks exist by age. Want to pick one and set a baseline?</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-card-title">Sprint Log</div>
+        <div class="empty-state" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:8px;">⚡</div>
+          <div class="empty-state-text">Choose a metric to get started</div>
+          <div class="empty-state-sub">Once we pick a test, I'll track your sprints here</div>
+        </div>
+      </div>
+    `
+  }
+};
+
+let vo2ChartInstance = null;
+
+function openPanel(key) {
+  const panel = panels[key];
+  if (!panel) return;
+  document.getElementById('slideTitle').textContent = panel.title;
+  document.getElementById('slideBody').innerHTML = panel.html;
+  document.getElementById('overlay').classList.add('active');
+  document.getElementById('slidePanel').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if (key === 'vo2') {
+    setTimeout(renderVO2Chart, 50);
+  }
+}
+
+function renderVO2Chart() {
+  const canvas = document.getElementById('vo2Chart');
+  if (!canvas) return;
+  if (vo2ChartInstance) vo2ChartInstance.destroy();
+
+  const labels = [
+    '9/2', '9/19', '9/25', '10/2', '10/9\nRamp', '10/19', '10/23', '10/30', '11/16', '11/24', '', '1/9\nRamp'
+  ];
+
+  // 4x4 interval ranges (pedal-equivalent), null for ramp-only dates
+  const intervalLow =  [213, 233, 233, 243, null, null, 230, 240, 230, 240, null, null];
+  const intervalHigh = [243, 243, 243, 253, null, 250, 230, 240, 240, 240, null, null];
+
+  // Ramp test values (only on ramp dates)
+  const rampData = [null, null, null, null, 308, null, null, null, null, null, null, 275];
+
+  // Target line
+  const targetLine = labels.map(() => 308);
+
+  const ctx = canvas.getContext('2d');
+
+  vo2ChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: '4×4 Range (low)',
+          data: intervalLow,
+          backgroundColor: 'transparent',
+          borderColor: 'transparent',
+          barPercentage: 0.6,
+          categoryPercentage: 0.7,
+          order: 3
+        },
+        {
+          label: '4×4 Range',
+          data: intervalHigh.map((h, i) => {
+            if (h === null || intervalLow[i] === null) return null;
+            return h;
+          }),
+          backgroundColor: 'rgba(59,130,246,0.35)',
+          borderColor: 'rgba(59,130,246,0.6)',
+          borderWidth: 1,
+          borderRadius: 4,
+          barPercentage: 0.6,
+          categoryPercentage: 0.7,
+          order: 2,
+          base: intervalLow
+        },
+        {
+          label: 'Ramp Test',
+          data: rampData,
+          type: 'scatter',
+          pointRadius: 10,
+          pointHoverRadius: 13,
+          pointBackgroundColor: '#a78bfa',
+          pointBorderColor: '#c4b5fd',
+          pointBorderWidth: 2,
+          pointStyle: 'circle',
+          order: 1,
+          showLine: false,
+        },
+        {
+          label: 'Target (VO2 52 ≈ 308W)',
+          data: targetLine,
+          type: 'line',
+          borderColor: 'rgba(52,211,153,0.4)',
+          borderDash: [6, 4],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          order: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            color: '#6b7280',
+            font: { size: 11 },
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 16,
+            filter: (item) => item.text !== '4×4 Range (low)'
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a2e',
+          titleColor: '#e0e6ed',
+          bodyColor: '#8892a4',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+          callbacks: {
+            label: function(ctx) {
+              if (ctx.dataset.label === '4×4 Range (low)') return null;
+              if (ctx.dataset.label === '4×4 Range') {
+                const low = intervalLow[ctx.dataIndex];
+                const high = intervalHigh[ctx.dataIndex];
+                if (low === null) return null;
+                return low === high ? `4×4: ${low}W` : `4×4: ${low}-${high}W`;
+              }
+              if (ctx.dataset.label === 'Ramp Test') {
+                return `Ramp: ${ctx.parsed.y}W`;
+              }
+              if (ctx.dataset.label.startsWith('Target')) {
+                return `Target: 308W (VO2 ~52)`;
+              }
+              return ctx.dataset.label + ': ' + ctx.parsed.y + 'W';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: {
+            color: '#6b7280',
+            font: { size: 10 },
+            maxRotation: 0
+          }
+        },
+        y: {
+          min: 180,
+          max: 340,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: {
+            color: '#6b7280',
+            font: { size: 11 },
+            callback: (v) => v + 'W'
+          }
+        }
+      }
+    },
+    plugins: [{
+      id: 'floatingBars',
+      beforeDatasetsDraw(chart) {
+        const ds = chart.data.datasets[1];
+        const meta = chart.getDatasetMeta(1);
+        meta.data.forEach((bar, i) => {
+          if (intervalLow[i] !== null && intervalHigh[i] !== null) {
+            const yScale = chart.scales.y;
+            bar.base = yScale.getPixelForValue(intervalLow[i]);
+          }
+        });
+      }
+    }]
+  });
+}
+
+function closePanel() {
+  document.getElementById('overlay').classList.remove('active');
+  document.getElementById('slidePanel').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePanel();
+});
+</script>
+</body>
+</html>
