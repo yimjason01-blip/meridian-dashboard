@@ -38,6 +38,85 @@
     color: #6b7280;
   }
 
+  /* TAB BAR */
+  .tab-bar {
+    position: sticky;
+    top: 73px;
+    z-index: 99;
+    background: rgba(10,14,23,0.95);
+    backdrop-filter: blur(20px);
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tab-btn {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: #8892a4;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .tab-btn:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: #c9d1d9;
+  }
+
+  .tab-btn.active[data-tab="wealth"] {
+    background: rgba(139,92,246,0.2);
+    border-color: rgba(139,92,246,0.4);
+    color: #c4b5fd;
+  }
+
+  .tab-btn.active[data-tab="health"] {
+    background: rgba(59,130,246,0.2);
+    border-color: rgba(59,130,246,0.4);
+    color: #93c5fd;
+  }
+
+  .tab-btn.active[data-tab="life"] {
+    background: rgba(251,191,36,0.2);
+    border-color: rgba(251,191,36,0.4);
+    color: #fde68a;
+  }
+
+  /* QUICK STATS BAR */
+  .quick-stats {
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 10px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .quick-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .quick-stat .qs-label { color: #4b5563; }
+  .quick-stat .qs-value { color: #c9d1d9; font-weight: 600; }
+  .quick-stat .qs-pct { color: #a78bfa; font-weight: 500; }
+  .quick-stat .qs-check { color: #34d399; }
+
+  /* TAB CONTENT */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
   .container {
     max-width: 900px;
     margin: 0 auto;
@@ -465,11 +544,64 @@
   .empty-state-text { font-size: 14px; line-height: 1.6; }
   .empty-state-sub { font-size: 12px; color: #374151; margin-top: 8px; }
 
+  /* Life tab cards */
+  .life-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .life-card:hover {
+    border-color: rgba(251,191,36,0.25);
+    background: rgba(251,191,36,0.03);
+    transform: translateY(-2px);
+  }
+
+  .life-card:active { transform: translateY(0); }
+
+  .life-card-icon { font-size: 32px; margin-bottom: 12px; }
+
+  .life-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .life-card-desc {
+    font-size: 13px;
+    color: #8892a4;
+    line-height: 1.6;
+  }
+
+  .life-card-cta {
+    font-size: 12px;
+    color: #fbbf24;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .life-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
   @media (max-width: 640px) {
     .hero-row { grid-template-columns: 1fr; }
     .pillars { grid-template-columns: 1fr; }
+    .life-cards-grid { grid-template-columns: 1fr; }
     .slide-panel { max-width: 100%; }
     .metrics-row { grid-template-columns: 1fr 1fr; }
+    .tab-bar { gap: 6px; padding: 10px 16px; }
+    .tab-btn { font-size: 13px; padding: 7px 14px; }
+    .quick-stats { gap: 12px; padding: 8px 16px; font-size: 11px; }
+    .tab-bar { top: 65px; }
   }
 </style>
 </head>
@@ -493,10 +625,41 @@
   <div class="header-sub">Jason Yim · Updated Feb 2026</div>
 </div>
 
-<div class="container">
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="wealth" onclick="switchTab('wealth')">💰 Wealth</button>
+  <button class="tab-btn" data-tab="health" onclick="switchTab('health')">❤️ Health</button>
+  <button class="tab-btn" data-tab="life" onclick="switchTab('life')">🧠 Life</button>
+</div>
 
-  <!-- Hero Cards -->
-  <div class="hero-row">
+<!-- QUICK STATS BAR -->
+<div class="quick-stats">
+  <div class="quick-stat">
+    <span class="qs-label">Comp:</span>
+    <span class="qs-value">$440K → $1M</span>
+    <span class="qs-pct">(44%)</span>
+  </div>
+  <div class="quick-stat">
+    <span class="qs-label">VO2:</span>
+    <span class="qs-value">~48 → 52</span>
+  </div>
+  <div class="quick-stat">
+    <span class="qs-label">Stiffness:</span>
+    <span class="qs-value">?/10</span>
+  </div>
+  <div class="quick-stat">
+    <span class="qs-label">Strength:</span>
+    <span class="qs-check">✅ S&S</span>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- 💰 WEALTH TAB         -->
+<!-- ===================== -->
+<div class="tab-content active" id="tab-wealth">
+  <div class="container">
+
+    <!-- Hero Card -->
     <div class="hero-card money">
       <div class="hero-label">Annual Comp</div>
       <div class="hero-number">$440K</div>
@@ -505,6 +668,53 @@
         <div class="hero-bar purple" style="width: 44%"></div>
       </div>
     </div>
+
+    <!-- Comp Breakdown -->
+    <div class="section">
+      <div class="section-title"><span class="icon">💰</span> $1M Comp — Path</div>
+      <div class="comp-breakdown">
+        <div class="comp-item">
+          <span class="comp-label">Current total comp</span>
+          <span class="comp-value">~$440K</span>
+        </div>
+        <div class="comp-item">
+          <span class="comp-label">Target</span>
+          <span class="comp-value">$1,000K</span>
+        </div>
+        <div class="comp-item">
+          <span class="comp-label">Gap</span>
+          <span class="comp-value" style="color: #f87171;">$560K</span>
+        </div>
+        <div class="comp-item">
+          <span class="comp-label">LASO status</span>
+          <span class="comp-value" style="font-weight:400; color:#8892a4;">Early commercial · breakeven ~Q2</span>
+        </div>
+        <div class="comp-item">
+          <span class="comp-label">Levers</span>
+          <span class="comp-value" style="font-weight:400; color:#8892a4;">TBD — need to discuss</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholder -->
+    <div class="section" style="border-color:rgba(139,92,246,0.12);background:rgba(139,92,246,0.02);">
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:32px;margin-bottom:12px;">📊</div>
+        <div style="font-size:15px;font-weight:600;color:#c4b5fd;margin-bottom:8px;">Comp structure deep-dive coming soon</div>
+        <div style="font-size:13px;color:#6b7280;line-height:1.6;">Text Jay-C to start the conversation</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- ❤️ HEALTH TAB         -->
+<!-- ===================== -->
+<div class="tab-content" id="tab-health">
+  <div class="container">
+
+    <!-- Hero Card -->
     <div class="hero-card vo2">
       <div class="hero-label">VO2 Max</div>
       <div class="hero-number">~48</div>
@@ -513,94 +723,130 @@
         <div class="hero-bar blue" style="width: 92%"></div>
       </div>
     </div>
+
+    <!-- Longevity Pillars -->
+    <div class="section">
+      <div class="section-title"><span class="icon">🏋️</span> Longevity — Four Pillars</div>
+      <div class="pillars">
+
+        <div class="pillar" onclick="openPanel('strength')">
+          <div class="pillar-header">
+            <span class="pillar-name">💪 Strength</span>
+            <span class="pillar-status achieved">Achieved</span>
+          </div>
+          <div class="pillar-detail">Simple & Sinister kettlebell standard. Maintaining consistently.</div>
+          <div class="pillar-bar-bg">
+            <div class="pillar-bar green" style="width: 100%"></div>
+          </div>
+          <div class="pillar-cta">View details →</div>
+        </div>
+
+        <div class="pillar" onclick="openPanel('vo2')">
+          <div class="pillar-header">
+            <span class="pillar-name">❤️ VO2 Max</span>
+            <span class="pillar-status active">Active</span>
+          </div>
+          <div class="pillar-detail">48 → 52 target. Ramp 275W (1/9). Peak 325W/53 (10/9).</div>
+          <div class="pillar-bar-bg">
+            <div class="pillar-bar blue" style="width: 92%"></div>
+          </div>
+          <div class="pillar-cta">View details →</div>
+        </div>
+
+        <div class="pillar" onclick="openPanel('mobility')">
+          <div class="pillar-header">
+            <span class="pillar-name">🧘 Mobility</span>
+            <span class="pillar-status active">Active</span>
+          </div>
+          <div class="pillar-detail">Eliminate fear/avoidance patterns. Morning low back stiffness.</div>
+          <div class="pillar-bar-bg">
+            <div class="pillar-bar orange" style="width: 25%"></div>
+          </div>
+          <div class="pillar-cta">View details →</div>
+        </div>
+
+        <div class="pillar" onclick="openPanel('speed')">
+          <div class="pillar-header">
+            <span class="pillar-name">⚡ Speed</span>
+            <span class="pillar-status tbd">TBD</span>
+          </div>
+          <div class="pillar-detail">Sprint metric not yet defined.</div>
+          <div class="pillar-bar-bg">
+            <div class="pillar-bar pink" style="width: 0%"></div>
+          </div>
+          <div class="pillar-cta">View details →</div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <!-- Longevity Pillars -->
-  <div class="section">
-    <div class="section-title"><span class="icon">🏋️</span> Longevity — Four Pillars</div>
-    <div class="pillars">
+<!-- ===================== -->
+<!-- 🧠 LIFE TAB           -->
+<!-- ===================== -->
+<div class="tab-content" id="tab-life">
+  <div class="container">
 
-      <div class="pillar" onclick="openPanel('strength')">
-        <div class="pillar-header">
-          <span class="pillar-name">💪 Strength</span>
-          <span class="pillar-status achieved">Achieved</span>
-        </div>
-        <div class="pillar-detail">Simple & Sinister kettlebell standard. Maintaining consistently.</div>
-        <div class="pillar-bar-bg">
-          <div class="pillar-bar green" style="width: 100%"></div>
-        </div>
-        <div class="pillar-cta">View details →</div>
+    <!-- Intro Card -->
+    <div class="section" style="border-color:rgba(251,191,36,0.12);background:rgba(251,191,36,0.02);">
+      <div style="font-size:28px;margin-bottom:12px;">🧠</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;">What's this?</div>
+      <div style="font-size:14px;color:#8892a4;line-height:1.7;">
+        This is where the <strong style="color:#fde68a;">"why"</strong> lives. The wealth goals fund this. The health goals protect this. These are the reasons you're building — the people, experiences, and meaning behind the numbers.
+      </div>
+    </div>
+
+    <!-- Life Cards Grid -->
+    <div class="life-cards-grid">
+
+      <div class="life-card" onclick="openPanel('family')">
+        <div class="life-card-icon">👨‍👩‍👧</div>
+        <div class="life-card-title">Family</div>
+        <div class="life-card-desc">Being present. Adventures. Keeping up with my daughter for decades.</div>
+        <div class="life-card-cta">Explore →</div>
       </div>
 
-      <div class="pillar" onclick="openPanel('vo2')">
-        <div class="pillar-header">
-          <span class="pillar-name">❤️ VO2 Max</span>
-          <span class="pillar-status active">Active</span>
-        </div>
-        <div class="pillar-detail">48 → 52 target. Ramp 275W (1/9). Peak 325W/53 (10/9).</div>
-        <div class="pillar-bar-bg">
-          <div class="pillar-bar blue" style="width: 92%"></div>
-        </div>
-        <div class="pillar-cta">View details →</div>
+      <div class="life-card" onclick="openPanel('adventures')">
+        <div class="life-card-icon">🏔️</div>
+        <div class="life-card-title">Adventures</div>
+        <div class="life-card-desc">Mountain biking, snowboarding, travel. The stuff that makes it all worth it.</div>
+        <div class="life-card-cta">Explore →</div>
       </div>
 
-      <div class="pillar" onclick="openPanel('mobility')">
-        <div class="pillar-header">
-          <span class="pillar-name">🧘 Mobility</span>
-          <span class="pillar-status active">Active</span>
-        </div>
-        <div class="pillar-detail">Eliminate fear/avoidance patterns. Morning low back stiffness.</div>
-        <div class="pillar-bar-bg">
-          <div class="pillar-bar orange" style="width: 25%"></div>
-        </div>
-        <div class="pillar-cta">View details →</div>
+      <div class="life-card" onclick="openPanel('growth')">
+        <div class="life-card-icon">📚</div>
+        <div class="life-card-title">Growth</div>
+        <div class="life-card-desc">Skills, learning, becoming. What do I want to master?</div>
+        <div class="life-card-cta">Explore →</div>
       </div>
 
-      <div class="pillar" onclick="openPanel('speed')">
-        <div class="pillar-header">
-          <span class="pillar-name">⚡ Speed</span>
-          <span class="pillar-status tbd">TBD</span>
-        </div>
-        <div class="pillar-detail">Sprint metric not yet defined.</div>
-        <div class="pillar-bar-bg">
-          <div class="pillar-bar pink" style="width: 0%"></div>
-        </div>
-        <div class="pillar-cta">View details →</div>
+      <div class="life-card" onclick="openPanel('legacy')">
+        <div class="life-card-icon">🎯</div>
+        <div class="life-card-title">Legacy</div>
+        <div class="life-card-desc">What do I want to be remembered for?</div>
+        <div class="life-card-cta">Explore →</div>
       </div>
 
     </div>
-  </div>
 
-  <!-- Comp -->
-  <div class="section">
-    <div class="section-title"><span class="icon">💰</span> $1M Comp — Path</div>
-    <div class="comp-breakdown">
-      <div class="comp-item">
-        <span class="comp-label">Current total comp</span>
-        <span class="comp-value">~$440K</span>
-      </div>
-      <div class="comp-item">
-        <span class="comp-label">Target</span>
-        <span class="comp-value">$1,000K</span>
-      </div>
-      <div class="comp-item">
-        <span class="comp-label">Gap</span>
-        <span class="comp-value" style="color: #f87171;">$560K</span>
-      </div>
-      <div class="comp-item">
-        <span class="comp-label">LASO status</span>
-        <span class="comp-value" style="font-weight:400; color:#8892a4;">Early commercial · breakeven ~Q2</span>
-      </div>
-      <div class="comp-item">
-        <span class="comp-label">Levers</span>
-        <span class="comp-value" style="font-weight:400; color:#8892a4;">TBD — need to discuss</span>
-      </div>
-    </div>
   </div>
-
 </div>
 
 <script>
+/* ===== TAB SWITCHING ===== */
+let activeTab = 'wealth';
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+/* ===== PANELS ===== */
 const panels = {
   strength: {
     title: '💪 Strength',
@@ -1175,6 +1421,98 @@ const panels = {
         </div>
       </div>
     `
+  },
+
+  family: {
+    title: '👨‍👩‍👧 Family',
+    html: `
+      <div style="text-align:center;padding:32px 20px;">
+        <div style="font-size:56px;margin-bottom:16px;">👨‍👩‍👧</div>
+        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Family</div>
+        <div style="font-size:15px;color:#8892a4;line-height:1.7;max-width:400px;margin:0 auto;">
+          Being present. Adventures together. Keeping up with your daughter for decades — not just now, but when she's 20 and you're 67.
+        </div>
+      </div>
+
+      <div class="detail-card" style="border-color:rgba(251,191,36,0.15);background:rgba(251,191,36,0.03);">
+        <div style="font-size:14px;color:#fde68a;font-weight:600;margin-bottom:10px;">🌱 This space is ready for you</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;">
+          What does "being present" look like for you? What adventures are on the list? What kind of dad do you want to be at 50, 60, 70?
+        </div>
+        <div style="margin-top:16px;font-size:13px;color:#fbbf24;">
+          Text Jay-C to start exploring this →
+        </div>
+      </div>
+    `
+  },
+
+  adventures: {
+    title: '🏔️ Adventures',
+    html: `
+      <div style="text-align:center;padding:32px 20px;">
+        <div style="font-size:56px;margin-bottom:16px;">🏔️</div>
+        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Adventures</div>
+        <div style="font-size:15px;color:#8892a4;line-height:1.7;max-width:400px;margin:0 auto;">
+          Mountain biking, snowboarding, travel. The stuff that makes it all worth it. The reason you train.
+        </div>
+      </div>
+
+      <div class="detail-card" style="border-color:rgba(251,191,36,0.15);background:rgba(251,191,36,0.03);">
+        <div style="font-size:14px;color:#fde68a;font-weight:600;margin-bottom:10px;">🗺️ The bucket list starts here</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;">
+          Where do you want to ride? What peaks are calling? What trips would you regret not taking? Let's build the list — then reverse-engineer the fitness and freedom to make them happen.
+        </div>
+        <div style="margin-top:16px;font-size:13px;color:#fbbf24;">
+          Text Jay-C to start exploring this →
+        </div>
+      </div>
+    `
+  },
+
+  growth: {
+    title: '📚 Growth',
+    html: `
+      <div style="text-align:center;padding:32px 20px;">
+        <div style="font-size:56px;margin-bottom:16px;">📚</div>
+        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Growth</div>
+        <div style="font-size:15px;color:#8892a4;line-height:1.7;max-width:400px;margin:0 auto;">
+          Skills, learning, becoming. What do you want to master? What would make you proud to know?
+        </div>
+      </div>
+
+      <div class="detail-card" style="border-color:rgba(251,191,36,0.15);background:rgba(251,191,36,0.03);">
+        <div style="font-size:14px;color:#fde68a;font-weight:600;margin-bottom:10px;">🧠 What's worth learning?</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;">
+          Technical skills, creative pursuits, languages, instruments, crafts — what lights you up when you think about getting really good at it?
+        </div>
+        <div style="margin-top:16px;font-size:13px;color:#fbbf24;">
+          Text Jay-C to start exploring this →
+        </div>
+      </div>
+    `
+  },
+
+  legacy: {
+    title: '🎯 Legacy',
+    html: `
+      <div style="text-align:center;padding:32px 20px;">
+        <div style="font-size:56px;margin-bottom:16px;">🎯</div>
+        <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Legacy</div>
+        <div style="font-size:15px;color:#8892a4;line-height:1.7;max-width:400px;margin:0 auto;">
+          What do you want to be remembered for? Not what you built — who you were.
+        </div>
+      </div>
+
+      <div class="detail-card" style="border-color:rgba(251,191,36,0.15);background:rgba(251,191,36,0.03);">
+        <div style="font-size:14px;color:#fde68a;font-weight:600;margin-bottom:10px;">✨ The big question</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;">
+          If your daughter described you to her kids someday, what would you want her to say? That's the north star. Everything else flows from there.
+        </div>
+        <div style="margin-top:16px;font-size:13px;color:#fbbf24;">
+          Text Jay-C to start exploring this →
+        </div>
+      </div>
+    `
   }
 };
 
@@ -1232,6 +1570,7 @@ function renderVO2Chart() {
         {
           label: '4×4 Range',
           data: intervalHigh.map((h, i) => {
+
             if (h === null || intervalLow[i] === null) return null;
             return h;
           }),
