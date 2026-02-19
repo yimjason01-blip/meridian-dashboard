@@ -960,55 +960,126 @@ const panels = {
     html: `
       <div class="metrics-row">
         <div class="metric">
-          <div class="metric-value orange">25%</div>
-          <div class="metric-label">Progress</div>
+          <div class="metric-value orange">?/10</div>
+          <div class="metric-label">AM Stiffness</div>
         </div>
         <div class="metric">
-          <div class="metric-value orange">AM</div>
-          <div class="metric-label">Stiffness Window</div>
+          <div class="metric-value orange">0/14</div>
+          <div class="metric-label">Days Tracked</div>
         </div>
         <div class="metric">
-          <div class="metric-value">0/10</div>
+          <div class="metric-value">≤2</div>
           <div class="metric-label">Target Stiffness</div>
         </div>
       </div>
 
+      <!-- HYPOTHESIS -->
+      <div class="detail-card" style="border-color:rgba(251,146,60,0.2);background:rgba(251,146,60,0.03);">
+        <div class="detail-card-title" style="color:#fb923c;">🔬 The Experiment: Kill Morning Stiffness</div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;margin-bottom:16px;">
+          <strong style="color:#e5e7eb;">Hypothesis:</strong> Your morning low back stiffness is caused by <strong>tight hip flexors (psoas)</strong> pulling your lumbar spine into excessive lordosis overnight — not weak stabilizers (S&S kettlebell work already covers that).
+        </div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;margin-bottom:16px;">
+          <strong style="color:#e5e7eb;">Why it makes sense:</strong> You sit during the day (CEO life), cycle on the Peloton (hip flexors shortened), and kettlebell swings are ballistic hip extension — none of these <em>lengthen</em> the psoas. A chronically short psoas pulls your lumbar spine into extension all night while your discs are swollen with fluid. Result: stiffness.
+        </div>
+        <div style="font-size:13px;color:#8892a4;line-height:1.7;">
+          <strong style="color:#e5e7eb;">The test:</strong> 2 minutes of couch stretch per side before bed, every night for 2 weeks. Rate morning stiffness 1-10 each morning. If it drops, we've found the culprit.
+        </div>
+      </div>
+
+      <!-- PROTOCOL -->
       <div class="detail-card">
-        <div class="detail-card-title">Current Issues</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div class="timeline-entry warn">
-            <div class="tl-value" style="min-width:auto;">🔸 Low back stiffness</div>
-            <div class="tl-note">Morning stiffness pattern — improves through the day</div>
+        <div class="detail-card-title">📋 Nightly Protocol — 4 Minutes</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:14px 16px;">
+            <div style="font-size:14px;font-weight:600;color:#fb923c;margin-bottom:8px;">Couch Stretch — 2 min per side</div>
+            <div style="font-size:13px;color:#8892a4;line-height:1.6;">
+              1. Kneel facing away from a wall<br>
+              2. Place one knee on ground, shin going UP the wall (top of foot against wall)<br>
+              3. Step other foot forward into a lunge<br>
+              4. Squeeze the glute on the back leg, drive hips forward<br>
+              5. Stand tall — don't lean forward<br>
+              6. Breathe. Hold. Feel the deep stretch in front of hip.
+            </div>
+            <div style="margin-top:10px;font-size:12px;">
+              <span style="color:#fb923c;">📺 Video tutorials:</span><br>
+              <a href="https://www.youtube.com/watch?v=WKo4APrwfXQ" style="color:#60a5fa;text-decoration:none;" target="_blank">Progressions: Beginner → Advanced ↗</a><br>
+              <a href="https://www.youtube.com/watch?v=-rsIS-wl-ig" style="color:#60a5fa;text-decoration:none;" target="_blank">Quick Form Demo ↗</a>
+            </div>
           </div>
-          <div class="timeline-entry warn">
-            <div class="tl-value" style="min-width:auto;">🔸 Fear/avoidance</div>
-            <div class="tl-note">Movement patterns limited by protective guarding, not actual limitation</div>
+          <div style="font-size:12px;color:#6b7280;line-height:1.5;">
+            <strong>When:</strong> Before bed, every night<br>
+            <strong>Duration:</strong> 2 weeks minimum (14 days)<br>
+            <strong>Intensity:</strong> Uncomfortable but not painful. Week 1 will be rough — that's the point.
           </div>
         </div>
       </div>
 
-      <div class="insight">
-        <span class="insight-icon">💡</span>
-        <span>Morning stiffness that improves through the day is often about <strong>movement nutrition</strong> — the tissues need loading, not rest. This is a solvable problem. We should define a baseline (stiffness 1-10 scale) and track it alongside a morning routine.</span>
+      <!-- MORNING RATING -->
+      <div class="detail-card">
+        <div class="detail-card-title">📊 Morning Stiffness Log</div>
+        <div style="font-size:12px;color:#6b7280;margin-bottom:12px;">Text Jay-C each morning: "stiffness X/10" — I'll track it here</div>
+        <div style="overflow-x:auto;">
+          <table class="log-table">
+            <thead>
+              <tr><th>Date</th><th>Stiffness (1-10)</th><th>Couch Stretch?</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" style="text-align:center;color:#374151;padding:16px;">Waiting for Day 1... text me your first morning rating!</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footnote">Scale: 1 = barely notice it · 5 = noticeable, limits some movement · 10 = can barely get out of bed</div>
       </div>
 
+      <!-- ROOT CAUSE ANALYSIS -->
       <div class="detail-card">
-        <div class="detail-card-title">Stiffness Log</div>
-        <div class="empty-state" style="padding:24px;">
-          <div style="font-size:24px;margin-bottom:8px;">📊</div>
-          <div class="empty-state-text">No entries yet</div>
-          <div class="empty-state-sub">Rate your morning stiffness 1-10 and I'll build a trend here</div>
+        <div class="detail-card-title">🔍 Root Cause Analysis</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:#8892a4;line-height:1.5;">
+          <div>
+            <strong style="color:#e5e7eb;">❌ Weak deep stabilizers</strong> — Ruled out. S&S kettlebell standard achieved. Swings and get-ups train transverse abdominis and multifidus under load.
+          </div>
+          <div>
+            <strong style="color:#fb923c;">🔍 Tight hip flexors (psoas)</strong> — <strong>Testing now.</strong> Sitting + cycling shorten the psoas. A chronically short psoas pulls lumbar spine into lordosis overnight. Couch stretch is the test.
+          </div>
+          <div>
+            <strong style="color:#6b7280;">⏳ Disc rehydration</strong> — Contributing factor (normal at 47). Discs absorb water overnight and swell, creating pressure. Can't eliminate but can reduce impact by fixing the position the spine is in overnight.
+          </div>
+          <div>
+            <strong style="color:#6b7280;">❓ Sleep position / mattress</strong> — Unknown. Worth evaluating if couch stretch doesn't move the needle.
+          </div>
+          <div>
+            <strong style="color:#6b7280;">❓ Systemic inflammation</strong> — Possible contributor. Diet, sleep quality, stress. Longer conversation.
+          </div>
         </div>
       </div>
 
+      <!-- WHAT SUCCESS LOOKS LIKE -->
       <div class="detail-card">
-        <div class="detail-card-title">Potential Protocol</div>
-        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#8892a4;line-height:1.5;">
-          <div>🌅 <strong>Morning flow</strong> — 5-10min movement routine upon waking</div>
-          <div>🧘 <strong>Hip hinge work</strong> — Jefferson curls, good mornings, loaded stretching</div>
-          <div>🔄 <strong>Spinal CARs</strong> — controlled articular rotations for back</div>
-          <div>💪 <strong>McGill Big 3</strong> — curl-up, side plank, bird dog for stability</div>
-          <div style="color:#4b5563;font-style:italic;">Protocol TBD — let's discuss what resonates</div>
+        <div class="detail-card-title">🎯 What Success Looks Like</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#8892a4;line-height:1.5;">
+          <div>✅ <strong>Week 1-2:</strong> Establish baseline stiffness score. Couch stretch will feel very intense at first.</div>
+          <div>✅ <strong>Week 2-3:</strong> Stretch becomes easier (tissue adapting). Morning stiffness should start to drop.</div>
+          <div>✅ <strong>Week 4+:</strong> If working → stiffness consistently ≤3/10. Add morning cat-cow + walk to accelerate.</div>
+          <div>🏆 <strong>End goal:</strong> Get out of bed without that sensation. Stiffness ≤2/10 consistently.</div>
+        </div>
+      </div>
+
+      <!-- STUART MCGILL REFERENCE -->
+      <div class="detail-card">
+        <div class="detail-card-title">📚 The Science</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:#6b7280;line-height:1.5;">
+          <div>
+            <strong style="color:#8892a4;">Disc rehydration</strong> — Spinal discs absorb water overnight (you're ~1-2cm taller in the AM). Swollen discs increase pressure on surrounding structures. Stuart McGill's research shows herniation risk is highest in the first hour after waking.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">McGill, S. (2015) Back Mechanic</div>
+          </div>
+          <div>
+            <strong style="color:#8892a4;">Psoas & lumbar lordosis</strong> — A shortened psoas increases lumbar extension, compressing posterior disc and facet joints. Sustained stretching (>90 sec) produces lasting tissue length changes via viscoelastic creep.
+            <div style="color:#4b5563;font-style:italic;margin-top:2px;">Page et al. (2010) Assessment and Treatment of Muscle Imbalance</div>
+          </div>
+          <div>
+            <strong style="color:#8892a4;">Why before bed</strong> — Stretching before sleep means the psoas is lengthened going INTO the overnight period, reducing the lordotic pull while discs rehydrate. Morning stretching helps symptoms but doesn't address the overnight mechanism.
+          </div>
         </div>
       </div>
     `
