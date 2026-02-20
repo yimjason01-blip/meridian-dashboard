@@ -659,6 +659,15 @@
 <div class="tab-content active" id="tab-wealth">
   <div class="container">
 
+    <!-- Wealth Sub-Toggle -->
+    <div style="display:flex;gap:8px;margin-bottom:20px;">
+      <button onclick="showWealthView('income')" id="wv-income" style="flex:1;padding:12px;border-radius:12px;border:1px solid #7c3aed;background:rgba(124,58,237,0.12);color:#c4b5fd;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;">💰 Income</button>
+      <button onclick="showWealthView('networth')" id="wv-networth" style="flex:1;padding:12px;border-radius:12px;border:1px solid #1f2937;background:transparent;color:#6b7280;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;">📈 Net Worth</button>
+    </div>
+
+    <!-- ===== INCOME VIEW ===== -->
+    <div id="wealth-income">
+
     <!-- Hero Card -->
     <div class="hero-card money">
       <div class="hero-label">Annual Cash Comp</div>
@@ -970,6 +979,173 @@
       <div style="font-size:11px;color:#4b5563;margin-top:8px;">Far exceeds the 10x threshold. This makes the $1M comp conversation easy to justify.</div>
     </div>
 
+    </div><!-- end wealth-income -->
+
+    <!-- ===== NET WORTH VIEW ===== -->
+    <div id="wealth-networth" style="display:none;">
+
+    <!-- Hero Card -->
+    <div class="hero-card money" style="background:linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,78,59,0.12));">
+      <div class="hero-label">Net Worth</div>
+      <div class="hero-number" style="color:#34d399;">TBD</div>
+      <div class="hero-target">Track assets, liabilities & path to financial independence</div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="section" style="border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.02);">
+      <div class="section-title"><span class="icon">🧭</span> Two Sides of Wealth</div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;">
+        <div style="flex:1;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.15);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:6px;">💰</div>
+          <div style="font-size:14px;font-weight:600;color:#c4b5fd;margin-bottom:4px;">Income</div>
+          <div style="font-size:12px;color:#6b7280;line-height:1.5;">How fast you fill the bucket.<br>Measured in $/year.</div>
+        </div>
+        <div style="flex:1;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.15);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:6px;">📈</div>
+          <div style="font-size:14px;font-weight:600;color:#34d399;margin-bottom:4px;">Net Worth</div>
+          <div style="font-size:12px;color:#6b7280;line-height:1.5;">How full the bucket is.<br>Assets minus liabilities.</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:#8892a4;line-height:1.6;text-align:center;">
+        Income fuels net worth. At $1M income → ~$580K take-home → invest $280K/year at 8% → financial independence accelerates.
+      </div>
+    </div>
+
+    <!-- Assets -->
+    <div class="section">
+      <div class="section-title"><span class="icon">🏦</span> Assets</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">🏠 Real Estate</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Primary residence, investment properties</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">📊 Retirement Accounts</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">401(k), IRA, Roth</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">💹 Brokerage / Investments</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Taxable accounts, index funds, individual stocks</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">🏢 LASO Equity</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Meaningful but draconian terms — discounted value</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">💵 Cash & Savings</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Emergency fund, high-yield savings, checking</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">📦 Other</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Vehicles, collectibles, crypto, etc.</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liabilities -->
+    <div class="section">
+      <div class="section-title"><span class="icon">📉</span> Liabilities</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">🏠 Mortgage</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Outstanding balance</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">🚗 Auto / Personal Loans</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Outstanding balances</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#e5e7eb;">💳 Other Debt</div>
+            <div style="font-size:11px;color:#4b5563;margin-top:2px;">Credit cards, lines of credit, etc.</div>
+          </div>
+          <div style="font-size:15px;font-weight:600;color:#374151;">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Net Worth Summary -->
+    <div class="section" style="border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.03);">
+      <div class="section-title"><span class="icon">🎯</span> Net Worth Summary</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#34d399;">Total Assets</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#f87171;">Total Liabilities</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(52,211,153,0.06);border-radius:8px;border:1px solid rgba(52,211,153,0.15);">
+          <span style="font-size:14px;font-weight:600;color:#34d399;">Net Worth</span>
+          <span style="font-size:16px;font-weight:700;color:#34d399;">—</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#4b5563;margin-top:8px;">Share your numbers with Jay-C to populate — all data stays local on your Mac Mini.</div>
+    </div>
+
+    <!-- FI Target -->
+    <div class="section">
+      <div class="section-title"><span class="icon">🏖️</span> Financial Independence Target</div>
+      <div style="font-size:13px;color:#8892a4;line-height:1.7;margin-bottom:16px;">
+        The "number" where work becomes optional. A common rule of thumb: 25× your annual spending. If you spend $300K/year, your FI number is $7.5M in invested assets (assuming 4% safe withdrawal rate).
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#8892a4;">Annual spending (est.)</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#8892a4;">FI Target (25× spending)</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#8892a4;">Current invested assets</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <span style="font-size:13px;color:#8892a4;">Progress to FI</span>
+          <span style="font-size:14px;font-weight:600;color:#374151;">—%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#4b5563;margin-top:8px;">This isn't about retiring. It's about having the freedom to work because you want to, not because you have to.</div>
+    </div>
+
+    <!-- Net Worth Trend placeholder -->
+    <div class="section">
+      <div class="section-title"><span class="icon">📊</span> Net Worth Trend</div>
+      <div style="text-align:center;padding:24px 0;">
+        <div style="font-size:32px;margin-bottom:8px;">📈</div>
+        <div style="font-size:13px;color:#6b7280;">Chart will appear once we start tracking quarterly snapshots</div>
+      </div>
+    </div>
+
+    </div><!-- end wealth-networth -->
+
   </div>
 </div>
 
@@ -1109,6 +1285,34 @@ function switchTab(tab) {
   document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+/* ===== WEALTH SUB-VIEW TOGGLE ===== */
+function showWealthView(view) {
+  const incomeEl = document.getElementById('wealth-income');
+  const networthEl = document.getElementById('wealth-networth');
+  const btnIncome = document.getElementById('wv-income');
+  const btnNetworth = document.getElementById('wv-networth');
+  
+  if (view === 'income') {
+    incomeEl.style.display = 'block';
+    networthEl.style.display = 'none';
+    btnIncome.style.borderColor = '#7c3aed';
+    btnIncome.style.background = 'rgba(124,58,237,0.12)';
+    btnIncome.style.color = '#c4b5fd';
+    btnNetworth.style.borderColor = '#1f2937';
+    btnNetworth.style.background = 'transparent';
+    btnNetworth.style.color = '#6b7280';
+  } else {
+    incomeEl.style.display = 'none';
+    networthEl.style.display = 'block';
+    btnNetworth.style.borderColor = '#059669';
+    btnNetworth.style.background = 'rgba(16,185,129,0.12)';
+    btnNetworth.style.color = '#34d399';
+    btnIncome.style.borderColor = '#1f2937';
+    btnIncome.style.background = 'transparent';
+    btnIncome.style.color = '#6b7280';
+  }
 }
 
 /* ===== PANELS ===== */
