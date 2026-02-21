@@ -71,11 +71,23 @@
     "updated": "2026-02-21",
     "research": {
       "date": "2026-02-21",
-      "verdict": "Unfavorable asymmetry for standalone business. Real emotional/clinical value but low commercial ceiling.",
-      "upside": "Reminiscence therapy is clinically validated (reduces depression, improves QoL, improves communication). Social memory aggregation from patient's actual circle is genuinely novel — no existing product does this. Enormous emotional value to families (combats helplessness). ~7M US dementia patients, ~11M unpaid caregivers.",
-      "downside": "No dementia consumer app has achieved venture scale. WTP ~$25/mo median. Built-in churn (patient deteriorates). Regulatory minefield if claiming cognitive benefit. MindMate raised only $2M after 500K+ users. High opportunity cost vs LASO/Executive CI.",
-      "competitors": "Remme (AI reminiscence, early stage), LifeBio Memory (care facility focused), MindMate (brain games, $2M raised), Kodak reminiscence tool (minimal traction)",
-      "recommendation": "If pursued: open-source/nonprofit (grant-fundable) or integrate as LASO feature. Do not build standalone company."
+      "d2c_analysis": {
+        "verdict": "Unfavorable asymmetry as a direct-to-consumer business. Real emotional/clinical value but low commercial ceiling.",
+        "upside": "Reminiscence therapy is clinically validated (reduces depression Cohen's d=-0.54, improves QoL, improves communication). Social memory aggregation from patient's actual circle is genuinely novel — no existing product does this. Enormous emotional value to families (combats helplessness). ~7M US dementia patients, ~11M unpaid caregivers.",
+        "downside": "No dementia consumer app has achieved venture scale. WTP ~$25/mo median. Built-in churn (patient deteriorates over time — narrow usability window). Regulatory minefield if claiming cognitive benefit (FDA territory). MindMate raised only $2M after 500K+ users. Kodak tried with massive brand recognition — minimal traction. Caregiver buyer is financially strained, time-poor, emotionally overwhelmed — hard to acquire and retain.",
+        "competitors": "Remme (AI reminiscence, early stage), LifeBio Memory (care facility focused), MindMate (brain games, $2M raised), Kodak reminiscence tool (minimal traction). 50+ research apps studied, most abandoned.",
+        "recommendation": "Do not build as standalone D2C company. Graveyard of failed attempts is large and clear."
+      },
+      "provider_rtm_analysis": {
+        "verdict": "Meaningfully better asymmetry. Provider-billed RTM model removes hardest D2C problems (consumer WTP, acquisition cost) and maps to Jason's Court Health playbook.",
+        "mechanism": "CPT 98978 covers RTM for cognitive behavioral therapy data — device supply + data transmission. Platform tracks therapy adherence (patient engagement with memory content), therapy response (mood scores, behavioral changes), and delivers structured therapeutic content as part of formal treatment plan.",
+        "revenue_per_patient": "~$105-145/mo (98978 ~$55 + 98980 ~$50 + potential 98981 add-ons ~$39 each). 4-6x the D2C ceiling.",
+        "who_pays": "Medicare, not exhausted families.",
+        "2026_tailwinds": "CMS expanded RTM significantly: new codes 98984/98985 allow shorter monitoring periods, lower time thresholds, more documentation flexibility. Trend is clearly toward expanding what qualifies.",
+        "target_providers": "Primary market: geriatric psychiatrists (~1,800 board-certified US), behavioral neurologists, memory clinics. Secondary: geriatricians, psychiatrists, NPs under supervising physicians. Volume play: primary care (delivers majority of dementia care but less motivated by specialty tools).",
+        "key_risk": "CMS hasn't explicitly blessed reminiscence therapy under 98978 — code was designed around CBT. Needs careful clinical framing as structured digital therapeutic intervention with measurable data. Navigable but requires work.",
+        "recommendation": "This is the path worth exploring. B2B to clinics is Jason's exact playbook from Court Health. Next step: validate 98978 clinical framing with a geriatric psychiatrist or billing specialist."
+      }
     },
     "suggestions": [
       {
@@ -90,16 +102,26 @@
       },
       {
         "id": "s3",
-        "text": "Explore technical architecture: how contributors submit memories, how resurfacing algorithm works",
-        "status": "proposed"
+        "text": "Research RTM/RPM reimbursement path (98978 cognitive behavioral therapy code)",
+        "status": "done"
       },
       {
         "id": "s4",
-        "text": "Talk to dementia caregivers about pain points and what they'd actually use",
+        "text": "Validate 98978 clinical framing with a geriatric psychiatrist or billing specialist",
         "status": "proposed"
       },
       {
         "id": "s5",
+        "text": "Talk to dementia caregivers about pain points and what they'd actually use",
+        "status": "proposed"
+      },
+      {
+        "id": "s6",
+        "text": "Explore technical architecture: how contributors submit memories, how resurfacing algorithm works",
+        "status": "proposed"
+      },
+      {
+        "id": "s7",
         "text": "Explore grant funding (NIA, Alzheimer's Association) if pursuing as nonprofit/research project",
         "status": "proposed"
       }
