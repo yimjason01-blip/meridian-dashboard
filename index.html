@@ -475,20 +475,18 @@
 <div class="stats-row">
   <div class="stat-card">
     <div class="stat-label">Uptime</div>
-    <div class="stat-value" id="uptimeValue">~6h</div>
+    <div class="stat-value" id="uptimeValue">—</div>
     <div class="stat-sub">since last restart</div>
   </div>
   <div class="stat-card">
-    <div class="stat-label">Context Usage</div>
-    <div class="stat-value" id="contextValue">72%</div>
-    <div class="context-meter">
-      <div class="context-bar-bg"><div class="context-bar" id="contextBar" style="width: 72%"></div></div>
-    </div>
+    <div class="stat-label">Memory Files</div>
+    <div class="stat-value" id="memoryCount">—</div>
+    <div class="stat-sub">Indexed documents</div>
   </div>
   <div class="stat-card">
     <div class="stat-label">Model</div>
-    <div class="stat-value" style="font-size: 16px;" id="modelValue">Claude Opus 4</div>
-    <div class="stat-sub">200k context window</div>
+    <div class="stat-value" style="font-size: 16px;" id="modelValue">—</div>
+    <div class="stat-sub">Auto-detected</div>
   </div>
   <div class="stat-card">
     <div class="stat-label">Gateway</div>
@@ -882,6 +880,40 @@
 </div>
 
 <script>
+  // Dynamic fetch of status
+  function updateStatus() {
+    fetch('/api/status')
+      .then(r => r.json())
+      .then(data => {
+        // Uptime
+        const hrs = Math.floor(data.uptime / 3600);
+        const mins = Math.floor((data.uptime % 3600) / 60);
+        document.getElementById('uptimeValue').textContent = `${hrs}h ${mins}m`;
+
+        // Memory Count
+        if (data.memoryFiles) {
+          document.getElementById('memoryCount').textContent = data.memoryFiles.length;
+        }
+
+        // Model (prettify known IDs)
+        let modelName = data.model || 'Unknown';
+        if (modelName.includes('claude-opus')) modelName = 'Claude Opus 4';
+        if (modelName.includes('claude-sonnet')) modelName = 'Claude Sonnet 3.5';
+        if (modelName.includes('gemini')) modelName = 'Gemini 3 Pro';
+        document.getElementById('modelValue').textContent = modelName;
+        
+        // Memory Files - simplistic update for now (could be full re-render)
+        // Just updating the "Recent Events" log to show refresh
+        const log = document.getElementById('errorLog');
+        // Prepend refresh entry only if significantly changed
+      })
+      .catch(e => console.error(e));
+      
+    const now = new Date();
+    document.getElementById('lastRefresh').textContent = 
+      `Updated ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
   // Generate 24h timeline
   function drawTimeline() {
     const tl = document.getElementById('timeline');
@@ -907,15 +939,9 @@
     }
   }
 
-  function updateTime() {
-    const now = new Date();
-    document.getElementById('lastRefresh').textContent = 
-      `Updated ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
-  }
-
   drawTimeline();
-  updateTime();
-  setInterval(updateTime, 30000);
+  updateStatus();
+  setInterval(updateStatus, 30000);
 </script>
 </body>
 </html>

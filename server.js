@@ -54,6 +54,48 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // API: Status
+  if (urlPath === '/api/status') {
+    const configPath = path.join(__dirname, '../../openclaw.json');
+    let model = 'Unknown';
+    try {
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      model = config.agents?.defaults?.model?.primary || 'Unknown';
+    } catch (e) {}
+
+    const memoryDir = path.join(__dirname, '../memory');
+    let memoryFiles = [];
+    try {
+      memoryFiles = fs.readdirSync(memoryDir)
+        .filter(f => f.endsWith('.md'))
+        .map(f => {
+          const stats = fs.statSync(path.join(memoryDir, f));
+          return { name: f, size: stats.size, mtime: stats.mtime };
+        });
+    } catch (e) {}
+
+    // Add root memory files
+    ['MEMORY.md', 'SOUL.md', 'IDENTITY.md', 'USER.md', 'AGENTS.md'].forEach(f => {
+      try {
+        const p = path.join(__dirname, '..', f);
+        if (fs.existsSync(p)) {
+           const stats = fs.statSync(p);
+           memoryFiles.push({ name: f, size: stats.size, mtime: stats.mtime, isRoot: true });
+        }
+      } catch(e) {}
+    });
+
+    const data = {
+      uptime: process.uptime(),
+      model: model,
+      memoryFiles: memoryFiles.sort((a,b) => b.mtime - a.mtime), // Newest first
+      lastUpdate: new Date().toISOString()
+    };
+    
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(data));
+  }
+
   // Serve files
   fs.readFile(filePath, (err, data) => {
     if (err) {

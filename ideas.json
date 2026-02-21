@@ -37,5 +37,37 @@
     ],
     "created": "2026-02-18",
     "updated": "2026-02-18"
+  },
+  {
+    "id": "idea-003",
+    "title": "Social Memory Network for Dementia",
+    "summary": "A centralized memory platform built from a dementia patient's social circle to resurface memories and maintain connection.",
+    "status": "new",
+    "category": "health",
+    "description": "Inspired by watching Jason's father-in-law's dementia progression and the parallel with AI memory formation. Core insight: memory is networked, not individual. The patient's social circle collectively holds memories the patient is losing. The platform aggregates photos, stories, voice recordings, and music from family/friends and resurfaces them to the patient at therapeutic cadence — like Apple Photos memories but crowdsourced from everyone who loves them. Quality of life play, not clinical claims. Side effect: keeps the social circle engaged with the patient (combats isolation). Potential to exercise forgotten neural pathways through familiar social triggers.",
+    "suggestions": [
+      {
+        "id": "s1",
+        "text": "Research existing products in reminiscence/dementia care space — identify gaps",
+        "status": "proposed"
+      },
+      {
+        "id": "s2",
+        "text": "Map the caregiver/family buyer persona and willingness to pay",
+        "status": "proposed"
+      },
+      {
+        "id": "s3",
+        "text": "Explore technical architecture: how contributors submit memories, how resurfacing algorithm works",
+        "status": "proposed"
+      },
+      {
+        "id": "s4",
+        "text": "Talk to dementia caregivers about pain points and what they'd actually use",
+        "status": "proposed"
+      }
+    ],
+    "created": "2026-02-20",
+    "updated": "2026-02-20"
   }
 ]
