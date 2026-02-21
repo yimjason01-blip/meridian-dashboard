@@ -68,6 +68,41 @@
       }
     ],
     "created": "2026-02-20",
-    "updated": "2026-02-20"
+    "updated": "2026-02-21",
+    "research": {
+      "date": "2026-02-21",
+      "verdict": "Unfavorable asymmetry for standalone business. Real emotional/clinical value but low commercial ceiling.",
+      "upside": "Reminiscence therapy is clinically validated (reduces depression, improves QoL, improves communication). Social memory aggregation from patient's actual circle is genuinely novel — no existing product does this. Enormous emotional value to families (combats helplessness). ~7M US dementia patients, ~11M unpaid caregivers.",
+      "downside": "No dementia consumer app has achieved venture scale. WTP ~$25/mo median. Built-in churn (patient deteriorates). Regulatory minefield if claiming cognitive benefit. MindMate raised only $2M after 500K+ users. High opportunity cost vs LASO/Executive CI.",
+      "competitors": "Remme (AI reminiscence, early stage), LifeBio Memory (care facility focused), MindMate (brain games, $2M raised), Kodak reminiscence tool (minimal traction)",
+      "recommendation": "If pursued: open-source/nonprofit (grant-fundable) or integrate as LASO feature. Do not build standalone company."
+    },
+    "suggestions": [
+      {
+        "id": "s1",
+        "text": "Research existing products in reminiscence/dementia care space — identify gaps",
+        "status": "done"
+      },
+      {
+        "id": "s2",
+        "text": "Map the caregiver/family buyer persona and willingness to pay",
+        "status": "done"
+      },
+      {
+        "id": "s3",
+        "text": "Explore technical architecture: how contributors submit memories, how resurfacing algorithm works",
+        "status": "proposed"
+      },
+      {
+        "id": "s4",
+        "text": "Talk to dementia caregivers about pain points and what they'd actually use",
+        "status": "proposed"
+      },
+      {
+        "id": "s5",
+        "text": "Explore grant funding (NIA, Alzheimer's Association) if pursuing as nonprofit/research project",
+        "status": "proposed"
+      }
+    ]
   }
 ]
