@@ -87,6 +87,19 @@
         "target_providers": "Primary market: geriatric psychiatrists (~1,800 board-certified US), behavioral neurologists, memory clinics. Secondary: geriatricians, psychiatrists, NPs under supervising physicians. Volume play: primary care (delivers majority of dementia care but less motivated by specialty tools).",
         "key_risk": "CMS hasn't explicitly blessed reminiscence therapy under 98978 — code was designed around CBT. Needs careful clinical framing as structured digital therapeutic intervention with measurable data. Navigable but requires work.",
         "recommendation": "This is the path worth exploring. B2B to clinics is Jason's exact playbook from Court Health. Next step: validate 98978 clinical framing with a geriatric psychiatrist or billing specialist."
+      },
+      "cbt_integration_analysis": {
+        "verdict": "Reminiscence therapy is already a recognized CBT component for dementia in published clinical protocols. Natural additions would clearly satisfy 98978.",
+        "precedent": "CBTAC protocol (published RCT) explicitly combines behavioral activation, reminiscence, cognitive restructuring, and caregiver interventions into a single CBT treatment for dementia dyads.",
+        "natural_additions": [
+          "Behavioral activation tracking — daily engagement with memory content + pre/post mood scoring = therapy adherence + response data",
+          "Caregiver cognitive restructuring modules — reframing grief/catastrophic thoughts, daily stress check-ins (strong evidence base for caregiver CBT)",
+          "Active cognitive stimulation prompts alongside passive memory resurfacing ('Who is this? Tell me about this place.')",
+          "Behavioral symptom logging by caregiver (agitation, sleep, wandering) for clinician treatment adjustment"
+        ],
+        "positioning": "Not 'a reminiscence app that also does CBT' — it's a digital CBT platform for dementia patient-caregiver dyads where social memory is the behavioral activation engine. Clinically accurate per CBTAC model.",
+        "98978_fit": "Scheduled daily recordings (engagement tracking, mood logs), programmed alerts (disengagement, behavioral changes), therapy adherence data, therapy response data — all flow naturally from this design.",
+        "bonus": "Caregiver depression/anxiety from caregiving is a billable diagnosis — platform potentially serves two patients per family unit."
       }
     },
     "suggestions": [
