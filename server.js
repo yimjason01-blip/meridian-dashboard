@@ -96,6 +96,23 @@ const server = http.createServer((req, res) => {
     return res.end(JSON.stringify(data));
   }
 
+  // API: Read a file by path (for modal viewer)
+  if (urlPath === '/api/file') {
+    const filep = new URL(req.url, 'http://localhost').searchParams.get('path');
+    if (!filep || !filep.startsWith('/Users/jasonyim/.openclaw/workspace/')) {
+      res.writeHead(403);
+      return res.end('Forbidden');
+    }
+    try {
+      const content = fs.readFileSync(filep, 'utf8');
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end(content);
+    } catch(e) {
+      res.writeHead(404);
+      return res.end('File not found');
+    }
+  }
+
   // Serve files
   fs.readFile(filePath, (err, data) => {
     if (err) {

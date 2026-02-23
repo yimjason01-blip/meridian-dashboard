@@ -449,6 +449,162 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Memory Buckets */
+  .memory-bucket {
+    margin-bottom: 20px;
+  }
+
+  .memory-bucket:last-child { margin-bottom: 0; }
+
+  .bucket-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .bucket-header.active-bucket {
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.2);
+  }
+
+  .bucket-header.passive-bucket {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+  }
+
+  .bucket-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+
+  .bucket-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .bucket-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .auto-badge {
+    background: rgba(99,102,241,0.2);
+    color: #a5b4fc;
+  }
+
+  .search-badge {
+    background: rgba(251,191,36,0.15);
+    color: #fcd34d;
+  }
+
+  .bucket-desc {
+    font-size: 11px;
+    color: #8892a4;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .bucket-footer {
+    font-size: 10px;
+    color: #4b5563;
+    text-align: right;
+    padding: 4px 4px 0;
+  }
+
+  /* File viewer modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: #121621;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .modal-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .modal-close {
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: #8892a4;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .modal-body pre {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #c9d1d9;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+  }
+
+  .semantic-category {
+    font-size: 10px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 10px 0 4px;
+  }
+
+  .semantic-category:first-child { margin-top: 0; }
+
   @media (max-width: 960px) {
     .main { grid-template-columns: 1fr; }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -656,116 +812,107 @@
   <!-- Right Column: Sidebar -->
   <div class="sidebar">
 
-    <!-- Memory Files -->
+    <!-- Memory Architecture -->
     <div class="card">
-      <div class="card-title">🧠 Memory Files</div>
-      <div class="memory-section">
+      <div class="card-title">🧠 Memory Architecture</div>
 
-        <div class="memory-group-label">Core Identity</div>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/MEMORY.md" title="Open MEMORY.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">📖</div>
-            <div>
-              <div class="memory-file-name">MEMORY.md</div>
-              <div class="memory-file-desc">Long-term curated memory</div>
-            </div>
+      <!-- Bucket 1: Auto-Injected -->
+      <div class="memory-bucket">
+        <div class="bucket-header active-bucket">
+          <div class="bucket-icon">⚡</div>
+          <div>
+            <div class="bucket-title">Active Context <span class="bucket-badge auto-badge">AUTO-INJECTED</span></div>
+            <div class="bucket-desc">Loaded into every session at startup. Always in my context window.</div>
           </div>
-          <div class="memory-file-meta">1.0 KB</div>
-        </a>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/SOUL.md" title="Open SOUL.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">👻</div>
-            <div>
-              <div class="memory-file-name">SOUL.md</div>
-              <div class="memory-file-desc">Personality & core values</div>
+        </div>
+        <div class="memory-section">
+          <div class="memory-file" onclick="openFile('AGENTS.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">📋</div>
+              <div>
+                <div class="memory-file-name">AGENTS.md</div>
+                <div class="memory-file-desc">Operating instructions & rules</div>
+              </div>
             </div>
+            <div class="memory-file-meta">7.7 KB</div>
           </div>
-          <div class="memory-file-meta">1.6 KB</div>
-        </a>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/IDENTITY.md" title="Open IDENTITY.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">🦞</div>
-            <div>
-              <div class="memory-file-name">IDENTITY.md</div>
-              <div class="memory-file-desc">Name, creature, vibe, emoji</div>
+          <div class="memory-file" onclick="openFile('SOUL.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">👻</div>
+              <div>
+                <div class="memory-file-name">SOUL.md</div>
+                <div class="memory-file-desc">Personality & core values</div>
+              </div>
             </div>
+            <div class="memory-file-meta">1.9 KB</div>
           </div>
-          <div class="memory-file-meta">191 B</div>
-        </a>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/USER.md" title="Open USER.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">👤</div>
-            <div>
-              <div class="memory-file-name">USER.md</div>
-              <div class="memory-file-desc">About Jason</div>
+          <div class="memory-file" onclick="openFile('USER.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">👤</div>
+              <div>
+                <div class="memory-file-name">USER.md</div>
+                <div class="memory-file-desc">About Jason</div>
+              </div>
             </div>
+            <div class="memory-file-meta">737 B</div>
           </div>
-          <div class="memory-file-meta">770 B</div>
-        </a>
-
-        <div class="memory-group-label">Configuration</div>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/AGENTS.md" title="Open AGENTS.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">📋</div>
-            <div>
-              <div class="memory-file-name">AGENTS.md</div>
-              <div class="memory-file-desc">Operating instructions</div>
+          <div class="memory-file" onclick="openFile('IDENTITY.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">🦞</div>
+              <div>
+                <div class="memory-file-name">IDENTITY.md</div>
+                <div class="memory-file-desc">Name, creature, vibe, emoji</div>
+              </div>
             </div>
+            <div class="memory-file-meta">466 B</div>
           </div>
-          <div class="memory-file-meta">7.7 KB</div>
-        </a>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/TOOLS.md" title="Open TOOLS.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">🔧</div>
-            <div>
-              <div class="memory-file-name">TOOLS.md</div>
-              <div class="memory-file-desc">Local tool notes</div>
+          <div class="memory-file" onclick="openFile('MEMORY.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">📖</div>
+              <div>
+                <div class="memory-file-name">MEMORY.md</div>
+                <div class="memory-file-desc">Long-term curated memory</div>
+              </div>
             </div>
+            <div class="memory-file-meta">4.0 KB</div>
           </div>
-          <div class="memory-file-meta">860 B</div>
-        </a>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/HEARTBEAT.md" title="Open HEARTBEAT.md">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">💓</div>
-            <div>
-              <div class="memory-file-name">HEARTBEAT.md</div>
-              <div class="memory-file-desc">Periodic task checklist</div>
+          <div class="memory-file" onclick="openFile('TOOLS.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">🔧</div>
+              <div>
+                <div class="memory-file-name">TOOLS.md</div>
+                <div class="memory-file-desc">Local tool notes</div>
+              </div>
             </div>
+            <div class="memory-file-meta">860 B</div>
           </div>
-          <div class="memory-file-meta">168 B</div>
-        </a>
-
-        <div class="memory-group-label">Daily Notes & Goals</div>
-
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/memory/2026-02-17.md" title="Open daily note">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">📝</div>
-            <div>
-              <div class="memory-file-name">2026-02-17.md</div>
-              <div class="memory-file-desc">First day online — setup log</div>
+          <div class="memory-file" onclick="openFile('HEARTBEAT.md','workspace')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">💓</div>
+              <div>
+                <div class="memory-file-name">HEARTBEAT.md</div>
+                <div class="memory-file-desc">Periodic task checklist</div>
+              </div>
             </div>
+            <div class="memory-file-meta">168 B</div>
           </div>
-          <div class="memory-file-meta">1.0 KB</div>
-        </a>
+        </div>
+        <div class="bucket-footer">~16 KB loaded every session</div>
+      </div>
 
-        <a class="memory-file" href="file:///Users/jasonyim/.openclaw/workspace/memory/goals.md" title="Open goals">
-          <div class="memory-file-left">
-            <div class="memory-file-icon">🎯</div>
-            <div>
-              <div class="memory-file-name">goals.md</div>
-              <div class="memory-file-desc">$1M comp + longevity pillars</div>
-            </div>
+      <!-- Bucket 2: Semantic Search -->
+      <div class="memory-bucket">
+        <div class="bucket-header passive-bucket">
+          <div class="bucket-icon">🔍</div>
+          <div>
+            <div class="bucket-title">Semantic Memory <span class="bucket-badge search-badge">SEARCH ON DEMAND</span></div>
+            <div class="bucket-desc">Retrieved via vector search when relevant. Not loaded by default.</div>
           </div>
-          <div class="memory-file-meta">858 B</div>
-        </a>
-
+        </div>
+        <div class="memory-section" id="semanticFiles">
+          <!-- Populated by JS -->
+        </div>
+        <div class="bucket-footer" id="semanticFooter">Loading...</div>
       </div>
     </div>
 
@@ -879,7 +1026,120 @@
   </div>
 </div>
 
+<!-- File Viewer Modal -->
+<div class="modal-overlay" id="fileModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">—</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <pre id="modalContent">Loading...</pre>
+    </div>
+  </div>
+</div>
+
 <script>
+  const WORKSPACE = '/Users/jasonyim/.openclaw/workspace';
+
+  // Semantic memory files — categorized
+  const semanticFiles = {
+    'Daily Logs': [
+      { name: '2026-02-22.md', desc: 'Yesterday', icon: '📝' },
+      { name: '2026-02-21.md', desc: 'Dementia research, BTC', icon: '📝' },
+      { name: '2026-02-20.md', desc: 'Consciousness & memory', icon: '📝' },
+      { name: '2026-02-19.md', desc: 'Dashboard, icon work', icon: '📝' },
+      { name: '2026-02-18.md', desc: 'Setup continued', icon: '📝' },
+      { name: '2026-02-17.md', desc: 'First day online', icon: '📝' },
+    ],
+    'Topic Files': [
+      { name: 'credibility-framework.md', desc: 'Who to trust & why', icon: '🎯', size: '10.2 KB' },
+      { name: 'bitcoin-analysis-2026-02-23.md', desc: 'BTC thesis & analysis', icon: '₿', size: '3.6 KB' },
+      { name: 'laso-business-model.md', desc: 'LASO Health strategy', icon: '🏥', size: '5.3 KB' },
+      { name: 'laso-financials.md', desc: 'Revenue & projections', icon: '💰', size: '1.9 KB' },
+      { name: 'laso-team.md', desc: 'Team context', icon: '👥', size: '2.3 KB' },
+      { name: 'executive-ci-strategy.md', desc: 'Executive CI notes', icon: '🔬', size: '5.1 KB' },
+      { name: 'executive-ci-product-notes.md', desc: 'Product notes', icon: '📋', size: '2.5 KB' },
+      { name: 'goals.md', desc: '$1M comp + longevity pillars', icon: '🎯', size: '858 B' },
+      { name: 'health-insights.md', desc: 'Longevity & fitness', icon: '❤️', size: '3.3 KB' },
+      { name: 'vo2max-log.md', desc: 'VO2 Max tracking', icon: '🫁', size: '2.1 KB' },
+      { name: 'todo-memory-architecture.md', desc: 'Memory system design', icon: '🧠', size: '1.6 KB' },
+    ],
+    'Session Transcripts': [
+      { name: '2026-02-22-linkedin-sourcing.md', desc: 'LinkedIn candidate search', icon: '💼', size: '2.8 KB' },
+      { name: '2026-02-22-candidate-spreadsheet.md', desc: 'Candidate results', icon: '📊', size: '4.6 KB' },
+      { name: '2026-02-21-dementia-analysis.md', desc: 'Deep research session', icon: '🔬', size: '15.8 KB' },
+      { name: '2026-02-20-request-timed-out-before-a-res.md', desc: 'Timeout session', icon: '⚠️', size: '6.3 KB' },
+      { name: 'bitcoin-analysis-2026-02-21.md', desc: 'Earlier BTC analysis', icon: '₿', size: '1.7 KB' },
+      { name: '2025-07-11.md', desc: 'Investment worldview', icon: '📈', size: '3.1 KB' },
+    ],
+  };
+
+  function renderSemanticFiles() {
+    const container = document.getElementById('semanticFiles');
+    let html = '';
+    let totalFiles = 0;
+    let totalSize = 0;
+    for (const [category, files] of Object.entries(semanticFiles)) {
+      html += `<div class="semantic-category">${category}</div>`;
+      for (const f of files) {
+        totalFiles++;
+        html += `
+          <div class="memory-file" onclick="openFile('${f.name}','memory')" title="Click to inspect">
+            <div class="memory-file-left">
+              <div class="memory-file-icon">${f.icon}</div>
+              <div>
+                <div class="memory-file-name">${f.name}</div>
+                <div class="memory-file-desc">${f.desc}</div>
+              </div>
+            </div>
+            <div class="memory-file-meta">${f.size || ''}</div>
+          </div>`;
+      }
+    }
+    container.innerHTML = html;
+    document.getElementById('semanticFooter').textContent = `${totalFiles} files · retrieved via Gemini embeddings`;
+  }
+
+  function openFile(name, type) {
+    const path = type === 'workspace' 
+      ? `${WORKSPACE}/${name}`
+      : `${WORKSPACE}/memory/${name}`;
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalContent').textContent = 'Loading...';
+    document.getElementById('fileModal').classList.add('open');
+    
+    // Fetch file content via the local API or fallback
+    fetch(`/api/file?path=${encodeURIComponent(path)}`)
+      .then(r => {
+        if (!r.ok) throw new Error('API unavailable');
+        return r.text();
+      })
+      .then(text => {
+        document.getElementById('modalContent').textContent = text;
+      })
+      .catch(() => {
+        // Direct file:// won't work in browser, show helpful message
+        document.getElementById('modalContent').textContent = 
+          `📂 ${path}\n\n` +
+          `To view this file, open it in your editor:\n\n` +
+          `  code "${path}"\n` +
+          `  open "${path}"\n\n` +
+          `(Browser security prevents reading local files directly.\n` +
+          ` Ask Jay-C in chat to show you the contents!)`;
+      });
+  }
+
+  function closeModal() {
+    document.getElementById('fileModal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  renderSemanticFiles();
+
   // Dynamic fetch of status
   function updateStatus() {
     fetch('/api/status')
