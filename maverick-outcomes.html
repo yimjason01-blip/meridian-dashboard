@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maverick — What You're Buying</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F5F9FF;
+    color: #54566B;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :root {
+    --navy: #11234B;
+    --teal: #0D8086;
+    --mint: #A5EAD1;
+    --coral: #E8614D;
+    --amber: #E5A100;
+    --blue: #2E5DC9;
+    --text: #11234B;
+    --text-muted: #54566B;
+    --bg: #F5F9FF;
+    --card: #fff;
+    --border: #EDEFF3;
+  }
+
+  .hero {
+    background: var(--navy);
+    color: #ECF2FD;
+    padding: 56px 40px 48px;
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: -2.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--mint); }
+  .hero p {
+    font-size: 18px;
+    color: rgba(236,242,253,0.65);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 40px 64px;
+  }
+
+  .section-label {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .section-label span { color: var(--teal); }
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 700px;
+  }
+
+  /* === ABSOLUTE RISK CARDS === */
+  .risk-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .risk-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .risk-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .risk-card.cv::before { background: var(--coral); }
+  .risk-card.cancer::before { background: var(--amber); }
+  .risk-card.dementia::before { background: var(--blue); }
+  .risk-card.allcause::before { background: var(--teal); }
+
+  .risk-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+  .cv .risk-card-title { color: var(--coral); }
+  .cancer .risk-card-title { color: var(--amber); }
+  .dementia .risk-card-title { color: var(--blue); }
+  .allcause .risk-card-title { color: var(--teal); }
+
+  .risk-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .risk-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .risk-bar-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    width: 60px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .risk-bar-track {
+    flex: 1;
+    height: 28px;
+    background: #f0f1f5;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .risk-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 1.5s ease-out;
+  }
+  .risk-bar-fill.before { background: rgba(0,0,0,0.25); }
+  .cv .risk-bar-fill.after { background: var(--coral); }
+  .cancer .risk-bar-fill.after { background: var(--amber); }
+  .dementia .risk-bar-fill.after { background: var(--blue); }
+  .allcause .risk-bar-fill.after { background: var(--teal); }
+
+  .risk-card-insight {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .risk-card-insight strong { color: var(--text); }
+
+  .reduction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .reduction-num {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .cv .reduction-num { color: var(--coral); }
+  .cancer .reduction-num { color: var(--amber); }
+  .dementia .reduction-num { color: var(--blue); }
+  .allcause .reduction-num { color: var(--teal); }
+  .reduction-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: #888;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+
+  /* === SURVIVAL CHART === */
+  .chart-container {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .chart-container canvas {
+    width: 100%;
+    height: auto;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+  .chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-legend-line {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .chart-legend-line.default { background: #CBD0DB; }
+  .chart-legend-line.intervention { background: var(--teal); }
+  .chart-legend-label { color: var(--text-muted); font-weight: 500; }
+
+  /* Milestone annotations */
+  .chart-milestones {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .chart-milestone {
+    text-align: center;
+    padding: 12px 8px;
+    background: #f8f9fb;
+    border-radius: 10px;
+  }
+  .chart-milestone-age {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .chart-milestone-daughter {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .chart-milestone-gap {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .chart-milestone-label {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+  }
+
+  /* === SUMMARY === */
+  .summary-card {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 40px;
+    color: #ECF2FD;
+    margin-bottom: 48px;
+  }
+  .summary-card h2 {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+  }
+  .summary-card h2 span { color: var(--mint); }
+  .summary-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .summary-stat { text-align: center; }
+  .summary-stat-num {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: var(--mint);
+  }
+  .summary-stat-label {
+    font-size: 14px;
+    color: rgba(236,242,253,0.6);
+    margin-top: 4px;
+  }
+  .summary-note {
+    font-size: 14px;
+    color: rgba(236,242,253,0.5);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px 40px;
+    background: var(--navy);
+    color: rgba(236,242,253,0.4);
+    font-size: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .risk-cards { grid-template-columns: 1fr; }
+    .summary-stats { grid-template-columns: 1fr; }
+    .chart-milestones { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 36px 20px; }
+    .hero h1 { font-size: 32px; }
+    .content { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>What you're <span>actually buying.</span></h1>
+    <p>Beyond the hazard ratios — the real, absolute impact of following through on your disease risk reduction plan. In years, percentages, and milestones that matter.</p>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ABSOLUTE RISK REDUCTION -->
+<div class="section-label">The absolute <span>numbers.</span></div>
+<div class="section-desc">Hazard ratios tell you relative change. These are the actual percentages — your real probability of experiencing each condition, before and after all three interventions sustained over time.</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#CBD0DB;"></div> Without interventions</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--teal);"></div> With all 3 sustained</div>
+</div>
+
+<div class="risk-cards">
+  <div class="risk-card cv">
+    <div class="risk-card-title">Cardiovascular event · 10-year risk</div>
+    <div class="reduction">
+      <div class="reduction-num">-5 to 7%</div>
+      <div class="reduction-text">absolute reduction<br>in heart attack or stroke</div>
+    </div>
+    <div class="risk-bars">
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">Before</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill before" style="width:38%;">~8%</div>
+        </div>
+      </div>
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">After</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill after" style="width:14%;">~3%</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk-card-insight">For every <strong>100 people with your risk profile</strong>, these interventions prevent 5-7 heart attacks or strokes over the next decade. The benefit roughly doubles over 20 years.</div>
+  </div>
+
+  <div class="risk-card cancer">
+    <div class="risk-card-title">Pancreatic cancer death · 10-year risk</div>
+    <div class="reduction">
+      <div class="reduction-num">~50%</div>
+      <div class="reduction-text">reduction in chance of<br>dying from pancreatic cancer</div>
+    </div>
+    <div class="risk-bars">
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">Before</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill before" style="width:12%;">~1.5%</div>
+        </div>
+      </div>
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">After</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill after" style="width:5%;">~0.5%</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk-card-insight">Small absolute numbers, but <strong>pancreatic cancer is 90% fatal when caught late</strong>. Metformin reduces incidence. Screening catches what slips through. Together, they cut the death rate roughly in half.</div>
+  </div>
+
+  <div class="risk-card dementia">
+    <div class="risk-card-title">Dementia · Lifetime risk</div>
+    <div class="reduction">
+      <div class="reduction-num">-6 to 9%</div>
+      <div class="reduction-text">absolute reduction<br>in lifetime dementia risk</div>
+    </div>
+    <div class="risk-bars">
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">Before</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill before" style="width:52%;">~13%</div>
+        </div>
+      </div>
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">After</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill after" style="width:22%;">~5%</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk-card-insight"><strong>Fitness is the single strongest protector here</strong> — more powerful than any drug. The statin adds modest benefit via vascular dementia reduction. Combined: roughly 1 in 20 vs. 1 in 8 lifetime odds.</div>
+  </div>
+
+  <div class="risk-card allcause">
+    <div class="risk-card-title">All-cause mortality · 20-year risk</div>
+    <div class="reduction">
+      <div class="reduction-num">~½</div>
+      <div class="reduction-text">roughly halving your chance<br>of dying in the next 20 years</div>
+    </div>
+    <div class="risk-bars">
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">Before</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill before" style="width:60%;">~15%</div>
+        </div>
+      </div>
+      <div class="risk-bar-row">
+        <div class="risk-bar-label">After</div>
+        <div class="risk-bar-track">
+          <div class="risk-bar-fill after" style="width:36%;">~9%</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk-card-insight">This is everything combined — CV, cancer, dementia, and everything else. <strong>The interventions compound across diseases</strong>, not just within them. That's why the all-cause number is larger than any single disease.</div>
+  </div>
+</div>
+
+<!-- SURVIVAL CURVES -->
+<div class="section-label">Your odds of being there for <span>her life.</span></div>
+<div class="section-desc">Two curves. The grey line is your current default trajectory. The teal line is what happens if you follow through on all three priorities. The gap between them is what you're buying.</div>
+
+<div class="chart-container">
+  <canvas id="survivalChart" width="836" height="420"></canvas>
+  <div class="chart-legend">
+    <div class="chart-legend-item">
+      <div class="chart-legend-line default"></div>
+      <div class="chart-legend-label">Current trajectory</div>
+    </div>
+    <div class="chart-legend-item">
+      <div class="chart-legend-line intervention"></div>
+      <div class="chart-legend-label">With all 3 interventions</div>
+    </div>
+  </div>
+  <div class="chart-milestones">
+    <div class="chart-milestone">
+      <div class="chart-milestone-age">Age 57</div>
+      <div class="chart-milestone-daughter">She's 16</div>
+      <div class="chart-milestone-gap">+3%</div>
+      <div class="chart-milestone-label">more likely there</div>
+    </div>
+    <div class="chart-milestone">
+      <div class="chart-milestone-age">Age 67</div>
+      <div class="chart-milestone-daughter">She's 26</div>
+      <div class="chart-milestone-gap">+7%</div>
+      <div class="chart-milestone-label">more likely there</div>
+    </div>
+    <div class="chart-milestone">
+      <div class="chart-milestone-age">Age 77</div>
+      <div class="chart-milestone-daughter">She's 36</div>
+      <div class="chart-milestone-gap">+13%</div>
+      <div class="chart-milestone-label">more likely there</div>
+    </div>
+    <div class="chart-milestone">
+      <div class="chart-milestone-age">Age 87</div>
+      <div class="chart-milestone-daughter">She's 46</div>
+      <div class="chart-milestone-gap">+15%</div>
+      <div class="chart-milestone-label">more likely there</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE BOTTOM LINE -->
+<div class="summary-card">
+  <h2>The bottom <span>line.</span></h2>
+  <div class="summary-stats">
+    <div class="summary-stat">
+      <div class="summary-stat-num">5-10</div>
+      <div class="summary-stat-label">additional healthy years<br>of life expectancy</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-num">~½</div>
+      <div class="summary-stat-label">your 20-year mortality<br>risk, roughly halved</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-num">+15</div>
+      <div class="summary-stat-label">percentage points more likely<br>to meet your grandchildren</div>
+    </div>
+  </div>
+  <div class="summary-note">
+    Three actions. A daily pill, three workouts a week, and one scan per year.<br>
+    That's the cost. The rest is time you get back.
+  </div>
+</div>
+
+<!-- CAVEAT -->
+<div style="background:var(--card);border-radius:16px;padding:24px;border:1px solid var(--border);margin-bottom:24px;">
+  <div style="font-size:13px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">A note on these numbers</div>
+  <div style="font-size:14px;color:var(--text-muted);line-height:1.6;">
+    These estimates are based on published epidemiological data, clinical trial results, and your specific risk factors. They are directionally accurate but not precision predictions — individual outcomes vary based on genetics, adherence, and factors we can't model. The relative rankings and magnitudes are well-supported. The exact percentages carry meaningful uncertainty. We share them because approximate answers to the right questions beat precise answers to the wrong ones.
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  LASO Health — Maverick Outcomes Model — March 2026 — Internal Reference
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('survivalChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+
+  // Hi-DPI scaling
+  const cssW = canvas.width;
+  const cssH = canvas.height;
+  canvas.width = cssW * dpr;
+  canvas.height = cssH * dpr;
+  canvas.style.width = cssW + 'px';
+  canvas.style.height = cssH + 'px';
+  ctx.scale(dpr, dpr);
+
+  // Chart area
+  const pad = { top: 30, right: 30, bottom: 70, left: 56 };
+  const w = cssW - pad.left - pad.right;
+  const h = cssH - pad.top - pad.bottom;
+
+  // Data: age → survival probability (%)
+  // Default trajectory (your current profile without new interventions)
+  const defaultCurve = [
+    [47, 100], [50, 99], [52, 98], [55, 97], [57, 95],
+    [60, 93], [62, 91], [65, 88], [67, 85],
+    [70, 80], [72, 76], [75, 72], [77, 69],
+    [80, 61], [82, 55], [85, 48], [87, 40],
+    [90, 30], [92, 22], [95, 14]
+  ];
+
+  // With all 3 interventions sustained
+  const interventionCurve = [
+    [47, 100], [50, 99.5], [52, 99], [55, 98.5], [57, 98],
+    [60, 97], [62, 96], [65, 94], [67, 92],
+    [70, 89], [72, 86], [75, 84], [77, 82],
+    [80, 76], [82, 71], [85, 64], [87, 55],
+    [90, 44], [92, 35], [95, 25]
+  ];
+
+  const minAge = 47, maxAge = 95;
+  const minPct = 0, maxPct = 100;
+
+  function xPos(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * w; }
+  function yPos(pct) { return pad.top + ((maxPct - pct) / (maxPct - minPct)) * h; }
+
+  // Background
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, cssW, cssH);
+
+  // Grid lines
+  ctx.strokeStyle = '#f0f1f5';
+  ctx.lineWidth = 1;
+  for (let pct = 0; pct <= 100; pct += 20) {
+    ctx.beginPath();
+    ctx.moveTo(pad.left, yPos(pct));
+    ctx.lineTo(pad.left + w, yPos(pct));
+    ctx.stroke();
+  }
+
+  // Milestone vertical lines with daughter age annotations
+  const milestones = [
+    { age: 57, daughter: 16, label: 'She\'s 16' },
+    { age: 67, daughter: 26, label: 'She\'s 26' },
+    { age: 77, daughter: 36, label: 'She\'s 36' },
+    { age: 87, daughter: 46, label: 'She\'s 46' }
+  ];
+
+  milestones.forEach(m => {
+    const x = xPos(m.age);
+    ctx.strokeStyle = 'rgba(13,128,134,0.12)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(x, pad.top);
+    ctx.lineTo(x, pad.top + h);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Daughter age label at top
+    ctx.fillStyle = 'rgba(13,128,134,0.5)';
+    ctx.font = '500 11px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(m.label, x, pad.top - 10);
+  });
+
+  // Shaded area between curves
+  ctx.beginPath();
+  defaultCurve.forEach((pt, i) => {
+    const x = xPos(pt[0]), y = yPos(pt[1]);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  for (let i = interventionCurve.length - 1; i >= 0; i--) {
+    const pt = interventionCurve[i];
+    ctx.lineTo(xPos(pt[0]), yPos(pt[1]));
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(13,128,134,0.08)';
+  ctx.fill();
+
+  // Draw curves
+  function drawCurve(data, color, lineWidth, dashed) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.setLineDash(dashed || []);
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+
+    // Smooth curve using quadratic bezier
+    for (let i = 0; i < data.length; i++) {
+      const x = xPos(data[i][0]), y = yPos(data[i][1]);
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        const prevX = xPos(data[i - 1][0]), prevY = yPos(data[i - 1][1]);
+        const cpX = (prevX + x) / 2, cpY = (prevY + y) / 2;
+        ctx.quadraticCurveTo(prevX + (x - prevX) * 0.5, prevY, cpX + (x - cpX) * 0.5, cpY + (y - cpY) * 0.5);
+        ctx.lineTo(x, y);
+      }
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  drawCurve(defaultCurve, '#CBD0DB', 3);
+  drawCurve(interventionCurve, '#0D8086', 3);
+
+  // Milestone dots on both curves
+  milestones.forEach(m => {
+    const defPt = defaultCurve.find(p => p[0] === m.age);
+    const intPt = interventionCurve.find(p => p[0] === m.age);
+    if (defPt && intPt) {
+      // Default dot
+      ctx.beginPath();
+      ctx.arc(xPos(m.age), yPos(defPt[1]), 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#CBD0DB';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Intervention dot
+      ctx.beginPath();
+      ctx.arc(xPos(m.age), yPos(intPt[1]), 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#0D8086';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Gap annotation
+      const gap = intPt[1] - defPt[1];
+      const midY = (yPos(defPt[1]) + yPos(intPt[1])) / 2;
+      ctx.fillStyle = '#0D8086';
+      ctx.font = '700 12px Inter';
+      ctx.textAlign = 'center';
+      ctx.fillText('+' + Math.round(gap) + '%', xPos(m.age) + 28, midY + 4);
+
+      // Connecting line between dots
+      ctx.strokeStyle = 'rgba(13,128,134,0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.beginPath();
+      ctx.moveTo(xPos(m.age), yPos(defPt[1]));
+      ctx.lineTo(xPos(m.age), yPos(intPt[1]));
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  });
+
+  // Y-axis labels
+  ctx.fillStyle = '#888';
+  ctx.font = '500 11px Inter';
+  ctx.textAlign = 'right';
+  for (let pct = 0; pct <= 100; pct += 20) {
+    ctx.fillText(pct + '%', pad.left - 10, yPos(pct) + 4);
+  }
+
+  // X-axis: your age
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#888';
+  ctx.font = '500 11px Inter';
+  for (let age = 50; age <= 95; age += 5) {
+    ctx.fillText(age, xPos(age), pad.top + h + 20);
+  }
+
+  // Axis labels
+  ctx.fillStyle = '#54566B';
+  ctx.font = '600 12px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Your age →', pad.left + 28, pad.top + h + 38);
+
+  // Daughter age axis (secondary)
+  ctx.fillStyle = 'rgba(13,128,134,0.45)';
+  ctx.font = '500 10px Inter';
+  for (let age = 50; age <= 95; age += 5) {
+    const dAge = age - 41; // daughter is 41 years younger
+    ctx.fillText(dAge, xPos(age), pad.top + h + 56);
+  }
+  ctx.font = '600 11px Inter';
+  ctx.fillStyle = 'rgba(13,128,134,0.55)';
+  ctx.fillText('Her age →', pad.left + 28, pad.top + h + 56);
+
+  // Y-axis label
+  ctx.save();
+  ctx.translate(14, pad.top + h / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#888';
+  ctx.font = '600 12px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Probability alive', 0, 0);
+  ctx.restore();
+
+  // "You are here" marker
+  ctx.fillStyle = '#0D8086';
+  ctx.beginPath();
+  ctx.arc(xPos(47), yPos(100), 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  ctx.fillStyle = '#0D8086';
+  ctx.font = '600 11px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillText('You are here (47)', xPos(47) + 12, yPos(100) + 4);
+
+})();
+</script>
+
+</body>
+</html>

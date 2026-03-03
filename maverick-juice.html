@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maverick — Is It Worth It?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F5F9FF;
+    color: #11234B;
+    -webkit-font-smoothing: antialiased;
+  }
+  :root {
+    --navy: #11234B;
+    --teal: #0D8086;
+    --mint: #A5EAD1;
+    --bg: #F5F9FF;
+    --card: #fff;
+    --border: #EDEFF3;
+    --text: #11234B;
+    --text-muted: #54566B;
+  }
+
+  .divider {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #999;
+  }
+
+  /* ============================================
+     OPTION A — The Proportion
+     One screen. Two bars. Absurd visual contrast.
+     ============================================ */
+  .opt-a {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    background: var(--navy);
+    color: #ECF2FD;
+  }
+  .opt-a-header {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -2px;
+    text-align: center;
+    margin-bottom: 56px;
+    line-height: 1.15;
+  }
+  .opt-a-header span { color: var(--mint); }
+
+  .opt-a-bars {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .opt-a-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .opt-a-label {
+    width: 110px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .opt-a-label-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(236,242,253,0.45);
+  }
+  .opt-a-label-num {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .opt-a-label-num.squeeze { color: rgba(236,242,253,0.35); }
+  .opt-a-label-num.juice { color: var(--mint); }
+
+  .opt-a-bar-track {
+    flex: 1;
+    height: 64px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .opt-a-bar-fill {
+    height: 100%;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: width 2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .opt-a-bar-fill.squeeze {
+    background: rgba(255,255,255,0.1);
+    color: rgba(236,242,253,0.5);
+    width: 1.1%;
+    min-width: 8px;
+  }
+  .opt-a-bar-fill.juice {
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+    color: var(--navy);
+    width: 100%;
+  }
+
+  .opt-a-ratio {
+    text-align: center;
+    margin-top: 48px;
+  }
+  .opt-a-ratio-num {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -4px;
+    color: var(--mint);
+    line-height: 1;
+  }
+  .opt-a-ratio-label {
+    font-size: 16px;
+    color: rgba(236,242,253,0.4);
+    margin-top: 8px;
+  }
+
+  .opt-a-tagline {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+    color: rgba(236,242,253,0.55);
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     OPTION B — The Trade
+     Two sides. Minimal. Typography-driven.
+     ============================================ */
+  .opt-b {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    background: var(--card);
+  }
+
+  .opt-b-trade {
+    display: flex;
+    align-items: stretch;
+    max-width: 800px;
+    width: 100%;
+    gap: 0;
+  }
+  .opt-b-side {
+    flex: 1;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .opt-b-side.give {
+    text-align: right;
+    border-right: 3px solid var(--border);
+  }
+  .opt-b-side.get {
+    padding-left: 48px;
+  }
+  .opt-b-side-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #bbb;
+    margin-bottom: 20px;
+  }
+  .opt-b-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .opt-b-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .give .opt-b-item { align-items: flex-end; }
+  .opt-b-item-name {
+    font-size: 14px;
+    color: #999;
+  }
+  .opt-b-item-value {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #bbb;
+  }
+  .get .opt-b-item-value {
+    color: var(--teal);
+    font-size: 28px;
+  }
+
+  .opt-b-total {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border);
+  }
+  .give .opt-b-total { border-color: transparent; border-top: 2px solid #eee; text-align: right; }
+  .opt-b-total-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #bbb;
+    margin-bottom: 4px;
+  }
+  .opt-b-total-value {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    letter-spacing: -2px;
+  }
+  .give .opt-b-total-value {
+    font-size: 40px;
+    color: #ccc;
+  }
+  .get .opt-b-total-value {
+    font-size: 56px;
+    color: var(--teal);
+  }
+  .opt-b-total-unit {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .opt-b-bottom {
+    text-align: center;
+    margin-top: 48px;
+    max-width: 500px;
+  }
+  .opt-b-bottom p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .opt-b-bottom strong { color: var(--text); }
+
+  /* ============================================
+     OPTION C — The Single Number
+     Maximum reduction. One stat. One question.
+     ============================================ */
+  .opt-c {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    background: var(--navy);
+    color: #ECF2FD;
+    text-align: center;
+  }
+
+  .opt-c-question {
+    font-size: 18px;
+    color: rgba(236,242,253,0.4);
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .opt-c-cost {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .opt-c-cost-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 120px;
+    font-weight: 800;
+    letter-spacing: -6px;
+    color: rgba(236,242,253,0.2);
+    line-height: 1;
+  }
+  .opt-c-cost-unit {
+    font-size: 24px;
+    color: rgba(236,242,253,0.25);
+    font-weight: 500;
+  }
+
+  .opt-c-arrow {
+    font-size: 32px;
+    color: rgba(236,242,253,0.15);
+    margin-bottom: 48px;
+  }
+
+  .opt-c-gain {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .opt-c-gain-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 160px;
+    font-weight: 800;
+    letter-spacing: -8px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--teal), var(--mint));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .opt-c-gain-unit {
+    font-size: 28px;
+    color: var(--mint);
+    font-weight: 500;
+  }
+
+  .opt-c-detail {
+    max-width: 440px;
+    margin-top: 24px;
+  }
+  .opt-c-detail-line {
+    font-size: 14px;
+    color: rgba(236,242,253,0.35);
+    line-height: 1.8;
+  }
+
+  .opt-c-tagline {
+    margin-top: 56px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: rgba(236,242,253,0.6);
+  }
+  .opt-c-tagline span { color: var(--mint); }
+
+  /* ============================================
+     OPTION D — The Calendar
+     Visual time: 365 days, 7 highlighted
+     ============================================ */
+  .opt-d {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    background: #fff;
+  }
+  .opt-d-header {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .opt-d-header span { color: var(--teal); }
+  .opt-d-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .opt-d-grid {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    gap: 3px;
+    max-width: 720px;
+    width: 100%;
+    margin-bottom: 32px;
+  }
+  .opt-d-dot {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: #f0f1f5;
+    transition: background 0.3s;
+  }
+  .opt-d-dot.active {
+    background: var(--teal);
+    box-shadow: 0 0 6px rgba(13,128,134,0.3);
+  }
+
+  .opt-d-legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 40px;
+    font-size: 13px;
+    color: #888;
+  }
+  .opt-d-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .opt-d-legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  .opt-d-payoff {
+    text-align: center;
+    max-width: 560px;
+  }
+  .opt-d-payoff-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .opt-d-payoff-label {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .opt-d-payoff-label strong { color: var(--text); }
+
+  .opt-d-footnote {
+    margin-top: 32px;
+    font-size: 14px;
+    color: #aaa;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .opt-a-header { font-size: 28px; }
+    .opt-a-ratio-num { font-size: 48px; }
+    .opt-b-trade { flex-direction: column; }
+    .opt-b-side.give { border-right: none; border-bottom: 3px solid var(--border); text-align: left; padding-bottom: 32px; }
+    .give .opt-b-item { align-items: flex-start; }
+    .give .opt-b-total { text-align: left; }
+    .opt-b-side.get { padding-left: 40px; padding-top: 32px; }
+    .opt-c-cost-num { font-size: 72px; }
+    .opt-c-gain-num { font-size: 96px; }
+    .opt-d-grid { grid-template-columns: repeat(20, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== OPTION A: The Proportion ==================== -->
+<section class="opt-a" id="option-a">
+  <h1 class="opt-a-header">Is the juice worth <span>the squeeze?</span></h1>
+
+  <div class="opt-a-bars">
+    <div class="opt-a-row">
+      <div class="opt-a-label">
+        <div class="opt-a-label-title">You give</div>
+        <div class="opt-a-label-num squeeze">7 days</div>
+      </div>
+      <div class="opt-a-bar-track">
+        <div class="opt-a-bar-fill squeeze"></div>
+      </div>
+    </div>
+
+    <div class="opt-a-row">
+      <div class="opt-a-label">
+        <div class="opt-a-label-title">You get</div>
+        <div class="opt-a-label-num juice">5-10 yrs</div>
+      </div>
+      <div class="opt-a-bar-track">
+        <div class="opt-a-bar-fill juice"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt-a-ratio">
+    <div class="opt-a-ratio-num">270-540×</div>
+    <div class="opt-a-ratio-label">return on every hour invested</div>
+  </div>
+
+  <div class="opt-a-tagline">
+    A daily pill. Three workouts a week. One scan a year.<br>
+    That's 7 days. The rest is time you get back.
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Option B</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ==================== OPTION B: The Trade ==================== -->
+<section class="opt-b" id="option-b">
+  <div class="opt-b-trade">
+    <div class="opt-b-side give">
+      <div class="opt-b-side-label">What you give</div>
+      <div class="opt-b-items">
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">A daily pill</div>
+          <div class="opt-b-item-value">30 sec/day</div>
+        </div>
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">Training 3×/week</div>
+          <div class="opt-b-item-value">3 hrs/week</div>
+        </div>
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">One scan</div>
+          <div class="opt-b-item-value">2 hrs/year</div>
+        </div>
+      </div>
+      <div class="opt-b-total">
+        <div class="opt-b-total-label">Total per year</div>
+        <div class="opt-b-total-value">7 <span class="opt-b-total-unit">days</span></div>
+      </div>
+    </div>
+    <div class="opt-b-side get">
+      <div class="opt-b-side-label">What you get back</div>
+      <div class="opt-b-items">
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">Additional healthy life</div>
+          <div class="opt-b-item-value">5-10 years</div>
+        </div>
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">20-year mortality risk</div>
+          <div class="opt-b-item-value">Cut in half</div>
+        </div>
+        <div class="opt-b-item">
+          <div class="opt-b-item-name">Chance of meeting grandchildren</div>
+          <div class="opt-b-item-value">+15%</div>
+        </div>
+      </div>
+      <div class="opt-b-total">
+        <div class="opt-b-total-label">Total return</div>
+        <div class="opt-b-total-value">5-10 <span class="opt-b-total-unit">years</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt-b-bottom">
+    <p>You trade <strong>2% of your year</strong> for a <strong>50% reduction in your chance of dying</strong> over the next two decades. There is no investment with a better return.</p>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Option C</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ==================== OPTION C: The Single Number ==================== -->
+<section class="opt-c" id="option-c">
+  <div class="opt-c-question">What does it cost?</div>
+
+  <div class="opt-c-cost">
+    <div class="opt-c-cost-num">7</div>
+    <div class="opt-c-cost-unit">days a year</div>
+  </div>
+
+  <div class="opt-c-arrow">↓</div>
+
+  <div class="opt-c-gain">
+    <div class="opt-c-gain-num">5-10</div>
+    <div class="opt-c-gain-unit">extra years</div>
+  </div>
+
+  <div class="opt-c-detail">
+    <div class="opt-c-detail-line">A daily pill · $5/month</div>
+    <div class="opt-c-detail-line">Three workouts · 3 hours/week</div>
+    <div class="opt-c-detail-line">One scan · 2 hours/year</div>
+  </div>
+
+  <div class="opt-c-tagline">That's <span>the trade.</span></div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Option D</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ==================== OPTION D: The Calendar ==================== -->
+<section class="opt-d" id="option-d">
+  <h2 class="opt-d-header">This is <span>one year</span> of your life.</h2>
+  <p class="opt-d-sub">Each square is one day. The teal squares are your total investment.</p>
+
+  <div class="opt-d-grid" id="calGrid"></div>
+
+  <div class="opt-d-legend">
+    <div class="opt-d-legend-item">
+      <div class="opt-d-legend-swatch" style="background:#f0f1f5;"></div>
+      Your year (358 days)
+    </div>
+    <div class="opt-d-legend-item">
+      <div class="opt-d-legend-swatch" style="background:var(--teal);"></div>
+      The investment (7 days)
+    </div>
+  </div>
+
+  <div class="opt-d-payoff">
+    <div class="opt-d-payoff-num">5-10 extra years</div>
+    <div class="opt-d-payoff-label">Those 7 teal squares — <strong>less than 2% of your year</strong> — buy you 5 to 10 additional years of healthy life. The best trade you'll ever make.</div>
+  </div>
+
+  <div class="opt-d-footnote">A daily pill. Three workouts a week. One scan a year.</div>
+</section>
+
+<script>
+// Build calendar grid for Option D
+const grid = document.getElementById('calGrid');
+for (let i = 0; i < 365; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'opt-d-dot';
+  // Scatter 7 active dots roughly evenly through the year
+  // Place them at positions that feel organic
+  const activeDays = [23, 75, 134, 187, 231, 289, 340];
+  if (activeDays.includes(i)) {
+    dot.className = 'opt-d-dot active';
+  }
+  grid.appendChild(dot);
+}
+</script>
+
+</body>
+</html>

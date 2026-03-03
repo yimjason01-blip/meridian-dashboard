@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maverick — Competitive Landscape</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Bricolage Grotesque';
+    src: url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&display=swap');
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F5F9FF;
+    color: #54566B;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    background: #11234B;
+    color: #ECF2FD;
+    padding: 48px 40px 40px;
+    text-align: left;
+  }
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 44px;
+    font-weight: 400;
+    letter-spacing: -2px;
+    color: #ECF2FD;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .hero h1 span { color: #A5EAD1; }
+  .hero p {
+    font-size: 16px;
+    color: rgba(236, 242, 253, 0.6);
+    max-width: 600px;
+  }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 40px 48px;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 40px;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .comp-table thead th {
+    background: #11234B;
+    padding: 16px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: rgba(236,242,253,0.7);
+    border-bottom: none;
+  }
+  .comp-table thead th:first-child {
+    width: 150px;
+    border-radius: 16px 0 0 0;
+  }
+  .comp-table thead th:last-child {
+    border-radius: 0 16px 0 0;
+  }
+  .comp-table thead th:nth-child(2) {
+    background: #0D8086;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+  .comp-table tbody td {
+    padding: 14px 14px;
+    border-bottom: 1px solid #EDEFF3;
+    vertical-align: top;
+    line-height: 1.5;
+    color: #54566B;
+  }
+  .comp-table tbody tr:last-child td { border-bottom: none; }
+  .comp-table tbody td:nth-child(2) {
+    background: rgba(13, 128, 134, 0.04);
+    color: #11234B;
+    font-weight: 500;
+  }
+  .comp-table tbody td:first-child {
+    font-weight: 600;
+    color: #11234B;
+    white-space: nowrap;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .tag {
+    display: block;
+    width: fit-content;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 3px;
+  }
+  .tag-desc {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #6B6B6B;
+    line-height: 1.4;
+  }
+  .tag-desc-nowrap {
+    white-space: nowrap;
+  }
+  .tag-green { background: #E0F5EC; color: #0D8086; }
+  .tag-amber { background: #FFF3E0; color: #B86E00; }
+  .tag-red { background: #FCEAEC; color: #C62828; }
+  .tag-teal { background: rgba(13,128,134,0.12); color: #0D8086; }
+  .tag-grey { background: #EDEFF3; color: #54566B; }
+
+  .section-title {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: #11234B;
+  }
+  .section-title span { color: #0D8086; }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .diff-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #EDEFF3;
+    transition: box-shadow 0.2s;
+  }
+  .diff-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .diff-card .icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(13,128,134,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 12px;
+  }
+  .diff-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: #11234B; }
+  .diff-card p { font-size: 13px; color: #54566B; line-height: 1.6; }
+
+  .responses {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #EDEFF3;
+    margin-bottom: 40px;
+  }
+  .responses h2 {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.8px;
+    margin-bottom: 24px; color: #11234B;
+  }
+  .response-item {
+    margin-bottom: 20px; padding-bottom: 20px;
+    border-bottom: 1px solid #EDEFF3;
+  }
+  .response-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .response-q {
+    font-size: 13px; font-weight: 600; color: #0D8086;
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+  }
+  .response-q::before {
+    content: "Q"; display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(13,128,134,0.1); color: #0D8086;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .response-a { font-size: 14px; color: #54566B; line-height: 1.65; padding-left: 28px; }
+
+  .footer {
+    text-align: center; padding: 24px 40px;
+    background: #11234B; color: rgba(236,242,253,0.4); font-size: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .diff-grid { grid-template-columns: 1fr; }
+    .comp-table { font-size: 11px; }
+    .comp-table thead th, .comp-table tbody td { padding: 10px 8px; }
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 32px; }
+    .content { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Maverick vs. <span>the market.</span></h1>
+    <p>Competitive landscape for health intelligence — LASO Health internal reference</p>
+  </div>
+</div>
+
+<div class="content">
+
+<table class="comp-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Maverick</th>
+      <th>Your PCP</th>
+      <th>Fountain Life</th>
+      <th>Human Longevity</th>
+      <th>Function Health</th>
+      <th>Superpower</th>
+      <th>Concierge MD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cost</td>
+      <td>~$200/mo</td>
+      <td>$20–$50/visit (copay)</td>
+      <td>$875–$7,000/mo</td>
+      <td>$415 first yr, $250/mo after</td>
+      <td>~$30/mo</td>
+      <td>~$17/mo</td>
+      <td>$170–$830/mo</td>
+    </tr>
+
+    <tr>
+      <td>Wearable data</td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Apple Watch, Oura, Garmin, etc.</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-amber">Limited</span><span class="tag-desc">Oura/WHOOP via third-party</span></td>
+      <td><span class="tag tag-red">No</span></td>
+    </tr>
+    <tr>
+      <td>Genetics</td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">Clinical-grade sequencing</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">Only if family history warrants referral</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">In-house testing</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">Full genome sequencing</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+    </tr>
+    <tr>
+      <td>Blood / labs</td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">80 biomarkers<br>2×/yr</span></td>
+      <td><span class="tag tag-amber">Basic</span><span class="tag-desc tag-desc-nowrap">~20 biomarkers<br>1×/yr</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">100+ biomarkers<br>1×/yr</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">100+ biomarkers<br>1×/yr</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">160+ biomarkers<br>2×/yr</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">100+ biomarkers<br>1×/yr</span></td>
+      <td><span class="tag tag-amber">Basic</span><span class="tag-desc tag-desc-nowrap">~20 biomarkers<br>1×/yr</span></td>
+    </tr>
+    <tr>
+      <td>Imaging (MRI, DEXA)</td>
+      <td><span class="tag tag-amber">Physician-ordered</span><span class="tag-desc">Prescribed when indicated by risk model. Not included in membership.</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">Referral required, typically symptomatic only</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">Full-body MRI, DEXA, CT calcium score</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">Full-body MRI</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-amber">Add-on</span><span class="tag-desc">Bookable via marketplace</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">Refers out</span></td>
+    </tr>
+    <tr>
+      <td>Disease-specific screenings</td>
+      <td><span class="tag tag-green">Targeted</span><span class="tag-desc">Driven by your personal risk profile and genetics</span></td>
+      <td><span class="tag tag-amber">Standard</span><span class="tag-desc">Age-based guidelines only</span></td>
+      <td><span class="tag tag-green">Broad</span><span class="tag-desc">Comprehensive screening for all members</span></td>
+      <td><span class="tag tag-green">Broad</span><span class="tag-desc">Comprehensive screening for all members</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-amber">Standard</span><span class="tag-desc">Physician-directed, age-based guidelines</span></td>
+    </tr>
+    <tr>
+      <td>Integrated disease risk modeling</td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Multi-domain: CV, cancer, dementia, stroke</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-amber">Basic</span><span class="tag-desc">Genetic risk scores</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span></td>
+    </tr>
+    <tr>
+      <td>Precision risk reduction</td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Physician-prescribed plan with video walkthrough. Priorities ranked by severity × effect size.</span></td>
+      <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Physician guidance, not data-integrated</span></td>
+      <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Clinical report with physician follow-up plan</span></td>
+      <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Physician recommendations at annual visit</span></td>
+      <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Optimal ranges and general recs</span></td>
+      <td><span class="tag tag-amber">Generic</span><span class="tag-desc">AI supplement suggestions</span></td>
+      <td><span class="tag tag-amber">Moderate</span><span class="tag-desc">Physician-driven, limited by data access</span></td>
+    </tr>
+    <tr>
+      <td>End-to-end virtual care</td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Fully remote; lab draws at Quest/LabCorp</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">In-person visits required</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">In-person clinic visits required</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">In-person clinic visits required</span></td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Remote; lab draws at Quest/LabCorp</span></td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Remote; lab draws at partner locations</span></td>
+      <td><span class="tag tag-amber">Partial</span><span class="tag-desc">Mix of virtual and in-person</span></td>
+    </tr>
+
+    <tr>
+      <td>Geographic access</td>
+      <td><span class="tag tag-green">Nationwide</span><span class="tag-desc">Remote + Quest/LabCorp network</span></td>
+      <td><span class="tag tag-green">Everywhere</span><span class="tag-desc">Local to you</span></td>
+      <td><span class="tag tag-red">Limited</span><span class="tag-desc">5 US clinic locations</span></td>
+      <td><span class="tag tag-red">Limited</span><span class="tag-desc">San Diego only</span></td>
+      <td><span class="tag tag-green">Nationwide</span><span class="tag-desc">Quest/LabCorp network</span></td>
+      <td><span class="tag tag-green">Nationwide</span><span class="tag-desc">2,000+ partner locations</span></td>
+      <td><span class="tag tag-amber">Varies</span><span class="tag-desc">Depends on the practice</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="section-title">Where Maverick <span>fits.</span></h2>
+<div class="diff-grid">
+  <div class="diff-card">
+    <div class="icon">🔄</div>
+    <h3>Continuous vs. Snapshot</h3>
+    <p>Most options give you one day of testing, then silence until next year. Maverick combines twice-yearly labs with daily wearable data for a picture that updates continuously — not just when you visit a clinic.</p>
+  </div>
+  <div class="diff-card">
+    <div class="icon">🧬</div>
+    <h3>Everything Analyzed Together</h3>
+    <p>Your wearable data, genetics, bloodwork, and family history live in separate silos today. Maverick is the first service that generates its own clinical data AND integrates it with your other sources into one unified risk model.</p>
+  </div>
+  <div class="diff-card">
+    <div class="icon">🎯</div>
+    <h3>Physician-Prescribed Priorities, Not Data Dumps</h3>
+    <p>A 50-page report or a dashboard of numbers isn't a plan. Your Maverick physician reviews the risk model and prescribes your #1 priority — why it outranks everything else and exactly what to do about it.</p>
+  </div>
+  <div class="diff-card">
+    <div class="icon">⚖️</div>
+    <h3>Honest Tradeoffs</h3>
+    <p>Maverick doesn't replace your doctor or a Fountain Life MRI. It doesn't do imaging or in-person exams. What it does is connect data sources that nobody else connects, model risks nobody else models, and give your physician the tools to prescribe what actually matters most.</p>
+  </div>
+</div>
+
+<div class="responses">
+  <h2>"How does this compare to…?"</h2>
+
+  <div class="response-item">
+    <div class="response-q">"I already have a doctor — why do I need this?"</div>
+    <div class="response-a">Your PCP is essential — Maverick doesn't replace them. But a standard annual physical with basic labs checks ~15 markers and has limited time to connect dots across your genetics, wearable trends, and family history. Maverick generates deeper data (2× annual labs + genetic sequencing), synthesizes it with your wearable data, and your Maverick physician uses that to prescribe a prioritized plan. You walk into your PCP visit knowing exactly what to discuss — because your Maverick physician already told you.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"How is this different from Fountain Life?"</div>
+    <div class="response-a">Fountain Life offers a best-in-class clinical experience — full-body MRI, DEXA, genomics, physician consult — that Maverick can't replicate. For that one day, they're unmatched. The gap is the other 364 days. Maverick provides continuous monitoring between those visits and integrates Fountain Life's data with your daily wearable trends and ongoing lab results. For someone who can afford both, they're complementary. For most people, Maverick delivers 80% of the insight at a fraction of the cost.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"What about Function Health? They test 160 biomarkers for $30/month."</div>
+    <div class="response-a">Function is excellent at what it does — broad, affordable lab testing with good trend tracking. If you only want bloodwork, Function is hard to beat on value. Where Maverick differs: it includes genetic sequencing, integrates wearable data, layers in family history, and models risk across cardiovascular, cancer, and cognitive domains. Function tells you your ApoB is 96. Your Maverick physician tells you what that means given your genetics, your Lp(a), and your training frequency — and prescribes the highest-impact action.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"Human Longevity does genomics + AI — same thing?"</div>
+    <div class="response-a">Similar ambition, different model. Human Longevity offers world-class genome sequencing and full-body MRI with physician interpretation — genuine clinical depth that Maverick doesn't match on imaging. But it's a $5K annual visit in San Diego, and between visits there's no ongoing monitoring. Maverick fills the gap: continuous wearable integration, twice-yearly labs, and a risk model that evolves as new data comes in.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"Why not just get a concierge doctor?"</div>
+    <div class="response-a">A concierge doctor gives you something Maverick can't: a trusted human relationship, in-person exams, and clinical judgment honed over years. That has real value. Where concierge falls short is data integration — even a great physician can't continuously monitor your wearable trends, cross-reference your genome, and model multi-domain risk at scale. Maverick augments the concierge relationship; it doesn't replace it.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"Superpower does blood tests + AI for $17/month — why pay 10× more?"</div>
+    <div class="response-a">Superpower is a well-designed blood testing app at an accessible price — good entry point for anyone curious about their biomarkers. The difference: Superpower tests once per year (vs. Maverick's twice), doesn't include genetics, has limited wearable integration, and its AI recommendations are primarily supplement-focused. Maverick includes clinical-grade genetic sequencing, models cross-domain risk, and your physician prescribes prioritized clinical actions — not supplement suggestions. Different depth for different needs.</div>
+  </div>
+
+  <div class="response-item">
+    <div class="response-q">"Didn't Forward Health try this and fail?"</div>
+    <div class="response-a">Forward tried to replace the doctor with an AI kiosk — $650M raised, shut down in 2024. That's a fundamentally different bet. Maverick doesn't replace anyone. It's an intelligence layer that generates clinical data (labs + genetics), integrates it with your wearables, and makes it actionable. No hardware, no clinics, no replacing the physician relationship. Forward proved demand exists for AI-powered health insights. The delivery model was the problem.</div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  LASO Health — Maverick Competitive Landscape — March 2026 — Internal Reference
+</div>
+
+</body>
+</html>
