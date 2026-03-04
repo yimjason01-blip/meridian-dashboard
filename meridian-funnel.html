@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Utilization Funnel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #11234B;
+    --teal: #0D8086;
+    --mint: #A5EAD1;
+    --bg: #F5F9FF;
+    --text: #2A2D35;
+    --text-muted: #54566B;
+    --card: #FFFFFF;
+    --border: #E8EBF0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .hero {
+    background: var(--navy);
+    padding: 48px 40px 40px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #ECF2FD;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--mint); }
+  .hero p {
+    font-size: 15px;
+    color: rgba(236,242,253,0.6);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* Funnel container */
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+  .funnel-step {
+    display: flex;
+    align-items: stretch;
+    min-height: 72px;
+  }
+  .funnel-bar-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .funnel-bar {
+    height: 52px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .funnel-bar-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .funnel-pct {
+    position: absolute;
+    right: -52px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .funnel-meta {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 70px;
+  }
+  .funnel-dropoff {
+    font-size: 12px;
+    font-weight: 600;
+    color: #E8614D;
+  }
+  .funnel-reason {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* Divider line between steps */
+  .funnel-divider {
+    display: flex;
+    align-items: center;
+    padding: 2px 0 2px 0;
+    min-height: 20px;
+  }
+  .funnel-divider-line {
+    width: 2px;
+    height: 16px;
+    background: #e0e2e8;
+    margin-left: 48px;
+  }
+
+  /* The couch line */
+  .couch-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    margin: 4px 0;
+  }
+  .couch-line-bar {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, #E8614D 0 8px, transparent 8px 14px);
+  }
+  .couch-line-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #E8614D;
+    white-space: nowrap;
+    padding: 4px 10px;
+    background: rgba(232,97,77,0.08);
+    border-radius: 4px;
+  }
+
+  /* Insight cards */
+  .insights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .insight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .insight-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 8px;
+  }
+  .insight-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .insight-card strong { color: var(--text); }
+  .insight-card .big-num {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: #bbb;
+  }
+
+  @media (max-width: 700px) {
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 28px; }
+    .content { padding: 28px 16px; }
+    .funnel-meta { width: 160px; padding-left: 50px; }
+    .insights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Meridian <span>utilization funnel.</span></h1>
+  <p>Expected member engagement at each step. Width = percentage of paying members who complete that action.</p>
+</div>
+
+<div class="content">
+
+<div class="funnel" id="funnel"></div>
+
+<div class="couch-line" style="margin-top:-8px; margin-bottom: 16px;">
+  <div class="couch-line-bar"></div>
+  <div class="couch-line-label">🛋️ The couch line — everything below requires leaving the house</div>
+  <div class="couch-line-bar"></div>
+</div>
+
+<div class="funnel" id="funnel2"></div>
+
+<div class="insights">
+  <div class="insight-card">
+    <h3>The couch divide</h3>
+    <p>Everything above the line is <strong>couch-compatible</strong> — answer questions, spit in a tube, tap "allow." Everything below requires <strong>scheduling, traveling, and fasting.</strong> That's where the real cliff is.</p>
+  </div>
+  <div class="insight-card">
+    <h3>Two biggest cliffs</h3>
+    <p><strong>Profile → Wearable (−20%)</strong> — Requires owning hardware + trusting data sharing.<br><br>
+    <strong>Profile → First lab (−30%)</strong> — First action requiring real physical effort.</p>
+  </div>
+  <div class="insight-card">
+    <h3>The "weekend" effect</h3>
+    <p>Genetic kit, wearable setup, lab scheduling — all get the same response: <strong>"I'll do it this weekend."</strong> Average delay from kit arrival to return: <strong>23 days.</strong> Each day of delay reduces completion by ~1%.</p>
+  </div>
+  <div class="insight-card">
+    <h3>Year 2 is bimodal</h3>
+    <p>Renewals split sharply: members who completed labs renew at <strong>~70%</strong>. Members who never got past onboarding renew at <strong>~25%</strong>. Engagement predicts retention better than satisfaction surveys.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">Meridian by LASO · Utilization model based on DTC health, wellness, and subscription industry benchmarks</div>
+
+<script>
+const aboveCouch = [
+  { label: 'Pay', pct: 100, color: '#11234B', drop: null, reason: null },
+  { label: 'Create account', pct: 75, color: '#1a3366', drop: '−25%', reason: 'Impulse buy, motivated moment passed' },
+  { label: 'Complete health profile', pct: 60, color: '#1f4480', drop: '−15%', reason: 'Health history feels like homework' },
+  { label: 'Return genetic kit', pct: 50, color: '#0D8086', drop: '−10%', reason: 'Kit sits on counter for weeks' },
+  { label: 'Connect wearable', pct: 40, color: '#109da3', drop: '−20% from profile', reason: "50% don't own one + permissions friction" },
+];
+
+const belowCouch = [
+  { label: 'First lab draw', pct: 30, color: '#E5A100', drop: '−20% from profile', reason: 'Scheduling, fasting, physically going' },
+  { label: 'Second lab draw', pct: 18, color: '#D4920A', drop: '−12%', reason: '"I\'m fine" or overwhelmed, 6mo gap' },
+  { label: 'Monthly active engagement', pct: 13, color: '#E8614D', drop: '−5%', reason: 'Tests done ≠ behavior change' },
+  { label: 'Year 2 renewal', pct: 45, color: '#11234B', drop: null, reason: 'Bimodal: 70% engaged, 25% passive' },
+];
+
+function renderFunnel(containerId, steps) {
+  const container = document.getElementById(containerId);
+  const maxBarWidth = 580; // px for 100%
+
+  steps.forEach((step, i) => {
+    if (i > 0) {
+      const div = document.createElement('div');
+      div.className = 'funnel-divider';
+      div.innerHTML = '<div class="funnel-divider-line"></div>';
+      container.appendChild(div);
+    }
+
+    const row = document.createElement('div');
+    row.className = 'funnel-step';
+
+    const barWidth = (step.pct / 100) * maxBarWidth;
+
+    row.innerHTML = `
+      <div class="funnel-bar-area">
+        <div class="funnel-bar" style="width:${barWidth}px; background:${step.color};">
+          <span class="funnel-bar-label">${step.label}</span>
+          <span class="funnel-pct" style="color:${step.color}">${step.pct}%</span>
+        </div>
+      </div>
+      <div class="funnel-meta">
+        ${step.drop ? `<div class="funnel-dropoff">${step.drop}</div>` : ''}
+        ${step.reason ? `<div class="funnel-reason">${step.reason}</div>` : ''}
+      </div>
+    `;
+
+    container.appendChild(row);
+  });
+}
+
+renderFunnel('funnel', aboveCouch);
+renderFunnel('funnel2', belowCouch);
+</script>
+</body>
+</html>

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Squaring the Curve</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F5F9FF;
+    color: #11234B;
+    -webkit-font-smoothing: antialiased;
+  }
+  :root {
+    --navy: #11234B;
+    --teal: #0D8086;
+    --mint: #A5EAD1;
+    --coral: #E8614D;
+    --bg: #F5F9FF;
+    --card: #fff;
+    --border: #EDEFF3;
+    --text: #11234B;
+    --text-muted: #54566B;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: var(--navy);
+    color: #ECF2FD;
+    padding: 56px 40px 48px;
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: -2.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--mint); }
+  .hero p {
+    font-size: 18px;
+    color: rgba(236,242,253,0.6);
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 40px 64px;
+  }
+
+  .section-label {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .section-label span { color: var(--teal); }
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 700px;
+  }
+
+  /* === CHART CARD === */
+  .chart-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .chart-card canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-legend-line {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .chart-legend-label { color: #555; font-weight: 600; }
+
+  /* === DECADES GRID === */
+  .decades {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .decade-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .decade-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .decade-card.default::before { background: #CBD0DB; }
+  .decade-card.optimized::before { background: var(--teal); }
+  .decade-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .decade-card.default .decade-card-label { color: #999; }
+  .decade-card.optimized .decade-card-label { color: var(--teal); }
+  .decade-card-age {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .decade-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .decade-activity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .decade-activity-icon { font-size: 18px; flex-shrink: 0; }
+  .decade-card.default .decade-activity { color: #888; }
+  .decade-card.optimized .decade-activity { color: var(--text-muted); }
+
+  /* === SUMMARY === */
+  .summary {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 40px;
+    color: #ECF2FD;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .summary h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .summary h2 span { color: var(--mint); }
+  .summary p {
+    font-size: 16px;
+    color: rgba(236,242,253,0.55);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* === COST BAR (juice/squeeze) === */
+  .cost-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .cost-header {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .cost-header span { color: var(--teal); }
+  .cost-bars {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .cost-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .cost-label {
+    width: 140px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .cost-label-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+  }
+  .cost-label-value {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .cost-label-value.give { color: #ccc; }
+  .cost-label-value.get { color: var(--teal); }
+  .cost-bar-track {
+    flex: 1;
+    height: 48px;
+    background: #f0f1f5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .cost-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .cost-bar-fill.give {
+    background: #e8e9ed;
+    color: #999;
+    width: 1.3%;
+    min-width: 8px;
+  }
+  .cost-bar-fill.get {
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+    color: var(--navy);
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .cost-punchline {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .cost-punchline strong { color: var(--text); }
+
+  .caveat {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .caveat-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .caveat p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px 40px;
+    background: var(--navy);
+    color: rgba(236,242,253,0.4);
+    font-size: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .hero { padding: 36px 20px; }
+    .hero h1 { font-size: 32px; }
+    .content { padding: 28px 16px; }
+    .decades { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Square <span>the curve.</span></h1>
+    <p>The goal isn't to live longer. It's to live well for longer — and when the end comes, make it fast. That's what these three actions buy you.</p>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- === CHART 1: YOUR QUALITY OF LIFE === -->
+<div class="section-label">The shape of <span>your life.</span></div>
+<div class="section-desc">Your projected quality of life at each age, calculated from your VO₂ max trajectory, cumulative disease risk (ATM, ApoB 96, Lp(a) 72), and age-related decline. 100% means you can do anything you want. 50% means you need help with some activities.</div>
+
+<div class="chart-card">
+  <canvas id="squareChart" height="480"></canvas>
+  <div class="chart-legend">
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:repeating-linear-gradient(90deg, #D4A574 0 6px, transparent 6px 10px); opacity:0.8;"></div>
+      <div class="chart-legend-label">Average American male</div>
+    </div>
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:#CBD0DB;"></div>
+      <div class="chart-legend-label">You — no changes</div>
+    </div>
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:var(--teal);"></div>
+      <div class="chart-legend-label">You — with interventions</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:14px 16px;background:#f8f9fb;border-radius:10px;font-size:13px;color:#666;line-height:1.5;">
+    <strong style="color:#555;">How this is calculated:</strong> Your VO₂ max trajectory (48, declining ~1%/yr untrained vs. maintained at ~0.5%/yr with 3×/wk), cumulative cardiovascular event probability (ApoB 96, Lp(a) 72, ATM carrier) weighted by quality impact, and age-related cognitive decline modulated by fitness level. The intervention curve adds statin (ApoB →&lt;70), metformin (pancreatic cancer risk reduction), and annual MRCP screening.
+  </div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div style="padding:12px 14px;background:#f8f9fb;border-radius:10px;font-size:13px;line-height:1.5;">
+      <strong style="color:#0D8086;">90–100%</strong><br>
+      <span style="color:#666;">Mountain biking, snowboarding, sprinting. No limitations. Do anything you want.</span>
+    </div>
+    <div style="padding:12px 14px;background:#f8f9fb;border-radius:10px;font-size:13px;line-height:1.5;">
+      <strong style="color:#0D8086;">70–90%</strong><br>
+      <span style="color:#666;">Active and independent. Some endurance decline. Gravel bikes, hiking, travel without help.</span>
+    </div>
+    <div style="padding:12px 14px;background:#f8f9fb;border-radius:10px;font-size:13px;line-height:1.5;">
+      <strong style="color:#E5A100;">50–70%</strong><br>
+      <span style="color:#666;">Independent but limited. Can walk, drive, manage daily life. Strenuous activity is difficult.</span>
+    </div>
+    <div style="padding:12px 14px;background:#f8f9fb;border-radius:10px;font-size:13px;line-height:1.5;">
+      <strong style="color:#E8614D;">Below 50%</strong><br>
+      <span style="color:#666;">Needs help with some daily activities. Can't get off the floor easily. Limited mobility and cognition.</span>
+    </div>
+  </div>
+</div>
+
+<!-- === CHART 1B: PERSONALIZED SURVIVAL CURVE === -->
+<div class="section-label">Your actual <span>survival probability.</span></div>
+<div class="section-desc">This chart is calculated from your specific risk profile — ATM carrier, ApoB 96, Lp(a) 72, VO₂ max 48, age 47. These are your real numbers, not illustrations.</div>
+
+<div class="chart-card">
+  <canvas id="survivalChart" height="460"></canvas>
+  <div class="chart-legend">
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:#CBD0DB;"></div>
+      <div class="chart-legend-label">Current trajectory</div>
+    </div>
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:var(--teal);"></div>
+      <div class="chart-legend-label">With all 3 interventions</div>
+    </div>
+  </div>
+</div>
+
+<!-- === CHART 2: THE MARGINAL DECADE === -->
+<div class="section-label">Your <span>marginal decade.</span></div>
+<div class="section-desc">Peter Attia's concept: what does your last decade of life look like? That's the decade that defines whether you lived well or just lived long. Here are two versions of it.</div>
+
+<div class="decades">
+  <div class="decade-card default">
+    <div class="decade-card-label">No changes · Your last decade (74-84)</div>
+    <div class="decade-card-age">What it looks like</div>
+    <div class="decade-activities">
+      <div class="decade-activity"><span class="decade-activity-icon">🚫</span> Can't mountain bike — too risky after cardiac event</div>
+      <div class="decade-activity"><span class="decade-activity-icon">🚫</span> Can't keep up with teenage daughter at the mall</div>
+      <div class="decade-activity"><span class="decade-activity-icon">⚠️</span> Managing 4+ medications for damage already done</div>
+      <div class="decade-activity"><span class="decade-activity-icon">⚠️</span> Cognitive fog — names slip, can't follow complex conversations</div>
+      <div class="decade-activity"><span class="decade-activity-icon">🚫</span> Can't snowboard — balance and strength gone</div>
+      <div class="decade-activity"><span class="decade-activity-icon">⚠️</span> Dependent on others for some daily activities</div>
+    </div>
+  </div>
+
+  <div class="decade-card optimized">
+    <div class="decade-card-label">With interventions · Your last decade (78-88)</div>
+    <div class="decade-card-age">What it looks like</div>
+    <div class="decade-activities">
+      <div class="decade-activity"><span class="decade-activity-icon">🚵</span> Still riding — gravel bikes, easier trails, but riding</div>
+      <div class="decade-activity"><span class="decade-activity-icon">👨‍👧</span> Walking your daughter down the aisle. Dancing at the reception.</div>
+      <div class="decade-activity"><span class="decade-activity-icon">🧒</span> Playing on the floor with grandchildren</div>
+      <div class="decade-activity"><span class="decade-activity-icon">🧠</span> Sharp enough to advise on her career, her life decisions</div>
+      <div class="decade-activity"><span class="decade-activity-icon">✈️</span> Traveling independently — no wheelchair, no oxygen</div>
+      <div class="decade-activity"><span class="decade-activity-icon">💪</span> Getting off the floor without help. Carrying groceries. Living on your terms.</div>
+    </div>
+  </div>
+</div>
+
+<!-- === CHART 3: DISABILITY-FREE YEARS === -->
+<div class="section-label">Years you'll wish <span>you had back.</span></div>
+<div class="section-desc">Using the 70% "active & independent" threshold from the chart above. Without changes: 22 active years (to 69) then 15 in decline (to ~84). With interventions: 28 active years (to 75) then 12 in decline (to ~87). Six more good years, three fewer bad ones. Below 50% ("needs help"): 6 years default vs 4 years intervention — the steeper tail is the compression.</div>
+
+<div class="chart-card">
+  <canvas id="disabilityChart" height="300"></canvas>
+  <div class="chart-legend">
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:var(--teal);"></div>
+      <div class="chart-legend-label">Active & independent (above 70%)</div>
+    </div>
+    <div class="chart-legend-item">
+      <div class="chart-legend-line" style="background:rgba(232,97,77,0.5);"></div>
+      <div class="chart-legend-label">Below 70% — limited or needs help</div>
+    </div>
+  </div>
+</div>
+
+<!-- === THE COST === -->
+<div class="cost-card">
+  <div class="cost-header">What it <span>costs.</span></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+    <div style="background:#f8f9fb;border-radius:12px;padding:16px;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#aaa;margin-bottom:8px;">What you invest</div>
+      <div style="font-size:14px;color:#666;line-height:1.7;">
+        <div><strong style="color:#555;">Pills:</strong> 30 sec/day (~3 hrs/yr)</div>
+        <div><strong style="color:#555;">Training:</strong> +1 session/week beyond current (~85 hrs/yr)</div>
+        <div><strong style="color:#555;">Scans & labs:</strong> ~2-3 days/year</div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #e8e9ed;">
+          <strong style="color:#555;">Total incremental:</strong> ~6 days/year
+        </div>
+      </div>
+    </div>
+    <div style="background:#f8f9fb;border-radius:12px;padding:16px;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#aaa;margin-bottom:8px;">What you gain</div>
+      <div style="font-size:14px;color:#666;line-height:1.7;">
+        <div><strong style="color:var(--teal);">+6 years</strong> of active independence (above 70%)</div>
+        <div><strong style="color:var(--teal);">−3 years</strong> in decline</div>
+        <div><strong style="color:var(--teal);">+3 years</strong> total life</div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #e8e9ed;">
+          <strong style="color:var(--teal);">≈ 2,190 active days</strong> gained
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--navy);border-radius:12px;padding:16px 20px;text-align:center;">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.5);margin-bottom:4px;">Return on investment</div>
+    <div style="font-size:28px;font-weight:700;color:var(--mint);letter-spacing:-1px;">10 active days gained for every 1 invested</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;">~6 days/yr × 37 years = 222 days invested → 2,190 days of active independence gained</div>
+  </div>
+
+  <div class="cost-punchline">
+    Mountain biking. Snowboarding. Keeping up with your daughter.<br>
+    A daily pill, one extra workout a week, one scan a year.
+  </div>
+</div>
+
+<!-- === SUMMARY === -->
+<div class="summary">
+  <h2>The goal isn't to <span>live longer.</span></h2>
+  <p>It's to stay capable longer — and when the end comes, make it sharp. Not a long, slow fade. A full life, then a quick goodbye. That's what squaring the curve means.</p>
+</div>
+
+<!-- === CAVEAT === -->
+<div class="caveat">
+  <div class="caveat-title">A note on these projections</div>
+  <p>The "squaring the curve" concept is well-supported by research on exercise and healthspan (compression of morbidity). The specific timelines shown are estimates based on epidemiological data applied to your risk profile. Individual outcomes vary. The direction and magnitude are well-supported. The exact years carry meaningful uncertainty.</p>
+</div>
+
+</div>
+
+<div class="footer">
+  LASO Health — Meridian Healthspan Model — March 2026 — Internal Reference
+</div>
+
+<script>
+(function() {
+
+  const dpr = window.devicePixelRatio || 1;
+
+  // === CHART 1: Squaring the Curve ===
+  const c1 = document.getElementById('squareChart');
+  const ctx = c1.getContext('2d');
+  // Size canvas to content area (parent clientWidth minus its padding)
+  const parentStyle = getComputedStyle(c1.parentElement);
+  const padL = parseFloat(parentStyle.paddingLeft) || 0;
+  const padR = parseFloat(parentStyle.paddingRight) || 0;
+  const W = c1.parentElement.clientWidth - padL - padR;
+  const H = 460;
+  c1.width = W * dpr; c1.height = H * dpr;
+  c1.style.width = W + 'px'; c1.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 40, right: 130, bottom: 56, left: 54 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const minAge = 47, maxAge = 92;
+  function xA(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * cw; }
+  function yP(pct) { return pad.top + ((100 - pct) / 100) * ch; }
+
+  // AVERAGE AMERICAN MALE: VO₂ ~37-38 at 47, BMI ~30, some BP/glucose issues
+  // Cumulative CV event ~15% by 65, ~25% by 75. Life expectancy from 47: ~79-80
+  // Sources: MESA, NHANES, EQ-5D utilities, Social Security Actuarial Tables
+  const avg = [
+    [47,84],  // overweight, low fitness, but functional — can work, drive, daily life
+    [50,82],  // VO₂ ~35, some deconditioning
+    [53,79],  // metabolic syndrome developing in ~35% of cohort
+    [55,77],  // VO₂ ~32, many on BP meds, strenuous activity limited
+    [58,73],  // cumulative CV risk ~8%
+    [60,71],  // VO₂ ~29, stairs getting hard
+    [63,66],  // many chronic conditions
+    [65,63],  // cumulative CV risk ~15%, cognitive decline starting
+    [68,57],  // significant limitations common
+    [70,53],  // many dependent for some activities
+    [73,47],  // substantial dependence
+    [75,42],  // severe limitations common
+    [78,28],  // very limited, approaching end
+    [80,12],  // avg male dies ~80
+    [81,4],[82,0]
+  ];
+
+  // JASON DEFAULT: "change nothing" — continue current lifestyle
+  // Baseline: VO₂ 48 (80th+ %ile), CAC 0, active, good HDL/TG, no MetSyn
+  // Trends: VO₂ declining (53→48), training ~1.9×/wk, ApoB 96, Lp(a) 72, ATM carrier
+  // VO₂ decline ~2.5-3 ml/decade at casual training
+  // CAC 0 provides near-term CV protection (MESA: 1.1-1.7% 10yr event rate)
+  // BUT Lp(a) not reflected in CAC (soft plaque) — risk catches up long-term
+  // Quality-adjusted: (prob event-free × event-free QoL) + (prob event × post-event QoL)
+  const def = [
+    [47,93],  // current: fit, minor orthostatic issues, VO₂ already trending down
+    [50,91],  // VO₂ ~46, still riding regularly, CAC still protecting
+    [53,90],  // VO₂ ~44, still above average for age
+    [55,89],  // VO₂ ~43, cumulative CV event ~2% (CAC 0 runway)
+    [58,86],  // VO₂ ~41, above average for 58, starting to feel harder rides
+    [60,84],  // VO₂ ~40, cumulative CV event ~5%
+    [63,80],  // VO₂ ~38, average for 63, some endurance loss
+    [65,76],  // VO₂ ~37, cumulative CV event ~9%, above avg but gap closing
+    [68,72],  // VO₂ ~35, still functional, technical trails getting hard
+    [70,68],  // VO₂ ~34, cumulative CV event ~14%, noticeable daily
+    [73,62],  // VO₂ ~32, strenuous activity largely gone
+    [75,57],  // cumulative CV event ~20%, independent but limited
+    [78,48],  // VO₂ ~29, below independence threshold
+    [80,36],  // cumulative CV event ~27%, includes stroke/cancer disability drag
+    [82,22],  // significant limitations
+    [84,8],   // very limited — dies ~84
+    [85,0]
+  ];
+  // JASON OPTIMIZED: all 3 interventions sustained
+  // VO₂ recovers to 52, declines ~2 ml/decade with 3×/wk structured training
+  // Statin: ApoB →<70, cumulative CV event risk reduced ~40%
+  // Metformin: pancreatic cancer risk reduced 27-46%
+  // MRCP screening: early detection, survival 12%→44% if found
+  const opt = [
+    [47,93],  // same starting point
+    [50,93],  // VO₂ recovering to 52
+    [53,92],  // VO₂ ~51, elite for age
+    [55,92],  // VO₂ ~50, ApoB normalized, cumulative CV event ~1%
+    [58,91],  // VO₂ ~48 (where you are NOW at 47), excellent for 58
+    [60,89],  // VO₂ ~47, cumulative CV event ~3%
+    [63,86],  // VO₂ ~45, cognition preserved, above average
+    [65,84],  // VO₂ ~44, cumulative CV event ~5% (statin protecting)
+    [68,81],  // VO₂ ~42, still riding technical trails
+    [70,78],  // VO₂ ~41, cumulative CV event ~8%, fully functional
+    [73,74],  // VO₂ ~39, still active, traveling
+    [75,70],  // cumulative CV event ~12%, riding gravel, independent
+    [78,63],  // VO₂ ~36, independent, some physical limits
+    [80,58],  // cumulative CV event ~17%, can still get off floor
+    [82,50],  // still independent, borderline
+    [83,44],  // decline accelerating
+    [84,35],  // below independence but no catastrophic events dragging
+    [85,24],  // steeper drop — age-related shutdown, not prolonged disability
+    [86,12],  // rapid final decline
+    [87,4],[88,0]   // dies ~87-88
+  ];
+
+  // Clear
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  // Tier background bands (match the 2×2 category grid below)
+  // 90-100%: teal tint (no limitations)
+  ctx.fillStyle = 'rgba(13,128,134,0.04)';
+  ctx.fillRect(pad.left, yP(100), cw, yP(90) - yP(100));
+  // 70-90%: subtle green tint (active & independent)
+  ctx.fillStyle = 'rgba(13,128,134,0.025)';
+  ctx.fillRect(pad.left, yP(90), cw, yP(70) - yP(90));
+  // 50-70%: amber tint (independent but limited)
+  ctx.fillStyle = 'rgba(229,161,0,0.035)';
+  ctx.fillRect(pad.left, yP(70), cw, yP(50) - yP(70));
+  // Below 50%: coral tint (needs help)
+  ctx.fillStyle = 'rgba(232,97,77,0.035)';
+  ctx.fillRect(pad.left, yP(50), cw, yP(0) - yP(50));
+
+  // Grid lines at tier boundaries
+  ctx.lineWidth = 1;
+  // 90% — top tier boundary
+  ctx.strokeStyle = 'rgba(13,128,134,0.2)';
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(90)); ctx.lineTo(pad.left + cw, yP(90)); ctx.stroke();
+  // 70% — independence with limits
+  ctx.strokeStyle = 'rgba(229,161,0,0.25)';
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(70)); ctx.lineTo(pad.left + cw, yP(70)); ctx.stroke();
+  // 50% — independence threshold
+  ctx.strokeStyle = 'rgba(232,97,77,0.3)';
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(50)); ctx.lineTo(pad.left + cw, yP(50)); ctx.stroke();
+  // Light gridlines at 100 and 0
+  ctx.strokeStyle = '#f0f1f5'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(100)); ctx.lineTo(pad.left + cw, yP(100)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(0)); ctx.lineTo(pad.left + cw, yP(0)); ctx.stroke();
+
+  // Y-axis — tier labels (14px, right-aligned)
+  ctx.font = '500 14px Inter';
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#666';
+  ctx.fillText('100%', pad.left - 10, yP(100) + 5);
+  ctx.fillText('0%', pad.left - 10, yP(0) + 5);
+  // Tier boundary labels with color coding
+  ctx.fillStyle = '#0D8086';
+  ctx.fillText('90%', pad.left - 10, yP(90) + 5);
+  ctx.fillStyle = '#0D8086';
+  ctx.fillText('70%', pad.left - 10, yP(70) + 5);
+  ctx.fillStyle = '#C4860A';
+  ctx.fillText('50%', pad.left - 10, yP(50) + 5);
+
+  // Tier description labels (right side of chart)
+  ctx.font = '600 11px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(13,128,134,0.6)';
+  ctx.fillText('No limitations', pad.left + cw + 6, yP(95) + 4);
+  ctx.fillStyle = 'rgba(13,128,134,0.45)';
+  ctx.fillText('Active & independent', pad.left + cw + 6, yP(80) + 4);
+  ctx.fillStyle = 'rgba(180,130,10,0.6)';
+  ctx.fillText('Limited', pad.left + cw + 6, yP(60) + 4);
+  ctx.fillStyle = 'rgba(232,97,77,0.6)';
+  ctx.fillText('Needs help', pad.left + cw + 6, yP(25) + 4);
+
+  // Catmull-Rom spline for smooth curves
+  function toPx(data) { return data.map(d => [xA(d[0]), yP(d[1])]); }
+  function crSpline(pts) {
+    const s = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(i-1,0)], p1 = pts[i], p2 = pts[i+1], p3 = pts[Math.min(i+2,pts.length-1)];
+      s.push({
+        cp1x: p1[0]+(p2[0]-p0[0])/6, cp1y: p1[1]+(p2[1]-p0[1])/6,
+        cp2x: p2[0]-(p3[0]-p1[0])/6, cp2y: p2[1]-(p3[1]-p1[1])/6,
+        x: p2[0], y: p2[1]
+      });
+    }
+    return s;
+  }
+  function stroke(data, color, lw) {
+    const px = toPx(data), segs = crSpline(px);
+    ctx.strokeStyle = color; ctx.lineWidth = lw;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(px[0][0], px[0][1]);
+    segs.forEach(s => ctx.bezierCurveTo(s.cp1x,s.cp1y,s.cp2x,s.cp2y,s.x,s.y));
+    ctx.stroke();
+  }
+
+  // Shaded area between curves
+  const pxDef = toPx(def), pxOpt = toPx(opt);
+  ctx.beginPath();
+  pxDef.forEach((p,i) => i===0 ? ctx.moveTo(p[0],p[1]) : ctx.lineTo(p[0],p[1]));
+  for (let i = pxOpt.length-1; i >= 0; i--) ctx.lineTo(pxOpt[i][0], pxOpt[i][1]);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(13,128,134,0.1)';
+  ctx.fill();
+
+  // Subtle red under default decline
+  ctx.beginPath();
+  ctx.moveTo(xA(60), yP(84));
+  def.filter(d=>d[0]>=60).forEach(d => ctx.lineTo(xA(d[0]), yP(d[1])));
+  ctx.lineTo(xA(87), yP(0)); ctx.lineTo(xA(60), yP(0));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(232,97,77,0.04)';
+  ctx.fill();
+
+  // Draw average American male curve (dashed, light)
+  const avgPx = toPx(avg);
+  const avgSegs = crSpline(avgPx);
+  ctx.strokeStyle = '#D4A574';
+  ctx.lineWidth = 2.5;
+  ctx.setLineDash([6, 4]);
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(avgPx[0][0], avgPx[0][1]);
+  avgSegs.forEach(s => ctx.bezierCurveTo(s.cp1x, s.cp1y, s.cp2x, s.cp2y, s.x, s.y));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Draw curves
+  stroke(def, '#CBD0DB', 3);
+  stroke(opt, '#0D8086', 3.5);
+
+  // "You start here — 93%" horizontal dashed line
+  ctx.strokeStyle = 'rgba(13,128,134,0.35)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(pad.left, yP(93)); ctx.lineTo(xA(47) - 12, yP(93)); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // "You are here" — pill badge above dot (14px bold, background for contrast)
+  ctx.beginPath(); ctx.arc(xA(47), yP(93), 7, 0, Math.PI*2);
+  ctx.fillStyle = '#0D8086'; ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5; ctx.stroke();
+
+  const youLabel = 'You are here · 93%';
+  ctx.font = '700 14px Inter';
+  const youW = ctx.measureText(youLabel).width;
+  const youX = xA(47) + 14;
+  const youY = yP(93) - 22;
+  // Pill background
+  ctx.fillStyle = '#0D8086';
+  ctx.beginPath();
+  ctx.roundRect(youX - 8, youY - 12, youW + 16, 22, 11);
+  ctx.fill();
+  // Label text (white on teal = 4.6:1 contrast)
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'left';
+  ctx.fillText(youLabel, youX, youY + 3);
+
+
+
+  // === "6 extra years" annotation at the 70% line ===
+  // Default crosses 70% at ~69, intervention at ~75
+  const cross70def = 69;
+  const cross70opt = 75;
+  const y70 = yP(70);
+
+  // Dots where each curve crosses 70%
+  ctx.beginPath(); ctx.arc(xA(cross70def), y70, 5, 0, Math.PI*2);
+  ctx.fillStyle = '#CBD0DB'; ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+  ctx.beginPath(); ctx.arc(xA(cross70opt), y70, 5, 0, Math.PI*2);
+  ctx.fillStyle = '#0D8086'; ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+  // Connecting arrow along 70% line
+  const arrY = y70 + 18;
+  ctx.strokeStyle = '#0D8086'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(xA(cross70def), arrY); ctx.lineTo(xA(cross70opt), arrY); ctx.stroke();
+  // Arrow caps
+  ctx.beginPath(); ctx.moveTo(xA(cross70def) + 6, arrY - 4); ctx.lineTo(xA(cross70def), arrY); ctx.lineTo(xA(cross70def) + 6, arrY + 4); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(xA(cross70opt) - 6, arrY - 4); ctx.lineTo(xA(cross70opt), arrY); ctx.lineTo(xA(cross70opt) - 6, arrY + 4); ctx.stroke();
+
+  // "6 extra years" pill badge centered on the arrow
+  const extraLabel = '6 extra years';
+  ctx.font = '700 13px Inter';
+  const extraW = ctx.measureText(extraLabel).width;
+  const extraX = (xA(cross70def) + xA(cross70opt)) / 2;
+  const extraY = arrY + 18;
+  ctx.fillStyle = '#0D8086';
+  ctx.beginPath();
+  ctx.roundRect(extraX - extraW/2 - 10, extraY - 10, extraW + 20, 22, 11);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.fillText(extraLabel, extraX, extraY + 4);
+
+  // X-axis (14px, #666 for proper contrast)
+  ctx.fillStyle = '#666'; ctx.font = '500 14px Inter'; ctx.textAlign = 'center';
+  for (let age = 50; age <= 90; age += 10) ctx.fillText(age, xA(age), yP(0)+22);
+  ctx.fillStyle = '#555'; ctx.font = '600 14px Inter';
+  ctx.fillText('Age', pad.left + cw/2, yP(0)+42);
+
+  // No extra Y-axis label — description + % markers are sufficient
+
+
+  // === CHART 2: Disability-Free Years ===
+  const c2 = document.getElementById('disabilityChart');
+  const ctx2 = c2.getContext('2d');
+  const ps2 = getComputedStyle(c2.parentElement);
+  const W2 = c2.parentElement.clientWidth - (parseFloat(ps2.paddingLeft)||0) - (parseFloat(ps2.paddingRight)||0);
+  const H2 = 280;
+  c2.width = W2 * dpr; c2.height = H2 * dpr;
+  c2.style.width = W2 + 'px'; c2.style.height = H2 + 'px';
+  ctx2.scale(dpr, dpr);
+
+  ctx2.fillStyle = '#fff';
+  ctx2.fillRect(0, 0, W2, H2);
+
+  const m = { left: 30, right: 60, top: 40 }; // extra right margin for outside labels
+  const bW = W2 - m.left - m.right;
+  const bH = 56;
+  const maxSpan = 42;
+  const ppY = bW / maxSpan;
+
+  function bar(yOff, label, good, dec, total, hi) {
+    const by = m.top + yOff;
+
+    // Label (14px, #555 = 7:1 contrast on white)
+    ctx2.fillStyle = hi ? '#0D8086' : '#555';
+    ctx2.font = '700 14px Inter'; ctx2.textAlign = 'left';
+    ctx2.fillText(label, m.left, by - 12);
+
+    const gw = good * ppY;
+    ctx2.fillStyle = hi ? '#0D8086' : '#8892a4';
+    ctx2.beginPath(); ctx2.roundRect(m.left, by, gw, bH, [10,0,0,10]); ctx2.fill();
+
+    const dw = dec * ppY;
+    ctx2.fillStyle = hi ? '#E8614D' : '#D4564A';
+    ctx2.globalAlpha = hi ? 0.5 : 0.6;
+    ctx2.beginPath(); ctx2.roundRect(m.left+gw, by, dw, bH, [0,10,10,0]); ctx2.fill();
+    ctx2.globalAlpha = 1;
+
+    // Capable years text (16px bold white — 4.5:1+ on teal/grey)
+    ctx2.fillStyle = '#fff'; ctx2.font = '700 16px Inter'; ctx2.textAlign = 'center';
+    ctx2.fillText(good + ' active years', m.left + gw/2, by + bH/2 + 6);
+
+    // Decline text — outside right (14px, #C0463C = 4.5:1 on white)
+    ctx2.fillStyle = '#C0463C'; ctx2.font = '700 14px Inter'; ctx2.textAlign = 'left';
+    const labelX = m.left + gw + dw + 10;
+    ctx2.fillText(dec + ' yrs decline', labelX, by + bH/2 + 5);
+
+    // Age markers (14px, #666)
+    ctx2.fillStyle = '#666'; ctx2.font = '500 14px Inter';
+    ctx2.textAlign = 'left'; ctx2.fillText('Age 47', m.left, by + bH + 18);
+    ctx2.textAlign = 'center';
+    ctx2.fillText('~' + (47+total), m.left + (good+dec)*ppY, by + bH + 18);
+  }
+
+  bar(0, 'YOU — NO CHANGES', 22, 15, 37, false);
+  bar(115, 'YOU — WITH INTERVENTIONS', 28, 12, 40, true);
+
+
+  // === CHART 1B: Personalized Survival Curve (your actual data) ===
+  const c3 = document.getElementById('survivalChart');
+  const ctx3 = c3.getContext('2d');
+  const ps3 = getComputedStyle(c3.parentElement);
+  const W3 = c3.parentElement.clientWidth - (parseFloat(ps3.paddingLeft)||0) - (parseFloat(ps3.paddingRight)||0);
+  const H3 = 460;
+  c3.width = W3 * dpr; c3.height = H3 * dpr;
+  c3.style.width = W3 + 'px'; c3.style.height = H3 + 'px';
+  ctx3.scale(dpr, dpr);
+
+  const sp = { top: 40, right: 30, bottom: 70, left: 54 };
+  const sw3 = W3 - sp.left - sp.right;
+  const sh3 = H3 - sp.top - sp.bottom;
+
+  const sMinAge = 47, sMaxAge = 92;
+  function sxA(age) { return sp.left + ((age - sMinAge) / (sMaxAge - sMinAge)) * sw3; }
+  function syP(pct) { return sp.top + ((100 - pct) / 100) * sh3; }
+
+  // Data from Jason's actual risk profile (interpolated between calculated milestones)
+  // Anchors: 47=100%, 57=95/98%, 67=85/92%, 77=69/82%, 87=40/55%
+  const sDef = [
+    [47,100],[50,99],[52,98],[54,97],[57,95],
+    [59,93],[61,91],[63,89],[65,87],[67,85],
+    [69,82],[71,79],[73,76],[75,72],[77,69],
+    [79,64],[81,59],[83,54],[85,48],[87,40],
+    [89,33],[91,25],[92,21]
+  ];
+  const sOpt = [
+    [47,100],[50,99.5],[52,99],[54,99],[57,98],
+    [59,97],[61,96],[63,95],[65,93.5],[67,92],
+    [69,90],[71,88],[73,86],[75,84],[77,82],
+    [79,78],[81,73],[83,68],[85,62],[87,55],
+    [89,47],[91,38],[92,34]
+  ];
+
+  // Clear
+  ctx3.fillStyle = '#fff';
+  ctx3.fillRect(0, 0, W3, H3);
+
+  // Grid
+  ctx3.strokeStyle = '#f0f1f5'; ctx3.lineWidth = 1;
+  for (let p = 0; p <= 100; p += 20) {
+    ctx3.beginPath(); ctx3.moveTo(sp.left, syP(p)); ctx3.lineTo(sp.left + sw3, syP(p)); ctx3.stroke();
+  }
+
+  // Y-axis (14px, #666)
+  ctx3.font = '500 14px Inter'; ctx3.textAlign = 'right'; ctx3.fillStyle = '#666';
+  [100, 80, 60, 40, 20, 0].forEach(p => ctx3.fillText(p + '%', sp.left - 10, syP(p) + 5));
+
+  // Spline helpers
+  function sToPx(data) { return data.map(d => [sxA(d[0]), syP(d[1])]); }
+  function sCR(pts) {
+    const s = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0=pts[Math.max(i-1,0)], p1=pts[i], p2=pts[i+1], p3=pts[Math.min(i+2,pts.length-1)];
+      s.push({cp1x:p1[0]+(p2[0]-p0[0])/6, cp1y:p1[1]+(p2[1]-p0[1])/6,
+              cp2x:p2[0]-(p3[0]-p1[0])/6, cp2y:p2[1]-(p3[1]-p1[1])/6,
+              x:p2[0], y:p2[1]});
+    }
+    return s;
+  }
+  function sStroke(data, color, lw) {
+    const px = sToPx(data), segs = sCR(px);
+    ctx3.strokeStyle = color; ctx3.lineWidth = lw;
+    ctx3.lineJoin = 'round'; ctx3.lineCap = 'round';
+    ctx3.beginPath(); ctx3.moveTo(px[0][0], px[0][1]);
+    segs.forEach(s => ctx3.bezierCurveTo(s.cp1x,s.cp1y,s.cp2x,s.cp2y,s.x,s.y));
+    ctx3.stroke();
+  }
+
+  // Shaded area between curves
+  const sPxD = sToPx(sDef), sPxO = sToPx(sOpt);
+  ctx3.beginPath();
+  sPxD.forEach((p,i) => i===0 ? ctx3.moveTo(p[0],p[1]) : ctx3.lineTo(p[0],p[1]));
+  for (let i=sPxO.length-1; i>=0; i--) ctx3.lineTo(sPxO[i][0], sPxO[i][1]);
+  ctx3.closePath();
+  ctx3.fillStyle = 'rgba(13,128,134,0.1)';
+  ctx3.fill();
+
+  // Draw curves
+  sStroke(sDef, '#CBD0DB', 3);
+  sStroke(sOpt, '#0D8086', 3.5);
+
+  // "You are here" pill
+  ctx3.beginPath(); ctx3.arc(sxA(47), syP(100), 7, 0, Math.PI*2);
+  ctx3.fillStyle = '#0D8086'; ctx3.fill();
+  ctx3.strokeStyle = '#fff'; ctx3.lineWidth = 2.5; ctx3.stroke();
+  const sYouL = 'You are here';
+  ctx3.font = '700 14px Inter';
+  const sYouW = ctx3.measureText(sYouL).width;
+  ctx3.fillStyle = '#0D8086';
+  ctx3.beginPath(); ctx3.roundRect(sxA(47)+14-8, syP(100)-34, sYouW+16, 22, 11); ctx3.fill();
+  ctx3.fillStyle = '#fff'; ctx3.textAlign = 'left';
+  ctx3.fillText(sYouL, sxA(47)+14, syP(100)-18);
+
+  // Milestone dots + gap pills
+  const sMilestones = [
+    {age:57, def:95, opt:98, daughter:16},
+    {age:67, def:85, opt:92, daughter:26},
+    {age:77, def:69, opt:82, daughter:36},
+    {age:87, def:40, opt:55, daughter:46}
+  ];
+
+  sMilestones.forEach(m => {
+    // Dots on both curves
+    [['#CBD0DB', m.def], ['#0D8086', m.opt]].forEach(([col, val]) => {
+      ctx3.beginPath(); ctx3.arc(sxA(m.age), syP(val), 5, 0, Math.PI*2);
+      ctx3.fillStyle = col; ctx3.fill();
+      ctx3.strokeStyle = '#fff'; ctx3.lineWidth = 2; ctx3.stroke();
+    });
+
+    // Dashed connector
+    ctx3.strokeStyle = '#0D8086'; ctx3.lineWidth = 1.5;
+    ctx3.setLineDash([4,4]);
+    ctx3.beginPath(); ctx3.moveTo(sxA(m.age), syP(m.def)); ctx3.lineTo(sxA(m.age), syP(m.opt)); ctx3.stroke();
+    ctx3.setLineDash([]);
+
+    // Gap pill
+    const gap = '+' + (m.opt - m.def) + '%';
+    ctx3.font = '700 14px Inter';
+    const gW = ctx3.measureText(gap).width;
+    const gX = sxA(m.age) + 10;
+    const gY = syP((m.def + m.opt) / 2);
+    ctx3.fillStyle = '#0D8086';
+    ctx3.beginPath(); ctx3.roundRect(gX-6, gY-11, gW+12, 22, 11); ctx3.fill();
+    ctx3.fillStyle = '#fff'; ctx3.textAlign = 'left';
+    ctx3.fillText(gap, gX, gY + 5);
+  });
+
+  // X-axis: your age (14px, #666)
+  ctx3.fillStyle = '#666'; ctx3.font = '500 14px Inter'; ctx3.textAlign = 'center';
+  for (let age = 50; age <= 90; age += 10) ctx3.fillText(age, sxA(age), syP(0) + 22);
+  ctx3.fillStyle = '#555'; ctx3.font = '600 14px Inter';
+  ctx3.fillText('Your age', sp.left + sw3/2, syP(0) + 42);
+
+  // Daughter age secondary axis
+  ctx3.fillStyle = '#0D8086'; ctx3.font = '500 14px Inter';
+  sMilestones.forEach(m => {
+    ctx3.fillText(m.daughter, sxA(m.age), syP(0) + 60);
+  });
+  ctx3.font = '600 14px Inter'; ctx3.textAlign = 'left';
+  ctx3.fillText("Her age", sp.left, syP(0) + 60);
+
+})();
+</script>
+
+</body>
+</html>

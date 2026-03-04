@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERIDIAN — Executive Health Intelligence</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #F5F9FF;
+    --card: #FFFFFF;
+    --border: #E8EBF0;
+    --card-hover: #F0F4FF;
+    --text: #2A2D35;
+    --text-dim: #54566B;
+    --text-muted: #54566B;
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --yellow: #eab308;
+    --yellow-dim: rgba(234,179,8,0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.12);
+    --orange: #f97316;
+    --orange-dim: rgba(249,115,22,0.12);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.12);
+    --purple: #a855f7;
+    --purple-dim: rgba(168,85,247,0.12);
+    --cyan: #06b6d4;
+    --cyan-dim: rgba(6,182,212,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    color: var(--text);
+  }
+
+  /* === LAYOUT === */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  /* === HEADER === */
+  .header {
+    padding: 20px 32px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left { display: flex; align-items: baseline; gap: 16px; }
+  .header-left h1 {
+    font-family: 'Bricolage Grotesque', serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #11234B, #0D8086);
+    
+    color: #11234B;
+  }
+  .header-left .subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .header-right {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  /* === EXEC SUMMARY === */
+  .exec-summary {
+    padding: 16px 32px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exec-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.06), rgba(59,130,246,0.06));
+    border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .exec-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .exec-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text-dim);
+  }
+  .exec-text strong { color: var(--text); font-weight: 600; }
+  .exec-from {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--cyan);
+    margin-bottom: 4px;
+  }
+
+  /* === PRIORITIES BAR === */
+  .priorities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 16px 32px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pri {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: default;
+    transition: background 0.2s;
+  }
+  .pri:hover { background: var(--card-hover); }
+  .pri.expandable { cursor: pointer; }
+  .pri-expand-icon {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .pri.expanded .pri-expand-icon { transform: rotate(180deg); }
+  .pri-detail {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .pri.expanded .pri-detail { display: block; }
+  .rec-card {
+    background: rgba(0,0,0,0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .rec-card:last-child { margin-bottom: 0; }
+  .rec-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .rec-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .rec-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .rec-tag {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .rec-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .rec-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cyan);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .rec-link:hover { text-decoration: underline; }
+  .pri-num {
+    font-size: 11px;
+    font-weight: 800;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pri.p1 .pri-num { background: var(--red-dim); color: var(--red); }
+  .pri.p2 .pri-num { background: var(--yellow-dim); color: var(--yellow); }
+  .pri.p3 .pri-num { background: var(--blue-dim); color: var(--blue); }
+  .pri-content { flex: 1; min-width: 0; }
+  .pri-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .pri-sub { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+  .pri-action {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+  .pri.p1 .pri-action { background: var(--red-dim); color: var(--red); }
+  .pri.p2 .pri-action { background: var(--yellow-dim); color: var(--yellow); }
+  .pri.p3 .pri-action { background: var(--blue-dim); color: var(--blue); }
+
+  /* === TAB BAR === */
+  .tab-bar {
+    display: flex;
+    padding: 0 32px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 0;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+    color: var(--text-muted);
+    user-select: none;
+  }
+  .tab:hover { color: var(--text-dim); }
+  .tab.active { color: var(--text); }
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    border-radius: 1px;
+  }
+  .tab[data-tab="digital"].active::after { background: var(--cyan); }
+  .tab[data-tab="genetic"].active::after { background: var(--purple); }
+  .tab[data-tab="labs"].active::after { background: var(--orange); }
+
+  .tab-icon { font-size: 16px; }
+  .tab-label { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+  .tab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tab-grade {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+
+  /* === TAB PANELS === */
+  .panels {
+    flex: 1;
+    overflow: hidden;
+    color: var(--text);
+    position: relative;
+  }
+  .panel {
+    position: absolute;
+    inset: 0;
+    padding: 24px 32px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .panel.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .panel::-webkit-scrollbar { width: 6px; }
+  .panel::-webkit-scrollbar-track { background: transparent; }
+  .panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* === METRIC GRID === */
+  .mgrid {
+    display: grid;
+    gap: 14px;
+  }
+  .mgrid.c2 { grid-template-columns: repeat(2, 1fr); }
+  .mgrid.c3 { grid-template-columns: repeat(3, 1fr); }
+  .mgrid.c4 { grid-template-columns: repeat(4, 1fr); }
+
+  .mcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .mcard-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .mcard-val {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .mcard-val .unit {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+  .mcard-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-top: 6px;
+  }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-yellow { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-orange { background: var(--orange-dim); color: var(--orange); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); }
+  .badge-purple { background: var(--purple-dim); color: var(--purple); }
+  .badge-cyan { background: var(--cyan-dim); color: var(--cyan); }
+
+  /* === GAUGE BAR === */
+  .gauge {
+    margin: 8px 0 4px;
+    height: 6px;
+    background: #E8EBF0;
+    border-radius: 3px;
+    overflow: visible;
+    position: relative;
+  }
+  .gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+  .gauge-target {
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 12px;
+    background: var(--text-muted);
+    border-radius: 1px;
+  }
+
+  /* === SECTION DIVIDER === */
+  .section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 12px;
+  }
+  .section:first-child { margin-top: 0; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* === SLEEP BARS === */
+  .sleep-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 48px;
+    margin: 8px 0;
+  }
+  .sleep-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    min-width: 2px;
+    transition: height 0.5s ease;
+    opacity: 0.8;
+  }
+  .sleep-bar:hover { opacity: 1; }
+  .sleep-bar.under { background: var(--orange); }
+  .sleep-bar.ok { background: var(--blue); }
+  .sleep-bar.good { background: var(--green); }
+
+  /* === RISK ROW === */
+  .risk-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .risk-label {
+    font-size: 12px;
+    font-weight: 500;
+    width: 200px;
+    flex-shrink: 0;
+  }
+  .risk-bar-bg {
+    flex: 1;
+    height: 5px;
+    background: #E8EBF0;
+    border-radius: 3px;
+    overflow: hidden;
+    color: var(--text);
+  }
+  .risk-bar-fill { height: 100%; border-radius: 3px; }
+  .risk-level {
+    font-size: 10px;
+    font-weight: 700;
+    width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* === GENE CARD === */
+  .gene-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .gene-name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+  .gene-variant {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    margin-bottom: 10px;
+  }
+  .gene-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .gene-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gene-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* === PROTOCOL ROW === */
+  .proto-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.02);
+  }
+  .proto-row:last-child { border-bottom: none; }
+  .proto-name { font-size: 13px; font-weight: 500; }
+  .proto-detail { font-size: 11px; color: var(--text-dim); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .priorities { grid-template-columns: 1fr; gap: 8px; }
+    .pri { padding: 12px; }
+    .mgrid.c4 { grid-template-columns: repeat(2, 1fr); }
+    .mgrid.c3 { grid-template-columns: repeat(2, 1fr); }
+    .header, .priorities, .panels .panel { padding-left: 16px; padding-right: 16px; }
+    .tab-bar { padding: 0 16px; }
+  }
+  @media (max-width: 600px) {
+    .mgrid.c4, .mgrid.c3, .mgrid.c2 { grid-template-columns: 1fr; }
+    .header-left h1 { font-size: 18px; }
+    .mcard-val { font-size: 28px; }
+    .pri-sub { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>MERIDIAN</h1>
+      <span class="subtitle">Executive Health Intelligence</span>
+    </div>
+    <div class="header-right">
+      <div style="font-weight:600;">Jason Yim · 47</div>
+      <div>Nov 2025 – Feb 2026</div>
+    </div>
+  </div>
+
+  <!-- EXEC SUMMARY -->
+  <div class="exec-summary">
+    <div class="exec-box">
+      <div class="exec-avatar">🩺</div>
+      <div>
+        <div class="exec-from">Clinical Summary</div>
+        <div class="exec-text">
+          Jason, you're a <strong>47-year-old male in strong metabolic and cardiovascular shape</strong> — excellent HDL, low triglycerides, normal glucose, and a CAC score of zero. The concern is what's under the surface: a <strong>pathogenic ATM variant</strong> that impairs your vascular DNA repair, combined with a <strong>genetically elevated Lp(a)</strong> that's quietly depositing soft plaque your calcium scan can't see. With your ApoB at 96, we have a clear and fixable mismatch between your risk profile and your lipid levels. <strong>The plan: get ApoB under 70 with medication, lock in training consistency for your VO₂ max goal, and add 30 minutes of sleep.</strong> Your arteries are clean today — let's keep them that way.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITIES -->
+  <div class="priorities">
+    <div class="pri p1 expandable" onclick="this.classList.toggle('expanded')">
+      <div class="pri-num">1</div>
+      <div class="pri-content">
+        <div class="pri-title">Get ApoB Under 70</div>
+        <div class="pri-sub">ATM impairs vascular repair · Lp(a) 72 is fixed · CAC is 0 now — intervene before damage starts</div>
+        <div class="pri-action">→ Book doctor · Start statin</div>
+
+        <div class="pri-detail">
+          <div class="rec-card">
+            <div class="rec-title">🏆 Recommended: UCSD Advanced Lipid Disorders Clinic</div>
+            <div class="rec-subtitle">The only dedicated lipid clinic in San Diego County. Led by Dr. Michael Wilkinson — board-certified lipidologist with published Lp(a) research. They'll understand ATM + Lp(a) + ApoB without you having to educate them.</div>
+            <div class="rec-tags">
+              <span class="rec-tag" style="background:var(--green-dim);color:var(--green);">✓ BCBS PPO In-Network</span>
+              <span class="rec-tag" style="background:var(--cyan-dim);color:var(--cyan);">Lp(a) Specialist</span>
+              <span class="rec-tag" style="background:var(--purple-dim);color:var(--purple);">Only Apheresis Unit in SD</span>
+              <span class="rec-tag" style="background:var(--blue-dim);color:var(--blue);">Encinitas Location</span>
+            </div>
+            <div class="rec-links">
+              <a class="rec-link" href="https://mychart.ucsd.edu" target="_blank">📅 Schedule via MyChart →</a>
+              <a class="rec-link" href="https://providers.ucsd.edu/details/32996/cardiology" target="_blank">👤 Dr. Wilkinson Profile →</a>
+              <a class="rec-link" href="tel:8009268273" target="_blank">📞 800-926-8273</a>
+            </div>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-title">Dr. Michael Wilkinson, MD, FACC, FNLA</div>
+            <div class="rec-subtitle">Leads the Advanced Lipid Disorders Clinic. Specializes in complex lipid disorders, Lp(a), atherosclerosis, preventive cardiology. Co-published research on inclisiran and novel lipid therapies with Dr. Pam Taub.</div>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-title">📋 What to bring</div>
+            <div class="rec-subtitle" style="margin-bottom:0;">
+              • Genetic report (ATM variant: c.8395_8404del)<br>
+              • Bloodwork from June 2025 (ApoB 96, Lp(a) 72)<br>
+              • CAC scan report (score: 0, July 2025)<br>
+              • Your doctor visit brief (saved on your devices)<br>
+              • Insurance card (BCBS Blue Edge PPO)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pri-expand-icon">▼</div>
+    </div>
+    <div class="pri p2">
+      <div class="pri-num">2</div>
+      <div class="pri-content">
+        <div class="pri-title">Train 3×/Week</div>
+        <div class="pri-sub">Currently 1.9×/wk with 5–15 day gaps · VO₂ target 52 requires consistency</div>
+        <div class="pri-action">→ 3 non-negotiable sessions</div>
+      </div>
+    </div>
+    <div class="pri p3">
+      <div class="pri-num">3</div>
+      <div class="pri-content">
+        <div class="pri-title">Add 30 Min Sleep</div>
+        <div class="pri-sub">6h46m avg · 51% nights &lt;7h · Short nights = 24% HRV drop next day</div>
+        <div class="pri-action">→ Lights out by 9:50 PM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <div class="tab active" data-tab="digital">
+      <span class="tab-icon">⌚</span>
+      <span class="tab-label">Digital</span>
+      <span class="tab-grade badge-green" style="background:var(--green-dim);color:var(--green);">B+</span>
+    </div>
+    <div class="tab" data-tab="genetic">
+      <span class="tab-icon">🧬</span>
+      <span class="tab-label">Genetic</span>
+      <span class="tab-grade" style="background:var(--red-dim);color:var(--red);">⚠</span>
+    </div>
+    <div class="tab" data-tab="labs">
+      <span class="tab-icon">🩸</span>
+      <span class="tab-label">Labs</span>
+      <span class="tab-grade" style="background:var(--orange-dim);color:var(--orange);">C+</span>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+
+    <!-- ===== DIGITAL ===== -->
+    <div class="panel active" id="panel-digital">
+
+      <div class="section">
+        <span class="section-label">Heart & Autonomic</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c4">
+        <div class="mcard">
+          <div class="mcard-label">Resting HR</div>
+          <div class="mcard-val">45 <span class="unit">bpm</span></div>
+          <div class="mcard-sub">Abs low: 34 · 309 readings &lt;42</div>
+          <span class="badge badge-yellow">⚠ Investigate</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">HRV (SDNN)</div>
+          <div class="mcard-val">64.5 <span class="unit">ms</span></div>
+          <div class="mcard-sub">Drops 24% after short sleep</div>
+          <span class="badge badge-green">✓ Strong</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">SpO₂</div>
+          <div class="mcard-val">96.6 <span class="unit">%</span></div>
+          <div class="mcard-sub">Overnight average</div>
+          <span class="badge badge-green">✓ Normal</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Blood Pressure</div>
+          <div class="mcard-val">120<span class="unit">/80</span></div>
+          <div class="mcard-sub">Orthostatic symptoms present</div>
+          <span class="badge badge-green">✓ Normal</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Sleep · 71 Nights</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c4">
+        <div class="mcard" style="grid-column: span 2;">
+          <div class="mcard-label">Duration</div>
+          <div style="display:flex;align-items:baseline;gap:12px;">
+            <div class="mcard-val">6<span class="unit">h</span>46<span class="unit">m</span></div>
+            <span class="badge badge-orange">51% under 7h</span>
+          </div>
+          <div class="sleep-bars" id="sleepBars"></div>
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);">
+            <span>Nov 26</span>
+            <span><span style="color:var(--orange)">■</span> &lt;6.5h &nbsp; <span style="color:var(--blue)">■</span> 6.5–7.5h &nbsp; <span style="color:var(--green)">■</span> &gt;7.5h</span>
+            <span>Feb 24</span>
+          </div>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Deep Sleep</div>
+          <div class="mcard-val" style="color:var(--orange)">10.5<span class="unit">%</span></div>
+          <div class="gauge">
+            <div class="gauge-fill" style="width:42%;background:var(--orange);"></div>
+            <div class="gauge-target" style="left:60%;" title="Target 15%"></div>
+          </div>
+          <div class="mcard-sub">Target: 15–20%</div>
+          <span class="badge badge-orange">↑ Low</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">REM Sleep</div>
+          <div class="mcard-val" style="color:var(--green)">26.3<span class="unit">%</span></div>
+          <div class="gauge">
+            <div class="gauge-fill" style="width:88%;background:var(--green);"></div>
+            <div class="gauge-target" style="left:75%;" title="Target 20-25%"></div>
+          </div>
+          <div class="mcard-sub">Target: 20–25%</div>
+          <span class="badge badge-green">✓ Excellent</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Fitness & Training</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c4">
+        <div class="mcard">
+          <div class="mcard-label">VO₂ Max (est)</div>
+          <div class="mcard-val" style="color:var(--blue)">~48</div>
+          <div class="gauge">
+            <div class="gauge-fill" style="width:72%;background:linear-gradient(90deg,var(--blue),var(--cyan));"></div>
+            <div class="gauge-target" style="left:80%;" title="Target 52"></div>
+          </div>
+          <div class="mcard-sub">Target: 52 · Gap: 4 pts</div>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Frequency</div>
+          <div class="mcard-val" style="color:var(--yellow)">1.9<span class="unit">×/wk</span></div>
+          <div class="mcard-sub">25 sessions / 91 days</div>
+          <span class="badge badge-yellow">↑ Below 3× target</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Strength</div>
+          <div class="mcard-val" style="color:var(--green)">S&S ✓</div>
+          <div class="mcard-sub">Simple & Sinister standard</div>
+          <span class="badge badge-green">✓ Achieved</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Weight</div>
+          <div class="mcard-val">160 <span class="unit">lbs</span></div>
+          <div class="mcard-sub">Stable over 5 months</div>
+          <span class="badge badge-green">✓ Stable</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== GENETIC ===== -->
+    <div class="panel" id="panel-genetic">
+
+      <div class="section">
+        <span class="section-label">Pathogenic Variants</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c2">
+        <div class="gene-card">
+          <div class="gene-name" style="color:var(--red)">ATM — Pathogenic</div>
+          <div class="gene-variant">c.8395_8404del · p.Phe2799Lysfs*4 · Heterozygous</div>
+          <div class="gene-desc">
+            Frameshift / loss-of-function. Impairs DNA double-strand break repair in all cells, including vascular smooth muscle. Accelerates atherosclerosis and increases lifetime cancer risk.
+          </div>
+          <div class="gene-tags">
+            <span class="gene-tag" style="background:var(--red-dim);color:var(--red);">↑ Pancreatic cancer</span>
+            <span class="gene-tag" style="background:var(--red-dim);color:var(--red);">↑ Breast cancer</span>
+            <span class="gene-tag" style="background:var(--orange-dim);color:var(--orange);">↑ Prostate cancer</span>
+            <span class="gene-tag" style="background:var(--orange-dim);color:var(--orange);">↑ Atherosclerosis</span>
+            <span class="gene-tag" style="background:var(--yellow-dim);color:var(--yellow);">⚠ Radiation sensitive</span>
+            <span class="gene-tag" style="background:var(--purple-dim);color:var(--purple);">50% daughter inheritance</span>
+          </div>
+        </div>
+        <div class="gene-card">
+          <div class="gene-name" style="color:var(--orange)">Lp(a) — Elevated</div>
+          <div class="gene-variant">72 nmol/L · Genetically determined</div>
+          <div class="gene-desc">
+            Lipoprotein(a) is genetically fixed — not modifiable by diet or exercise. Drives soft, non-calcified plaque invisible to CAC scans. Independent cardiovascular risk factor.
+          </div>
+          <div class="gene-tags">
+            <span class="gene-tag" style="background:var(--orange-dim);color:var(--orange);">↑ Coronary disease</span>
+            <span class="gene-tag" style="background:var(--orange-dim);color:var(--orange);">↑ Aortic valve stenosis</span>
+            <span class="gene-tag" style="background:var(--yellow-dim);color:var(--yellow);">Not lifestyle modifiable</span>
+            <span class="gene-tag" style="background:var(--cyan-dim);color:var(--cyan);">Offset by lowering ApoB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Risk Matrix</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mcard">
+        <div class="risk-row">
+          <div class="risk-label">Cardiovascular (ATM + Lp(a) + ApoB)</div>
+          <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--orange),var(--red));"></div></div>
+          <div class="risk-level" style="color:var(--red)">HIGH</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-label">Pancreatic Cancer (ATM)</div>
+          <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:45%;background:linear-gradient(90deg,var(--yellow),var(--orange));"></div></div>
+          <div class="risk-level" style="color:var(--orange)">MODERATE</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-label">Breast / Prostate (ATM)</div>
+          <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:35%;background:var(--yellow);"></div></div>
+          <div class="risk-level" style="color:var(--yellow)">MODERATE</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-label">Metabolic Syndrome</div>
+          <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:10%;background:var(--green);"></div></div>
+          <div class="risk-level" style="color:var(--green)">LOW</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Screening Cadence</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mcard">
+        <div class="proto-row">
+          <div>
+            <div class="proto-name">Pancreatic Cancer Screening</div>
+            <div class="proto-detail">MRI/MRCP or endoscopic ultrasound annually</div>
+          </div>
+          <span class="badge badge-yellow">Start ~age 50</span>
+        </div>
+        <div class="proto-row">
+          <div>
+            <div class="proto-name">Genetic Counselor</div>
+            <div class="proto-detail">ATM implications for Jason + daughter</div>
+          </div>
+          <span class="badge badge-orange">⏳ Not yet booked</span>
+        </div>
+        <div class="proto-row">
+          <div>
+            <div class="proto-name">Prostate Screening</div>
+            <div class="proto-detail">PSA baseline + enhanced surveillance</div>
+          </div>
+          <span class="badge badge-blue">Discuss with doctor</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Statin + ATM Synergy</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mcard">
+        <div class="gene-desc" style="margin:0;">
+          Research (Mahmoudi et al.) shows statins accelerate DNA repair via ATM pathway phosphorylation — meaning statins provide a <strong style="color:var(--cyan)">dual benefit specific to ATM carriers</strong>: lower ApoB <em>and</em> enhanced vascular DNA repair. This makes the case for statin therapy even stronger than ApoB alone would suggest.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== LABS ===== -->
+    <div class="panel" id="panel-labs">
+
+      <div class="section">
+        <span class="section-label">Lipid Panel</span>
+        <div class="section-line"></div>
+        <span style="font-size:10px;color:var(--text-muted);">June 2025</span>
+      </div>
+
+      <div class="mgrid c4">
+        <div class="mcard">
+          <div class="mcard-label">ApoB</div>
+          <div class="mcard-val" style="color:var(--red)">96</div>
+          <div class="gauge">
+            <div class="gauge-fill" style="width:68%;background:linear-gradient(90deg,var(--green) 0%,var(--yellow) 50%,var(--red) 100%);"></div>
+            <div class="gauge-target" style="left:50%;" title="Target <70"></div>
+          </div>
+          <div class="mcard-sub">Target &lt;70 mg/dL</div>
+          <span class="badge badge-red">⬆ 37% above target</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">LDL-C</div>
+          <div class="mcard-val" style="color:var(--orange)">121</div>
+          <div class="mcard-sub">mg/dL · Target &lt;100</div>
+          <span class="badge badge-orange">↑ Elevated</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">HDL</div>
+          <div class="mcard-val" style="color:var(--green)">69</div>
+          <div class="mcard-sub">mg/dL · Protective</div>
+          <span class="badge badge-green">✓ Excellent</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Triglycerides</div>
+          <div class="mcard-val" style="color:var(--green)">65</div>
+          <div class="mcard-sub">mg/dL · Metabolically healthy</div>
+          <span class="badge badge-green">✓ Excellent</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Metabolic & Kidney</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c3">
+        <div class="mcard">
+          <div class="mcard-label">Glucose</div>
+          <div class="mcard-val" style="color:var(--green)">88 <span class="unit">mg/dL</span></div>
+          <span class="badge badge-green">✓ Normal</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">eGFR</div>
+          <div class="mcard-val" style="color:var(--yellow)">72</div>
+          <div class="mcard-sub">Borderline · Retest with cystatin-C</div>
+          <span class="badge badge-yellow">⚠ Follow up</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Creatinine</div>
+          <div class="mcard-val">1.25 <span class="unit">mg/dL</span></div>
+          <div class="mcard-sub">Upper normal · Muscular artifact likely</div>
+          <span class="badge badge-yellow">⚠ Context-dependent</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Imaging</span>
+        <div class="section-line"></div>
+        <span style="font-size:10px;color:var(--text-muted);">July 2025</span>
+      </div>
+
+      <div class="mgrid c2">
+        <div class="mcard">
+          <div class="mcard-label">CAC Score (Agatston)</div>
+          <div class="mcard-val" style="color:var(--green);font-size:48px;">0</div>
+          <div class="mcard-sub" style="margin-top:8px;">All vessels: LM 0 · LAD 0 · LCx 0 · RCA 0 · PDA 0<br>Percentile: 0–25th for age/gender (MESA)</div>
+          <span class="badge badge-green">✓ No calcification</span>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">What CAC 0 Means For You</div>
+          <div class="mcard-sub" style="font-size:12px;line-height:1.6;color:var(--text-dim);margin-top:4px;">
+            Clean arteries <em>right now</em>. But CAC only detects calcified plaque — your Lp(a) at 72 drives <strong>soft, non-calcified plaque</strong> that this scan can't see.<br><br>
+            This is the <strong style="color:var(--cyan)">optimal intervention window</strong>: lower ApoB before any damage accumulates in vessels with impaired DNA repair (ATM).
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section-label">Active Protocols & Supplements</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="mgrid c2">
+        <div class="mcard">
+          <div class="mcard-label">Current Stack</div>
+          <div class="proto-row">
+            <div class="proto-name">Magnesium Bisglycinate</div>
+            <span class="badge badge-green">350mg · PM</span>
+          </div>
+          <div class="proto-row">
+            <div class="proto-name">Zinc Bisglycinate</div>
+            <span class="badge badge-green">15-30mg · AM</span>
+          </div>
+          <div class="proto-row">
+            <div class="proto-name">LMNT Electrolytes</div>
+            <span class="badge badge-cyan">×2/day</span>
+          </div>
+        </div>
+        <div class="mcard">
+          <div class="mcard-label">Pending Labs (Reorder)</div>
+          <div class="proto-row">
+            <div class="proto-name">CMP + Cystatin-C</div>
+            <div class="proto-detail">Accurate kidney function</div>
+          </div>
+          <div class="proto-row">
+            <div class="proto-name">Lipid Panel + ApoB</div>
+            <div class="proto-detail">Pre-medication baseline</div>
+          </div>
+          <div class="proto-row">
+            <div class="proto-name">Uric Acid · Thyroid · Iron</div>
+            <div class="proto-detail">Gout, bradycardia, orthostatic</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /panels -->
+
+</div><!-- /app -->
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  const tabs = ['digital', 'genetic', 'labs'];
+  if (e.key >= '1' && e.key <= '3') {
+    const idx = parseInt(e.key) - 1;
+    document.querySelector(`[data-tab="${tabs[idx]}"]`).click();
+  }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const active = document.querySelector('.tab.active').dataset.tab;
+    const idx = tabs.indexOf(active);
+    const next = e.key === 'ArrowRight' ? (idx + 1) % 3 : (idx + 2) % 3;
+    document.querySelector(`[data-tab="${tabs[next]}"]`).click();
+  }
+});
+
+// Sleep bars
+const sleepBars = document.getElementById('sleepBars');
+const sleepData = [
+  6.2,7.1,6.5,7.8,6.9,5.8,7.2,6.4,7.5,6.1,6.8,7.3,5.5,7.0,6.6,8.1,6.3,7.4,6.7,5.9,
+  7.6,6.0,6.9,7.2,6.5,5.7,7.8,6.4,7.1,6.2,8.0,6.8,5.6,7.3,6.6,7.0,6.1,7.5,6.3,6.9,
+  7.7,5.8,6.7,7.2,6.4,8.2,6.0,7.1,6.5,6.8,7.4,5.9,6.3,7.6,6.6,7.0,6.2,6.9,7.3,5.5,
+  7.8,6.4,6.7,7.1,6.0,7.5,6.8,5.7,7.2,6.5,6.9
+];
+sleepData.forEach(h => {
+  const bar = document.createElement('div');
+  bar.className = 'sleep-bar ' + (h < 6.5 ? 'under' : h > 7.5 ? 'good' : 'ok');
+  bar.style.height = ((h - 4.5) / 5) * 100 + '%';
+  bar.title = h.toFixed(1) + 'h';
+  sleepBars.appendChild(bar);
+});
+</script>
+
+</body>
+</html>
