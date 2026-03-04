@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    
+    
+<!-- BEGIN: ~/Views/ColonialLife/Metadata/Metadata.cshtml -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>404 Error | Colonial Life</title>
+<meta name="keywords" content="" />
+<meta name="description" content="404 Error | Colonial Life" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta property="og:title" content="404 Error | Colonial Life" />
+<meta property="og:type" content="website" />
+    <meta property="og:description" content="404 Error | Colonial Life" />
+<meta property="og:image" content="https://www.coloniallife.com/-/media/CL/images/OGI-images/Colonial-life-OGI--default.ashx?sc_lang=en" />
+<meta property="og:url" content="https://www.coloniallife.com/error-404?404;https://www.coloniallife.com:443/sitecore/service/notfound.aspx" />
+
+<meta property="og:site_name" content="Colonial Life" />
+<meta property="fb:admins" content="41912405179" />
+
+
+
+<!-- BEGIN: ~/Views/Favicon/Favicon.cshtml-->
+
+    <link rel="shortcut icon" type="image/x-icon" href="/-/media/Favicons/cl_favicon.ashx" />
+<!-- END: ~/Views/Favicon/Favicon.cshtml -->
+
+
+
+
+
+    <link rel="stylesheet" href="/Styles/ColonialLife/styles.min.css" />
+<script src="/scripts/ga4tracking.js"></script>
+<script src="/scripts/scripts.min.js" async></script>
+
+
+<!-- END: ~/Views/ColonialLife/Metadata/Metadata.cshtml -->
+    
+    
+
+
+<style nonce='ZILy5gUL6MBPIg5xUrqzM/S1U5U='>
+/* Fix for inputs being  shifted down  BEGIN */
+form.ux_colonial_form input:not([type=radio]) {
+    /* overriding this -> margin: .4rem 0 0; */
+    margin: 8px 0 15px 0;
+}
+/* Fix for inputs being  shifted down  BEGIN */
+
+/* CL form select margin fix Ivan 12/09/2022 BEGIN */
+form[action*=Colonial] .ux_unum_select2 select{
+    margin-top: .4rem;
+}
+/* CL form select margin fix Ivan 12/09/2022 END */
+
+/* recaptcha style override 1of2 Ivan 11-29-2022  BEGIN */
+.grecaptcha-badge{ visibility: hidden; }
+footer small { font-size: 1.3rem; }
+footer small p a[href*="google"] { color: inherit; }
+/* recaptcha style override 1of2 Ivan 11-29-2022  END */
+</style>
+<!--SEO/Search console confirmation codes below -->
+<meta name="google-site-verification" content="uuORcZi2gsR7HZusTSwzA6HKy_BR0Pr8cwWXitGPP-8" />
+<meta name="msvalidate.01" content="55869F2008DD048BA80DBE89D937EC91" />
+<script nonce='ZILy5gUL6MBPIg5xUrqzM/S1U5U='>
+// Begin GTM code - enhanced with environment specific details
+
+//Production gtmAuth and gtmPreview values
+var gtmAuth = "fqcb7wAOSFgmKgnxJE2sDg";
+var gtmPreview = "env-112";
+if (/dev./.test(window.location.hostname))
+{
+    //Development gtmAuth and gtmPreview values
+    gtmAuth = "8IQhvbS23uYlmTGqNO6zPQ";
+    gtmPreview = "env-110";
+}
+else if (/acpt./.test(window.location.hostname))
+{
+    //Acceptance gtmAuth and gtmPreview values
+    gtmAuth = "TCxPFXFcG-j7jby14Rya7Q";
+    gtmPreview = "env-111";
+}
+
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth='+gtmAuth+'&gtm_preview='+gtmPreview+'&gtm_cookies_win=x';var n=d.querySelector('[nonce]');
+n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5G2PHC');
+
+// End GTM code
+
+
+// Marketo munchkin tracking
+(function() {
+	var didInit = false;
+
+	function initMunchkin() {
+		if (didInit === false) {
+			didInit = true;
+			Munchkin.init('715-LKT-305');
+		}
+	}
+	var s = document.createElement('script');
+	s.type = 'text/javascript';
+	s.async = true;
+	s.src = '//munchkin.marketo.net/munchkin.js';
+	s.onreadystatechange = function() {
+		if (this.readyState == 'complete' || this.readyState == 'loaded') {
+			initMunchkin();
+		}
+	};
+	s.onload = initMunchkin;
+	document.getElementsByTagName('head')[0].appendChild(s);
+})();
+// end Marketo munchkin tracking
+</script>
+</head>
+<body class="">
+	
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G2PHC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script nonce='ZILy5gUL6MBPIg5xUrqzM/S1U5U='>
+function OptanonWrapper() { }
+</script>
+<div class="page-container">
+    
+
+
+
+<div><a class="skiplink" href="#after">Skip to main content</a></div>
+
+
+
+
+<header class="ux-page-header" role="banner" data-is-mobile-nav-open="false">
+    <div class="ux-page-header__container">
+        <div class="ux-page-header__mobile-controls">
+            <div class="ux-page-header__branding">
+<a href="/" class="willow-logo-link ux-page-header__logo-link" title="Go back to the homepage" aria-label="go to home page" ><img src="/-/media/Feature/ColonialLife/Globals/Header/Logo-blue-pewter.ashx?la=en&amp;hash=C12AE1769115887A6568CAFE465B3B4A" class="willow-logo-link__image" alt="Logo-blue-pewter" /></a>            </div>
+                <div class="ux-page-header__login">
+                    <a href="https://login.coloniallife.com/?pid=6" class="ux-page-header__login-link">Log In</a>
+                </div>
+
+                <a class="ux-page-header__menu" aria-label="Open Menu" href="">
+                    <div class="icon-hamburger"></div>
+                    <span class="ux-page-header__menu-title">Menu</span>
+                </a>
+        </div>
+        <div class="ux-page-header__content">
+            <div class="ux-page-header__branding">
+                <!-- insert Logo-Link Component Here -->
+<a href="/" class="willow-logo-link ux-page-header__logo-link" title="Go back to the homepage" aria-label="go to home page" ><img src="/-/media/Feature/ColonialLife/Globals/Header/Logo-blue-pewter.ashx?la=en&amp;hash=C12AE1769115887A6568CAFE465B3B4A" class="willow-logo-link__image" alt="Logo-blue-pewter" /></a>            </div>
+            <div class="ux-page-header__ancillary-nav-container">
+                <!-- insert ansilary/utility component here -->
+                <nav class="ancillary-nav" role="navigation" aria-label="Ancillary Navigation">
+                    <h1 class="ancillary-nav__heading sr-only">Support Links</h1>
+                        <ul class="ancillary-nav__list">
+                                <li class="ancillary-nav__item">
+                                    <a href="/individuals/Policyholder-Support" class="ancillary-nav__link" title="Go to policyholder support page" >Policyholder Support</a>
+                                </li>
+                                <li class="ancillary-nav__item">
+                                    <a href="/Espanol" class="ancillary-nav__link" title="Informaci&#243;n en espa&#241;ol" >En Espa&#241;ol</a>
+                                </li>
+                                <li class="ancillary-nav__item">
+                                    <a href="https://registration.coloniallife.com/?pid=6" class="ancillary-nav__link" >Register</a>
+                                </li>
+                                                            <li class="ancillary-nav__item">
+                                    <a href="https://login.coloniallife.com/?pid=6" class="ancillary-nav__link">Log In</a>
+                                </li>
+                        </ul>
+                                    </nav>
+            </div>
+
+            <div class="ux-page-header__nav-wrapper">
+                <!-- insert content selection component here -->
+                <div class="section-nav toggle-container">
+    <button class="section-nav__selected-item toggle-container-control" data-title-prefix="For" aria-describedby="section navigation control">
+        
+        <span class="section-nav__selected-item-title">Individuals &amp; Policyholders</span>
+        
+    </button>
+    <div class="flex-position-wrapper">
+        <div class="content-container toggle-container-content">
+            <ul class="section-nav__list" style="display: none;">
+                    <li class="section-nav__list-item">
+                            <a href="/individuals" title="" class="content-list__link section-nav__link">
+                                <div class="section-nav__link-title">Individuals & Policyholders</div>
+                                <div class="section-nav__link-description">Protect what you've worked so hard for with our financial protection benefits.</div>
+                            </a>
+                    </li>
+                    <li class="section-nav__list-item">
+                            <a href="/Employers" title="" class="content-list__link section-nav__link">
+                                <div class="section-nav__link-title">Employers & Plan Administrators</div>
+                                <div class="section-nav__link-description">Offer your employees financial protection that helps control the rising cost of medical insurance.</div>
+                            </a>
+                    </li>
+                    <li class="section-nav__list-item">
+                            <a href="/Brokers" title="Brokers" class="content-list__link section-nav__link">
+                                <div class="section-nav__link-title">Brokers & Consultants</div>
+                                <div class="section-nav__link-description">Grow your business and deliver more value to clients by partnering with a proven industry leader.</div>
+                            </a>
+                    </li>
+                    <li class="section-nav__list-item">
+                            <a href="/About" title="About Colonial Life" class="content-list__link section-nav__link">
+                                <div class="section-nav__link-title">About Colonial Life</div>
+                                <div class="section-nav__link-description">Learn how we’ve served America’s workers for more than 75 years.</div>
+                            </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+                <div class="ux-page-header__primary-nav-container">
+                    <!-- insert primary nav component here -->
+                    <nav class="primary-nav">
+    <h1 class="primary-nav__heading sr-only">Individuals Primary Navigation</h1>
+        <ul class="primary-nav__list">
+                <li class="primary-nav__item toggle-container">
+<a href="/individuals/products" class="primary-nav__link " title="Go to products page" >Benefits</a>
+                        <!-- Start Sub-nav -->
+                        <button class="sub-nav__trigger toggle-container-control" aria-label="sub navigation toggle">
+                            <span class="icon-accordion icon-accordion-expand"></span>
+                        </button>
+                        <div class="sub-nav__desktop-container">
+                            <div class="sub-nav toggle-container-content">
+                                <ul class="sub-nav__list">
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/disability-insurance" class="sub-nav__link " title="Go to disability insurance page" >Disability Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/life-insurance" class="sub-nav__link " title="Go to life insurance page" >Life Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/accident-insurance" class="sub-nav__link " title="Go to accident insurance page" >Accident Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/hospital-indemnity-insurance" class="sub-nav__link " title="Go to hospital indemnity insurance page" >Hospital Indemnity Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/critical-illness-insurance" class="sub-nav__link " title="Go to critical illness insurance page" >Critical Illness Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/cancer-insurance" class="sub-nav__link " title="Go to cancer insurance page" >Cancer Insurance</a>                                            </li>
+                                            <li class="sub-nav__item">
+<a href="/individuals/products/dental-vision-insurance" class="sub-nav__link " title="Go to dental insurance page" >Dental & Vision Insurance</a>                                            </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End sub nav -->
+                </li>
+                <li class="primary-nav__item ">
+<a href="/individuals/Understanding-Your-Benefits" class="primary-nav__link " title="Go to Understanding Your Benefits page" >Understanding Your Benefits</a>
+                </li>
+                <li class="primary-nav__item ">
+<a href="/individuals/Claims" class="primary-nav__link " title="Go to file a claim page to file claims, find claim forms, and more" >File a Claim</a>
+                </li>
+        </ul>
+</nav>
+                </div>
+                    <div class="ux-page-header__search-container toggle-container">
+                        <!-- insert Search component here -->
+                        <button class="search__view-control toggle__control toggle__item" title="Search" aria-label="search toggle">Search</button>
+                        <div class="search__form">
+                            <div class="toggle__flex-container search__desktop-container">
+                                <div class="toggle__content-container search__content-container toggle-container-content" id="reactContainer" data-url="/api/sitecore/search/preview" data-view-all="/search"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="afterHeader" class="skip-destination"></div>
+
+
+    <section class="generic-banner generic-banner--transparent" style="">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9 mx-auto">
+
+                        <h1 class="generic-banner__heading">Page Not Found 404</h1>
+                    
+                        <div class="generic-banner__content">
+                            <h2>We're sorry, but we couldn't find the page you're looking for.</h2>
+                        </div>
+                    
+                        <ul class="generic-banner__actions">
+                            <li class="generic-banner__action"><a href="/" class="button" >Return to Home Page</a></li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer class="w-page-footer" role="contentinfo">
+    <div class="w-page-footer__content">
+            <nav class="w-footer-nav" role="navigation" aria-label="footer">
+                <h1 class="w-footer-nav__heading sr-only">Site Footer Menu</h1>
+                    <div class="w-footer-nav__section">
+                        <ul class="w-footer-nav__list">
+                            <li>
+                                <h2 class="w-footer-nav__subheading">Solutions for</h2>
+                            </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/individuals" aria-label="Individuals &amp; Policyholders">Individuals &amp; Policyholders</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/Employers" aria-label="Employers &amp; Plan Administrators">Employers &amp; Plan Administrators</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/Brokers" aria-label="Brokers &amp; Consultants">Brokers &amp; Consultants</a>
+                                    </li>
+                        </ul>
+                    </div>
+                    <div class="w-footer-nav__section">
+                        <ul class="w-footer-nav__list">
+                            <li>
+                                <h2 class="w-footer-nav__subheading">Connect with Us</h2>
+                            </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/About/Contact-Us" aria-label="Contact Us">Contact Us</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/individuals/Claims" aria-label="File a Claim">File a Claim</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/Espanol" aria-label="En Espa&#241;ol">En Espa&#241;ol</a>
+                                    </li>
+                        </ul>
+                    </div>
+                    <div class="w-footer-nav__section">
+                        <ul class="w-footer-nav__list">
+                            <li>
+                                <h2 class="w-footer-nav__subheading">Our Company</h2>
+                            </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/About" aria-label="About Colonial Life">About Colonial Life</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/About/Careers" aria-label="Careers">Careers</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/About/Newsroom" aria-label="Newsroom">Newsroom</a>
+                                    </li>
+                                    <li class="w-footer-nav__item">
+                                        <a class="w-footer-nav__link" href="/employer-resource-center" aria-label="Employer Resource Center">Employer Resource Center</a>
+                                    </li>
+                        </ul>
+                    </div>
+                <div class="w-footer-nav__section">
+                    <ul class="w-footer-nav__list social">
+                        <li>
+                            <h2 class="w-footer-nav__subheading">Follow Us</h2>
+                        </li>
+                            <li class="w-footer-nav__item">
+<a href="https://www.facebook.com/coloniallifebenefits/" class="w-footer-nav__link" rel="noopener noreferrer" target="_blank" ><img src="/-/media/Feature/ColonialLife/Globals/Social-Share-Links/facebook.ashx?la=en&amp;hash=DEBD825C9418663ADEDD3FB6AA287339" alt="facebook" /></a>                            </li>
+                            <li class="w-footer-nav__item">
+<a href="https://www.linkedin.com/company/colonial-life" class="w-footer-nav__link" rel="noopener noreferrer" target="_blank" ><img src="/-/media/Feature/ColonialLife/Globals/Social-Share-Links/Linkedin.ashx?la=en&amp;hash=81148848EA2EAD23F0F3E3D1FB1B7CA6" alt="Linkedin" /></a>                            </li>
+                    </ul>
+                </div>
+            </nav>
+
+        <div class="w-page-footer__branding">
+            <a class="willow-logo-link w-page-footer__logo-link" href="/" aria-label="go to home page">
+                <img src="/-/media/CL/images/Logos/CL-logo-white.ashx?sc_lang=en&amp;la=en&amp;hash=A791A3E087308730DA989F3A0EEF6C7C" class="willow-logo-link__image w-page-footer__image" alt="CL-logo-white" />
+            </a>
+        </div>
+        <div class="w-page-footer__description">
+            <small class="w-page-footer__copy">
+                © 2026 Colonial Life & Accident Insurance Company. All rights reserved. Colonial Life is a registered trademark and marketing brand of Colonial Life & Accident Insurance Company. NS-15375-1
+                
+
+
+            </small>
+            <div class="w-page-footer__legal">
+                <p>
+                    Insurance products are underwritten by Colonial Life & Accident Insurance Company, Columbia, SC.
+ 
+This information is not intended to be a complete description of the insurance coverage available. The insurance or its provisions may vary or be unavailable in some states. The insurance has exclusions and limitations which may affect any benefits payable. For cost and complete details of coverage, call or write your Colonial Life benefits counselor or the company.
+                </p>
+            </div>
+        </div>
+        <nav class="ancillary-nav" role="navigation" aria-label="Footer Ancillary Navigation">
+            <ul class="ancillary-nav__list">
+                    <li class="ancillary-nav__item">
+                        <a href="/Privacy" class="ancillary-nav__link">Privacy</a>
+                    </li>
+                    <li class="ancillary-nav__item">
+                        <a href="/Legal" class="ancillary-nav__link">Legal Notices</a>
+                    </li>
+                    <li class="ancillary-nav__item">
+                        <a href="/Legal/Compensation-Disclosure" class="ancillary-nav__link">Compensation Disclosure</a>
+                    </li>
+                    <li class="ancillary-nav__item">
+                        <a href="/Legal/Accessibility" class="ancillary-nav__link">Accessibility</a>
+                    </li>
+                    <li class="ancillary-nav__item">
+                        <a href="https://privacyportal-cdn.onetrust.com/dsarwebform/d476cff7-6d6c-4806-a2f9-4f1ec5ed979d/413b947d-2aba-4e84-ab74-775347f8717e.html" class="ancillary-nav__link">Do Not Sell or Share My Personal Information</a>
+                    </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="footer__dialog-container">
+        
+    </div>
+
+<button class="scrollToTopBtn" data-scroll-percentage="25" data-scroll-position="1200">Back to Top</button></footer>
+
+</div>
+
+
+<script nonce='ZILy5gUL6MBPIg5xUrqzM/S1U5U='>
+//prevent multiple clicks leading to multiple form submissions
+
+var isSubmitBtnHere = document.querySelector('form[data-sc-fxb] input[type="submit"]');
+if (isSubmitBtnHere){
+
+    jQuery(document).on('invalid-form.validate', 'form', function () {
+        var button = jQuery('.form-submit-border input[type="submit"]')
+        button.removeAttr('disabled');
+    });
+    jQuery(document).on('submit', 'form', function () {
+        var button = jQuery('.form-submit-border input[type="submit"]')
+        button.val('...Please Wait');
+        button.attr('disabled', 'disabled');
+    });
+
+}
+
+/* recaptcha style override 2of2 Ivan 11-29-2022  BEGIN */
+setTimeout(function(){
+    const grecaptchaBadge = document.querySelector('.grecaptcha-badge');
+    if (grecaptchaBadge){
+        let footerLinks = document.querySelector('footer .ancillary-nav');
+        if (!footerLinks){
+            footerLinks = document.querySelector('footer .willow-ancillary-nav');
+        }
+        let small = document.createElement("small");
+        small.style.width = '100%';
+        let p = document.createElement("p");
+        p.innerHTML = `This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.`;
+        small.appendChild(p);
+        if (footerLinks && footerLinks.parentNode){
+            footerLinks.parentNode.insertBefore(small, footerLinks);
+        }
+    }
+}, 2000);
+/* recaptcha style override 2of2 Ivan 11-29-2022  END */
+</script>
+
+</body>
+</html>

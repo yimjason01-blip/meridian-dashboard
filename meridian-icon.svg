@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <rect width="512" height="512" rx="115" fill="#0A3654"/>
+  <g transform="translate(256,256)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#FFFFFF" stroke-width="16"/>
+    <!-- Four cardinal points — bold, simple -->
+    <polygon points="0,-190 -30,0 0,30" fill="#FFFFFF"/>
+    <polygon points="0,-190 30,0 0,30" fill="#FFFFFF" fill-opacity="0.55"/>
+    <polygon points="0,190 30,0 0,-30" fill="#FFFFFF"/>
+    <polygon points="0,190 -30,0 0,-30" fill="#FFFFFF" fill-opacity="0.55"/>
+    <polygon points="190,0 0,-30 -30,0" fill="#FFFFFF"/>
+    <polygon points="190,0 0,30 -30,0" fill="#FFFFFF" fill-opacity="0.55"/>
+    <polygon points="-190,0 0,30 30,0" fill="#FFFFFF"/>
+    <polygon points="-190,0 0,-30 30,0" fill="#FFFFFF" fill-opacity="0.55"/>
+    <!-- Center -->
+    <circle cx="0" cy="0" r="18" fill="#FFFFFF"/>
+  </g>
+</svg>

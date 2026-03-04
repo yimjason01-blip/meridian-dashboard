@@ -21,6 +21,7 @@
   }
 
   .hero {
+    position: relative;
     background: #11234B;
     color: #ECF2FD;
     padding: 48px 40px 40px;
@@ -86,6 +87,7 @@
     color: #fff;
     font-size: 13px;
     letter-spacing: 0.3px;
+    min-width: 220px;
   }
   .comp-table tbody td {
     padding: 14px 14px;
@@ -216,6 +218,9 @@
 <body>
 
 <div class="hero">
+  <div style="position:absolute;top:24px;left:32px;display:flex;align-items:center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="48" style="display:block;"><style>.brand-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.meridian{font-weight:700;fill:#99D5D3}.health{font-weight:400;fill:rgba(255,255,255,0.35)}</style><text x="10" y="75" class="brand-text"><tspan class="meridian">meridian</tspan> <tspan class="health">health</tspan></text></svg>
+  </div>
   <div class="hero-inner">
     <h1>Meridian vs. <span>the market.</span></h1>
     <p>Competitive landscape for health intelligence — LASO Health internal reference</p>
@@ -240,7 +245,7 @@
   <tbody>
     <tr>
       <td>Cost</td>
-      <td>~$200/mo</td>
+      <td>$150/mo</td>
       <td>$20–$50/visit (copay)</td>
       <td>$875–$7,000/mo</td>
       <td>$415 first yr, $250/mo after</td>
@@ -251,7 +256,7 @@
 
     <tr>
       <td>Wearable data</td>
-      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Apple Watch, Oura, Garmin, etc.</span></td>
+      <td><span class="tag tag-green">Yes</span><span class="tag-desc">Apple Watch, Oura, Garmin, WHOOP, etc.</span></td>
       <td><span class="tag tag-red">No</span></td>
       <td><span class="tag tag-red">No</span></td>
       <td><span class="tag tag-red">No</span></td>
@@ -261,17 +266,17 @@
     </tr>
     <tr>
       <td>Genetics</td>
-      <td><span class="tag tag-green">Included</span><span class="tag-desc">Clinical-grade sequencing</span></td>
+      <td><span class="tag tag-green">Clinical-grade</span><span class="tag-desc">Invitae 167-gene panel<br>All medically actionable</span></td>
       <td><span class="tag tag-red">No</span><span class="tag-desc">Only if family history warrants referral</span></td>
-      <td><span class="tag tag-green">Included</span><span class="tag-desc">In-house testing</span></td>
-      <td><span class="tag tag-green">Included</span><span class="tag-desc">Full genome sequencing</span></td>
+      <td><span class="tag tag-green">Clinical-grade</span><span class="tag-desc">Whole genome sequencing<br><1% actionable</span></td>
+      <td><span class="tag tag-green">Clinical-grade</span><span class="tag-desc">Whole genome sequencing<br><1% actionable</span></td>
       <td><span class="tag tag-red">No</span></td>
       <td><span class="tag tag-red">No</span></td>
       <td><span class="tag tag-red">No</span></td>
     </tr>
     <tr>
       <td>Blood / labs</td>
-      <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">80 biomarkers<br>2×/yr</span></td>
+      <td><span class="tag tag-green">Included</span><span class="tag-desc">Quest Elite Health Panel<br>100 biomarkers · 2×/yr</span></td>
       <td><span class="tag tag-amber">Basic</span><span class="tag-desc tag-desc-nowrap">~20 biomarkers<br>1×/yr</span></td>
       <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">100+ biomarkers<br>1×/yr</span></td>
       <td><span class="tag tag-green">Included</span><span class="tag-desc tag-desc-nowrap">100+ biomarkers<br>1×/yr</span></td>
@@ -281,17 +286,17 @@
     </tr>
 
     <tr>
-      <td>Personalized disease risk modeling</td>
+      <td>AI-powered disease risk assessment</td>
       <td><span class="tag tag-green">Yes</span><span class="tag-desc">Multi-domain: CV, cancer, dementia, stroke</span></td>
-      <td><span class="tag tag-red">No</span></td>
-      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-amber">Standard</span><span class="tag-desc">ASCVD calculator, guideline-based</span></td>
+      <td><span class="tag tag-amber">Basic</span><span class="tag-desc">Physician-interpreted, single visit</span></td>
       <td><span class="tag tag-amber">Basic</span><span class="tag-desc">Genetic risk scores</span></td>
-      <td><span class="tag tag-red">No</span></td>
-      <td><span class="tag tag-red">No</span></td>
-      <td><span class="tag tag-red">No</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">Biomarker tracking only</span></td>
+      <td><span class="tag tag-red">No</span><span class="tag-desc">AI supplement suggestions</span></td>
+      <td><span class="tag tag-amber">Standard</span><span class="tag-desc">Physician judgment, guideline-based</span></td>
     </tr>
     <tr>
-      <td>Precision risk reduction</td>
+      <td>MD × AI action plan</td>
       <td><span class="tag tag-green">Yes</span><span class="tag-desc">Physician-prescribed plan with video walkthrough. Priorities ranked by severity × effect size.</span></td>
       <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Physician guidance, not data-integrated</span></td>
       <td><span class="tag tag-amber">Generic</span><span class="tag-desc">Clinical report with physician follow-up plan</span></td>

@@ -48,6 +48,7 @@
      One screen. Two bars. Absurd visual contrast.
      ============================================ */
   .opt-a {
+    position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -477,6 +478,9 @@
 
 <!-- ==================== OPTION A: The Proportion ==================== -->
 <section class="opt-a" id="option-a">
+  <div style="position:absolute;top:24px;left:32px;display:flex;align-items:center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="48" style="display:block;"><style>.brand-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.meridian{font-weight:700;fill:#99D5D3}.health{font-weight:400;fill:rgba(255,255,255,0.35)}</style><text x="10" y="75" class="brand-text"><tspan class="meridian">meridian</tspan> <tspan class="health">health</tspan></text></svg>
+  </div>
   <h1 class="opt-a-header">Is the juice worth <span>the squeeze?</span></h1>
 
   <div class="opt-a-bars">
