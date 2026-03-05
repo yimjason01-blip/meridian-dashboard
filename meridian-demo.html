@@ -32,6 +32,7 @@
     justify-content: center;
     align-items: center;
     padding: 60px 80px;
+    overflow: hidden;
   }
 
   .slide-headline {
@@ -166,8 +167,10 @@
   <div class="slide-num">01</div>
 </div>
 
+
+
 <div class="slide-brand">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="44" style="display:block;"><style>.brand-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.meridian{font-weight:700;fill:#0F4C75}.health{font-weight:400;fill:#99D5D3}</style><text x="10" y="75" class="brand-text"><tspan class="meridian">meridian</tspan> <tspan class="health">health</tspan></text></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="44" style="display:block;"><style>.s1-bt{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.s1-m{font-weight:700;fill:#0F4C75}.s1-h{font-weight:400;fill:#99D5D3}</style><text x="10" y="75" class="s1-bt"><tspan class="s1-m">meridian</tspan> <tspan class="s1-h">health</tspan></text></svg>
 </div>
 
 <!-- SLIDE 2 -->
@@ -275,7 +278,137 @@
   <div class="slide-num" style="color:rgba(255,255,255,0.15);">04</div>
 </div>
 
-<!-- SLIDE 5: WHAT IF? -->
+<!-- SLIDE 5: ONE-TIME SETUP — SWIM LANES -->
+<div class="slide" style="background:#F5F9FF;">
+  <div style="max-width:1100px;width:100%;text-align:center;">
+    <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:var(--navy);letter-spacing:-2px;line-height:1.1;">One-time setup. <span style="color:var(--teal);">Continuous progress.</span></div>
+    <div style="font-size:16px;color:#54566B;margin-top:12px;">You onboard once — then enter a cycle of intelligent progression.</div>
+
+    <div style="margin-top:48px;max-width:1060px;margin-left:auto;margin-right:auto;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+      <!-- Time axis header -->
+      <div style="display:flex;background:#fff;border-bottom:1px solid #E8ECF2;">
+        <div style="flex:0 0 110px;"></div>
+        <div style="flex:0 0 140px;padding:14px 0;text-align:center;border-left:1px solid #E8ECF2;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;">Setup</div>
+        </div>
+        <div style="flex:0 0 100px;padding:14px 0;text-align:center;border-left:1px solid #E8ECF2;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;">Week 2</div>
+        </div>
+        <div style="flex:1;padding:14px 0;text-align:center;border-left:1px solid #E8ECF2;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;">Months 1–6</div>
+        </div>
+        <div style="flex:0 0 100px;padding:14px 0;text-align:center;border-left:1px solid #E8ECF2;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;">Month 6</div>
+        </div>
+        <div style="flex:1;padding:14px 0;text-align:center;border-left:1px solid #E8ECF2;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;">Months 7–12</div>
+        </div>
+      </div>
+
+      <!-- YOU LANE -->
+      <div style="display:flex;background:var(--navy);min-height:120px;">
+        <!-- Lane label -->
+        <div style="flex:0 0 110px;display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:1px;">YOU</div>
+        </div>
+        <!-- Setup -->
+        <div style="flex:0 0 140px;display:flex;align-items:center;justify-content:center;padding:16px 10px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="text-align:center;">
+            <div style="font-size:22px;">🧬 🩸 ⌚</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px;">Genetics · Blood<br>Wearable</div>
+          </div>
+        </div>
+        <!-- Game plan -->
+        <div style="flex:0 0 100px;display:flex;align-items:center;justify-content:center;padding:16px 8px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="text-align:center;">
+            <div style="font-size:20px;">📋</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px;">Receive your<br>game plan</div>
+          </div>
+        </div>
+        <!-- Months 1-6: work priorities -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;">Work your priorities</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+              <span style="font-size:11px;background:rgba(255,255,255,0.12);color:#fff;padding:4px 12px;border-radius:20px;">🏋️ Train</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.12);color:#fff;padding:4px 12px;border-radius:20px;">😴 Sleep</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.12);color:#fff;padding:4px 12px;border-radius:20px;">💊 Meds</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.12);color:#fff;padding:4px 12px;border-radius:20px;">🥗 Eat</span>
+            </div>
+          </div>
+        </div>
+        <!-- Month 6: labs -->
+        <div style="flex:0 0 100px;display:flex;align-items:center;justify-content:center;padding:16px 8px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="text-align:center;">
+            <div style="font-size:20px;">🩸</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:6px;">Blood<br>panel #2</div>
+          </div>
+        </div>
+        <!-- Months 7-12: refined -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px;">
+          <div style="text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;">Refined priorities</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;">What's working stays.<br>What's not gets adjusted.</div>
+            <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.3);font-weight:700;">repeats →</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MERIDIAN LANE -->
+      <div style="display:flex;background:var(--teal);min-height:120px;">
+        <!-- Lane label -->
+        <div style="flex:0 0 110px;display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(255,255,255,0.15);">
+          <div style="font-family:'Bricolage Grotesque',serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.5px;text-align:center;line-height:1.3;">MERIDIAN</div>
+        </div>
+        <!-- Setup -->
+        <div style="flex:0 0 140px;display:flex;align-items:center;justify-content:center;padding:16px 10px;border-right:1px solid rgba(255,255,255,0.15);">
+          <div style="text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#fff;">Process samples</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;">Gene panel +<br>100 biomarkers</div>
+          </div>
+        </div>
+        <!-- Game plan -->
+        <div style="flex:0 0 100px;display:flex;align-items:center;justify-content:center;padding:16px 8px;border-right:1px solid rgba(255,255,255,0.15);">
+          <div style="text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#fff;">Build plan</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;">AI + MD<br>priorities</div>
+          </div>
+        </div>
+        <!-- Months 1-6: behind the scenes -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px;border-right:1px solid rgba(255,255,255,0.15);">
+          <div style="text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;">Working behind the scenes</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+              <span style="font-size:11px;background:rgba(255,255,255,0.15);color:#fff;padding:4px 12px;border-radius:20px;">📊 Monitor</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.15);color:#fff;padding:4px 12px;border-radius:20px;">🔬 Research</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.15);color:#fff;padding:4px 12px;border-radius:20px;">🎯 Adjust</span>
+            </div>
+          </div>
+        </div>
+        <!-- Month 6: update -->
+        <div style="flex:0 0 100px;display:flex;align-items:center;justify-content:center;padding:16px 8px;border-right:1px solid rgba(255,255,255,0.15);">
+          <div style="text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#fff;">Update</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px;">New game<br>plan</div>
+          </div>
+        </div>
+        <!-- Months 7-12: smarter -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px;">
+          <div style="text-align:center;">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;">Smarter every cycle</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.5;">More data = better insights.<br>AI recalibrates risk.</div>
+            <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;">repeats →</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="slide-num">05</div>
+</div>
+
+<!-- SLIDE 6: WHAT IF? -->
 <div class="slide" style="background:#fff;">
   <div style="max-width:900px;width:100%;text-align:center;">
     <div style="font-family:'Bricolage Grotesque',serif;font-size:96px;font-weight:800;color:var(--navy);letter-spacing:-3px;line-height:1;">What if?</div>
@@ -308,10 +441,10 @@
       A new category: critical illness insurance supercharged with continuous health intelligence.
     </div>
   </div>
-  <div class="slide-num">05</div>
+  <div class="slide-num">06</div>
 </div>
 
-<!-- SLIDE 6: WHAT IT COULD MEAN -->
+<!-- SLIDE 7: WHAT IT COULD MEAN -->
 <div class="slide" style="background:var(--navy);">
   <div style="max-width:1000px;width:100%;text-align:center;">
     <div style="font-family:'Bricolage Grotesque',serif;font-size:52px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.1;">What it could <span style="color:var(--mint);">mean.</span></div>
@@ -346,8 +479,12 @@
 
     </div>
   </div>
-  <div class="slide-num" style="color:rgba(255,255,255,0.15);">06</div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.15);">07</div>
 </div>
+
+
+
+
 
 <script>
 (function() {
