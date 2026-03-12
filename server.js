@@ -19,17 +19,7 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  // Basic auth check
-  const auth = req.headers.authorization;
-  if (!auth || !auth.startsWith('Basic ')) {
-    res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Jay-C Dashboard"' });
-    return res.end('Auth required');
-  }
-  const [u, p] = Buffer.from(auth.slice(6), 'base64').toString().split(':');
-  if (u !== USER || p !== PASS) {
-    res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Jay-C Dashboard"' });
-    return res.end('Invalid credentials');
-  }
+  // Basic auth disabled — open access via Cloudflare tunnel
 
   // Strip query strings from URL
   const urlPath = req.url.split('?')[0];
