@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Value Framework</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #F5F9FF;
+    color: #2A2D35;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    margin-bottom: 8px;
+    color: #11234B;
+  }
+  h1 span { color: #0D8086; }
+  .subtitle {
+    font-size: 14px;
+    color: #6B6B6B;
+    margin-bottom: 40px;
+  }
+  .chart-container {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    margin: 0 auto 48px;
+  }
+  canvas {
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .legend {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-bottom: 48px;
+    font-size: 13px;
+    color: #54566B;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .notes {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #EDEFF3;
+  }
+  .notes h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #11234B;
+  }
+  .notes p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #54566B;
+    margin-bottom: 12px;
+  }
+  .notes ul {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #54566B;
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  .notes li { margin-bottom: 6px; }
+  .notes strong { color: #11234B; }
+</style>
+</head>
+<body>
+
+<h1>Meridian <span>value gap.</span></h1>
+<p class="subtitle">Risk identified vs. risk addressed — Case study: Jason, age 47</p>
+
+<div class="chart-container">
+  <canvas id="chart" width="700" height="700"></canvas>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#C0C4CC;"></div>
+    <span>Standard PCP visit</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#0D8086;"></div>
+    <span>Meridian (current)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#0D8086; opacity:0.4;"></div>
+    <span>Meridian (if fully acted on)</span>
+  </div>
+  <div class="legend-item">
+    <div style="width:40px; height:2px; background:#C62828; opacity:0.3;"></div>
+    <span>100% conversion line</span>
+  </div>
+</div>
+
+<div class="notes">
+  <h2>How to read this chart</h2>
+  <p><strong>X-axis — Risk Identified:</strong> The total magnitude of health risk made visible to the patient that would not have been visible through the benchmark. Measured as estimated cumulative relative risk reduction available if all identified risks are addressed. Further right = more risk was surfaced.</p>
+  <p><strong>Y-axis — Risk Addressed:</strong> The expected reduction in risk from actions the patient actually took (or is on track to take). Further up = more identified risk was converted into real-world action.</p>
+  <p><strong>The diagonal line</strong> represents perfect conversion — every risk identified is fully acted on. Points below the line represent unrealized potential.</p>
+  <p><strong>The distance between the PCP point and Meridian's point is the value Meridian created.</strong></p>
+
+  <h2>Case study estimates</h2>
+  <ul>
+    <li><strong>PCP:</strong> Identifies borderline LDL and overdue colonoscopy. Estimated addressable risk reduction ~15-20% (statin if started, colonoscopy screening benefit). Likely action conversion ~50%. Plots near lower-left.</li>
+    <li><strong>Meridian:</strong> Identifies ATM-driven cancer risks, Lp(a) cardiovascular reclassification, bradycardia, and guideline-based screenings. Estimated addressable risk reduction ~55-65% across CV, cancer, and vitality domains. Observed action conversion ~67% (4 of 6 priorities). Plots upper-right.</li>
+    <li><strong>Meridian (potential):</strong> If cardiac workup and fresh lipid panel are completed, conversion rises to ~90%+. Shown as the hollow point.</li>
+  </ul>
+
+  <h2>What the gap represents</h2>
+  <p>The shaded area between the two points is not just "more findings." It represents risk that was <strong>invisible</strong> to the PCP — and would have remained invisible indefinitely — that Meridian made visible and actionable. For this patient, that includes pancreatic cancer surveillance, cardiovascular risk reclassification, and genetic counseling for his daughter.</p>
+  <p><strong>Zero state:</strong> If Meridian found nothing the PCP wouldn't find, and the patient acted on nothing more, both points would overlap. The gap would be zero.</p>
+</div>
+
+<script>
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+const W = 700, H = 700;
+const pad = { top: 40, right: 40, bottom: 70, left: 80 };
+const plotW = W - pad.left - pad.right;
+const plotH = H - pad.top - pad.bottom;
+
+// Background
+ctx.fillStyle = '#FFFFFF';
+ctx.fillRect(0, 0, W, H);
+
+// Grid
+ctx.strokeStyle = '#EDEFF3';
+ctx.lineWidth = 1;
+for (let i = 0; i <= 10; i++) {
+  const x = pad.left + (plotW / 10) * i;
+  const y = pad.top + (plotH / 10) * i;
+  ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, H - pad.bottom); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+}
+
+// Axes
+ctx.strokeStyle = '#11234B';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, H - pad.bottom); ctx.lineTo(W - pad.right, H - pad.bottom); ctx.stroke();
+
+// Axis labels
+ctx.fillStyle = '#11234B';
+ctx.font = '600 13px Inter, system-ui';
+ctx.textAlign = 'center';
+ctx.fillText('RISK IDENTIFIED', pad.left + plotW / 2, H - 15);
+
+ctx.save();
+ctx.translate(20, pad.top + plotH / 2);
+ctx.rotate(-Math.PI / 2);
+ctx.fillText('RISK ADDRESSED', 0, 0);
+ctx.restore();
+
+// Tick labels
+ctx.font = '400 11px Inter, system-ui';
+ctx.fillStyle = '#6B6B6B';
+ctx.textAlign = 'center';
+const xLabels = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+for (let i = 0; i <= 10; i++) {
+  const x = pad.left + (plotW / 10) * i;
+  ctx.fillText(xLabels[i], x, H - pad.bottom + 20);
+}
+ctx.textAlign = 'right';
+for (let i = 0; i <= 10; i++) {
+  const y = H - pad.bottom - (plotH / 10) * i;
+  ctx.fillText(xLabels[i], pad.left - 10, y + 4);
+}
+
+// 100% conversion diagonal
+ctx.setLineDash([6, 4]);
+ctx.strokeStyle = 'rgba(198, 40, 40, 0.25)';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+ctx.moveTo(pad.left, H - pad.bottom);
+ctx.lineTo(W - pad.right, pad.top);
+ctx.stroke();
+ctx.setLineDash([]);
+
+// Label for diagonal
+ctx.save();
+ctx.translate(pad.left + plotW * 0.72, pad.top + plotH * 0.22);
+ctx.rotate(-Math.atan(plotH / plotW));
+ctx.font = '400 11px Inter, system-ui';
+ctx.fillStyle = 'rgba(198, 40, 40, 0.5)';
+ctx.fillText('100% conversion', 0, 0);
+ctx.restore();
+
+// Value gap shading
+function toX(pct) { return pad.left + (pct / 100) * plotW; }
+function toY(pct) { return H - pad.bottom - (pct / 100) * plotH; }
+
+// PCP point: ~18% risk identified, ~9% risk addressed (50% conversion of 18%)
+const pcpX = 18, pcpY = 9;
+// Meridian current: ~60% risk identified, ~40% risk addressed (67% conversion of 60%)
+const merX = 60, merY = 40;
+// Meridian potential: ~60% risk identified, ~55% addressed (90%+ conversion)
+const merPotX = 60, merPotY = 55;
+
+// Shaded value gap area
+ctx.fillStyle = 'rgba(13, 128, 134, 0.08)';
+ctx.beginPath();
+ctx.moveTo(toX(pcpX), toY(pcpY));
+ctx.lineTo(toX(merX), toY(pcpY));
+ctx.lineTo(toX(merX), toY(merY));
+ctx.lineTo(toX(pcpX), toY(merY));
+ctx.closePath();
+ctx.fill();
+
+// Dashed line connecting PCP to Meridian
+ctx.setLineDash([4, 3]);
+ctx.strokeStyle = 'rgba(13, 128, 134, 0.3)';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+ctx.moveTo(toX(pcpX), toY(pcpY));
+ctx.lineTo(toX(merX), toY(merY));
+ctx.stroke();
+ctx.setLineDash([]);
+
+// Dashed line from Meridian current to potential
+ctx.setLineDash([3, 3]);
+ctx.strokeStyle = 'rgba(13, 128, 134, 0.25)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(toX(merX), toY(merY));
+ctx.lineTo(toX(merPotX), toY(merPotY));
+ctx.stroke();
+ctx.setLineDash([]);
+
+// "Value gap" label
+ctx.font = '600 14px Inter, system-ui';
+ctx.fillStyle = '#0D8086';
+ctx.textAlign = 'center';
+const gapLabelX = (toX(pcpX) + toX(merX)) / 2;
+const gapLabelY = (toY(pcpY) + toY(merY)) / 2 - 12;
+ctx.fillText('VALUE GAP', gapLabelX, gapLabelY);
+
+// PCP point
+ctx.beginPath();
+ctx.arc(toX(pcpX), toY(pcpY), 10, 0, Math.PI * 2);
+ctx.fillStyle = '#C0C4CC';
+ctx.fill();
+ctx.strokeStyle = '#fff';
+ctx.lineWidth = 2;
+ctx.stroke();
+
+// PCP label
+ctx.font = '600 12px Inter, system-ui';
+ctx.fillStyle = '#6B6B6B';
+ctx.textAlign = 'left';
+ctx.fillText('Standard PCP', toX(pcpX) + 16, toY(pcpY) + 4);
+
+// Meridian current point
+ctx.beginPath();
+ctx.arc(toX(merX), toY(merY), 12, 0, Math.PI * 2);
+ctx.fillStyle = '#0D8086';
+ctx.fill();
+ctx.strokeStyle = '#fff';
+ctx.lineWidth = 2.5;
+ctx.stroke();
+
+// Meridian label
+ctx.font = '600 12px Inter, system-ui';
+ctx.fillStyle = '#0D8086';
+ctx.textAlign = 'left';
+ctx.fillText('Meridian', toX(merX) + 18, toY(merY) - 2);
+ctx.font = '400 11px Inter, system-ui';
+ctx.fillStyle = '#6B6B6B';
+ctx.fillText('(current conversion)', toX(merX) + 18, toY(merY) + 14);
+
+// Meridian potential point (hollow)
+ctx.beginPath();
+ctx.arc(toX(merPotX), toY(merPotY), 10, 0, Math.PI * 2);
+ctx.fillStyle = 'rgba(13, 128, 134, 0.15)';
+ctx.fill();
+ctx.strokeStyle = '#0D8086';
+ctx.lineWidth = 2;
+ctx.stroke();
+
+// Potential label
+ctx.font = '400 11px Inter, system-ui';
+ctx.fillStyle = '#6B6B6B';
+ctx.textAlign = 'left';
+ctx.fillText('Meridian (if fully acted on)', toX(merPotX) + 16, toY(merPotY) + 4);
+
+// Origin label
+ctx.font = '400 11px Inter, system-ui';
+ctx.fillStyle = '#999';
+ctx.textAlign = 'center';
+ctx.fillText('Zero state: no difference from PCP', pad.left + plotW * 0.15, H - pad.bottom - 8);
+</script>
+
+</body>
+</html>
