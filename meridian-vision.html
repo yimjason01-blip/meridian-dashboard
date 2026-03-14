@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #d4d0c8;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    z-index: 100;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #d4d0c8;
+  }
+  .nav-links a {
+    color: #8a8578;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-left: 32px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #d4d0c8; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 48px 40px;
+    position: relative;
+  }
+  .hero-icon {
+    width: min(90vw, 600px);
+    margin-bottom: 48px;
+    opacity: 0.85;
+  }
+  .hero-icon svg {
+    width: 100%;
+    height: auto;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.4;
+    max-width: 600px;
+    color: #e8e4dc;
+  }
+  .hero h1 em {
+    color: #b8a88a;
+    font-style: italic;
+  }
+  .hero-cta {
+    margin-top: 32px;
+    color: #8a8578;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .hero-cta:hover { color: #d4d0c8; }
+
+  /* VISION PAGE */
+  .vision-header {
+    display: none;
+  }
+  .vision-bg {
+    display: none;
+  }
+  .vision-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 8px 32px 120px;
+  }
+  .vision-content h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a8578;
+    margin-bottom: 48px;
+  }
+  .vision-content p {
+    margin-bottom: 24px;
+    color: #b0aca3;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .vision-content p.lead {
+    color: #d4d0c8;
+    font-size: 17px;
+  }
+
+  /* SECTION BREAKS */
+  .section-break {
+    width: 40px;
+    height: 1px;
+    background: #3a3830;
+    margin: 56px 0;
+  }
+
+  /* PULL QUOTES */
+  .pull-quote {
+    padding: 64px 0;
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .pull-quote blockquote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.5;
+    color: #e8e4dc;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* BELIEFS */
+  .belief {
+    padding: 16px 0 16px 24px;
+    border-left: 2px solid #2a2820;
+    margin-bottom: 32px;
+  }
+  .belief p {
+    color: #c8c4ba !important;
+    font-size: 15px;
+  }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin: 48px 0;
+  }
+  .stat {
+    padding: 24px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+  }
+  .stat-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    color: #b8a88a;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: #8a8578;
+    line-height: 1.5;
+  }
+
+  /* EXPANDABLE SECTIONS */
+  .expandable {
+    border-top: 1px solid #1a1a18;
+    padding: 0;
+    margin-top: 64px;
+  }
+  .expandable-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .expandable-header:hover { color: #e8e4dc; }
+  .expandable-header h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #d4d0c8;
+  }
+  .expandable-header .toggle {
+    font-size: 20px;
+    color: #8a8578;
+    transition: transform 0.3s;
+  }
+  .expandable-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+  }
+  .expandable.open .expandable-body {
+    max-height: 600px;
+    padding-bottom: 32px;
+  }
+  .expandable.open .toggle {
+    transform: rotate(45deg);
+  }
+
+  /* SIGNATURE */
+  .signature {
+    margin-top: 80px;
+    padding-top: 48px;
+    border-top: 1px solid #1a1a18;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: #8a8578;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px;
+    text-align: center;
+    color: #4a4840;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Stagger children slightly */
+  .reveal.delay-1 { transition-delay: 0.1s; }
+  .reveal.delay-2 { transition-delay: 0.2s; }
+  .reveal.delay-3 { transition-delay: 0.3s; }
+
+  /* WAITLIST */
+  .waitlist {
+    padding: 48px 0;
+    text-align: center;
+  }
+  .waitlist .lead {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .waitlist > p:not(.lead) {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto 32px;
+  }
+  .waitlist-form {
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .waitlist-input-row {
+    display: flex;
+    gap: 8px;
+  }
+  .waitlist-input-row input[type="text"],
+  .waitlist-input-row input[type="email"] {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: #e8e4dc;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .waitlist-input-row input[type="text"]::placeholder,
+  .waitlist-input-row input[type="email"]::placeholder {
+    color: rgba(255,255,255,0.25);
+  }
+  .waitlist-input-row input[type="text"]:focus,
+  .waitlist-input-row input[type="email"]:focus {
+    border-color: #b8a88a;
+  }
+  .waitlist-input-row button {
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    background: #b8a88a;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .waitlist-input-row button:hover {
+    background: #c8b89a;
+  }
+  .waitlist-input-row button:active {
+    transform: scale(0.97);
+  }
+  .waitlist-input-row button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .waitlist-status {
+    margin-top: 12px;
+    font-size: 13px;
+    min-height: 20px;
+  }
+  .waitlist-status.success { color: #7ae7bf; }
+  .waitlist-status.error { color: #ff887c; }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .vision-header { padding: 48px 0 0; }
+    .vision-content { padding: 0 24px 80px; }
+    .waitlist-input-row { flex-direction: column; }
+    .waitlist-input-row button { width: 100%; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .nav-links a { margin-left: 16px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Meridian</div>
+  <div class="nav-links">
+    <a href="#vision">Vision</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HOME / HERO -->
+<section class="hero" id="home">
+  <div class="hero-icon" id="heroGrid">
+    <svg id="gridSvg" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    </svg>
+  </div>
+  <script>
+  (function() {
+    const svg = document.getElementById('gridSvg');
+    const cols = 80;
+    const rows = 24;
+    const cellSize = 7;
+    const gap = 1;
+    const total = cols * rows;
+    const viewW = cols * (cellSize + gap) - gap;
+    const viewH = rows * (cellSize + gap) - gap;
+    svg.setAttribute('viewBox', `0 0 ${viewW} ${viewH}`);
+
+    // ~5% highlighted — the "needles", scattered randomly
+    const needleCount = Math.floor(total * 0.025);
+    const needleIndices = new Set();
+    // Use seeded positions for consistency across reloads
+    const seed = [17,89,156,247,338,
+                  67,178,265,352,427,
+                  53,145,233,321,411];
+    seed.forEach(i => { if (i < total) needleIndices.add(i); });
+    // Fill remaining randomly with minimum spacing
+    while (needleIndices.size < needleCount) {
+      const candidate = Math.floor(Math.random() * total);
+      needleIndices.add(candidate);
+    }
+
+    // Store needle positions for connection lines
+    const needlePositions = [];
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const idx = r * cols + c;
+        const x = c * (cellSize + gap);
+        const y = r * (cellSize + gap);
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y);
+        rect.setAttribute('width', cellSize);
+        rect.setAttribute('height', cellSize);
+        rect.setAttribute('rx', 1.5);
+
+        if (needleIndices.has(idx)) {
+          rect.setAttribute('fill', '#b8a88a');
+          rect.setAttribute('opacity', '0.9');
+          const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+          anim.setAttribute('attributeName', 'opacity');
+          anim.setAttribute('values', '0.6;1;0.6');
+          anim.setAttribute('dur', (2 + Math.random() * 2).toFixed(1) + 's');
+          anim.setAttribute('repeatCount', 'indefinite');
+          rect.appendChild(anim);
+          // Store center of this needle
+          needlePositions.push({ x: x + cellSize/2, y: y + cellSize/2 });
+        } else {
+          rect.setAttribute('fill', '#d4d0c8');
+          rect.setAttribute('opacity', (0.04 + Math.random() * 0.06).toFixed(3));
+        }
+        svg.appendChild(rect);
+      }
+    }
+    // Draw connection lines — prioritize distant connections to show cross-domain synthesis
+    const connected = new Set();
+    const lineGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    lineGroup.setAttribute('opacity', '0');
+    svg.insertBefore(lineGroup, svg.firstChild);
+
+    // For each needle, connect to 1 distant needle (skip nearest neighbors)
+    // Only half the needles get a connection
+    const connectCount = Math.floor(needlePositions.length / 2);
+    const shuffled = needlePositions.map((p, i) => i).sort(() => Math.random() - 0.5);
+    const toConnect = shuffled.slice(0, connectCount);
+
+    toConnect.forEach(i => {
+      const a = needlePositions[i];
+      // Sort by distance, pick from the far half (not nearest)
+      const distances = needlePositions
+        .map((b, j) => ({ j, dist: Math.hypot(a.x - b.x, a.y - b.y) }))
+        .filter(d => d.j !== i)
+        .sort((x, y) => x.dist - y.dist);
+
+      // Skip the nearest 30% — connect to something in the middle-to-far range
+      const farStart = Math.floor(distances.length * 0.3);
+      for (let k = farStart; k < distances.length; k++) {
+        const d = distances[k];
+        const key = [Math.min(i, d.j), Math.max(i, d.j)].join('-');
+        if (connected.has(key)) continue;
+        connected.add(key);
+
+        const b = needlePositions[d.j];
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', a.x);
+        line.setAttribute('y1', a.y);
+        line.setAttribute('x2', b.x);
+        line.setAttribute('y2', b.y);
+        line.setAttribute('stroke', '#d4c8a0');
+        line.setAttribute('stroke-width', '1.2');
+        line.setAttribute('opacity', '0.6');
+
+        const len = Math.hypot(b.x - a.x, b.y - a.y);
+        line.setAttribute('stroke-dasharray', len);
+        line.setAttribute('stroke-dashoffset', len);
+        const animDraw = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+        animDraw.setAttribute('attributeName', 'stroke-dashoffset');
+        animDraw.setAttribute('from', len);
+        animDraw.setAttribute('to', '0');
+        animDraw.setAttribute('dur', '2s');
+        animDraw.setAttribute('begin', (2.5 + Math.random() * 2).toFixed(1) + 's');
+        animDraw.setAttribute('fill', 'freeze');
+        line.appendChild(animDraw);
+
+        lineGroup.appendChild(line);
+        break; // one connection per needle
+      }
+    });
+
+    // Fade in the line group after initial delay
+    const fadeIn = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+    fadeIn.setAttribute('attributeName', 'opacity');
+    fadeIn.setAttribute('from', '0');
+    fadeIn.setAttribute('to', '1');
+    fadeIn.setAttribute('dur', '1s');
+    fadeIn.setAttribute('begin', '2s');
+    fadeIn.setAttribute('fill', 'freeze');
+    lineGroup.appendChild(fadeIn);
+
+  })();
+  </script>
+  <h1>The future is going to be exciting.<br><em>Don't die before it gets here.</em></h1>
+  <a href="#vision" class="hero-cta">Read vision →</a>
+</section>
+
+<!-- VISION PAGE -->
+<section id="vision">
+  <div class="vision-header">
+    <div class="vision-bg"></div>
+  </div>
+  <div class="vision-content">
+    <h2>Vision</h2>
+
+    <p class="lead">I'm 47. I feel like I'm just getting started.</p>
+
+    <p>The future is going to be extraordinary. AI is rewriting what's possible in science, in medicine, in how we understand ourselves. Gene therapies that were theoretical five years ago are entering human trials today. The tools to extend and improve human life are advancing faster than at any point in history.</p>
+
+    <p>I want to be around to see it. I want to participate in it. I want to help build it. And I want my daughter — she's six — to grow up in a world where her father is still making new memories with her, not a world where she's left with old ones.</p>
+
+    <div class="pull-quote">
+      <blockquote>One day, all we will have left is our memories.<br>And we might not even have those.<br><br>But today is not that day.</blockquote>
+    </div>
+
+    <p>That's the optimism that drives everything I'm building. Not fear. Not a cold solution to a clinical problem. A bridge to the future — for me, for my family, and for anyone who believes the best years are still ahead.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">But there's a gap between that future and today.</p>
+
+    <p>Last year I took a genetic test — not because anyone told me to, but because I was curious. It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it. No guideline said he should.</p>
+
+    <p>That single finding changed everything I thought I knew about my health.</p>
+
+    <p>ATM means my DNA repair machinery is impaired. It means I have a three-fold elevated risk of pancreatic cancer — one of the deadliest cancers there is — and I should have been getting annual surveillance imaging that no one had ever mentioned. It means my daughter has a fifty percent chance of carrying the same variant. It means the statin my doctor casually suggested isn't just for cholesterol — for someone with my genetics, it activates a secondary DNA repair pathway that could matter more than the lipid lowering.</p>
+
+    <p>None of this was hidden. It was all there in the published research, in the clinical guidelines, waiting for someone to connect my data to the science. But my doctor had fifteen minutes, a basic lab panel, and no genetic data. He never had a chance.</p>
+
+    <p>I was doing everything right and flying blind at the same time. And it made me wonder — how many other people are in the same position?</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">The answer is: almost everyone.</p>
+
+    <p>I talked to seventeen men like me — founders, executives, physicians — high-performing people in their 40s and 50s who care deeply about their health and have the resources to do something about it.</p>
+
+    <p>Eighty percent were in physical pain or dealing with increasing injuries. Nearly all of them said the right team would help. Nearly all of them said they couldn't find that team — or couldn't afford the time to coordinate one.</p>
+
+    <p>These aren't people who lack motivation. They're people who lack a system. They see a PCP who knows one piece. A specialist who knows another. A wearable that tracks a third. No one holds the complete picture. No one connects the dots. And no one tells them what actually matters most.</p>
+
+    <p>The structure of American healthcare was built around a simple idea: your primary care physician is the quarterback. They hold the complete picture. They route you to the right specialist at the right time.</p>
+
+    <p>That model is broken and everyone knows it.</p>
+
+    <p>Your PCP has fifteen minutes. They see you once a year. They work from whatever you remember to mention. They don't have your genetic data. They don't review your wearable data. They run a basic panel of twenty biomarkers when eighty-five are commercially available.</p>
+
+    <p>This isn't a failure of competence. It's a failure of structure. The best PCP in the world, in a fifteen-minute visit, with a basic lab panel, cannot do what needs to be done.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">Here is what I believe.</p>
+
+    <div class="belief">
+      <p>Artificial intelligence can hold the complete picture that no human physician can hold alone. Not because AI is smarter than a doctor — it isn't — but because it can hold genetics, bloodwork, wearable data, family history, and published research simultaneously and find the patterns that matter.</p>
+    </div>
+
+    <div class="belief">
+      <p>A single physician, equipped with this intelligence, gains superpowers. Not the power to replace cardiologists and oncologists, but the power to know when you need one — and why — before you or your current doctor ever would.</p>
+    </div>
+
+    <div class="belief">
+      <p>The value isn't in finding more things. It's in finding the right things and making them actionable. A list of twenty findings is noise. Three priorities, ranked by expected impact on your life, with clear next steps — that's medicine.</p>
+    </div>
+
+    <div class="belief">
+      <p>The specialist referral should be the exception, not the default. Most of what specialists do — interpret, advise, monitor — can be augmented by AI. What remains irreplaceable is their hands. Procedures, surgeries, physical examinations. Everything else is pattern recognition and guideline application, and AI is already better at holding the full context than any single specialist seeing you in isolation.</p>
+    </div>
+
+    <div class="belief">
+      <p>The practice of medicine is about to change fundamentally. Not in the way the last twenty years of "digital health" promised and failed to deliver — with patient portals and appointment reminders and wellness apps. But in the way that actually matters: the analytical function of the physician is becoming a computational problem. And computational problems get solved.</p>
+    </div>
+
+    <div class="section-break"></div>
+
+    <p class="lead">What Meridian does.</p>
+
+    <p>Meridian is a health intelligence platform. We collect four types of data that your PCP doesn't have: comprehensive genetics, expanded blood biomarkers, continuous wearable data, and structured personal history. We run that data through a multi-model AI analysis that synthesizes across every domain simultaneously — something no single physician, no matter how brilliant, can do in any number of fifteen-minute visits.</p>
+
+    <p>Then we give a physician the result. Not a raw data dump. A prioritized, ranked, clinically defensible set of recommendations with clear next steps. The physician reviews it, applies their judgment, catches what the model missed, and approves the plan.</p>
+
+    <p>The patient receives clarity. Not a wall of findings. Not an unranked list of suggestions. A small number of high-impact actions, explained in language that connects to their life — why this matters for you, specifically, right now.</p>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">80%</div>
+        <div class="stat-label">of adults 40–60 would receive at least one finding their PCP has not and would not surface</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5–8%</div>
+        <div class="stat-label">will discover something life-altering — a genetic variant that changes their cancer screening or cardiac risk</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">4</div>
+        <div class="stat-label">data pillars — genetics, blood, wearables, and history — held simultaneously by AI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">15 min</div>
+        <div class="stat-label">is all your PCP has. Meridian has your complete picture.</div>
+      </div>
+    </div>
+
+    <div class="section-break"></div>
+
+    <p>We tested this on one patient first. Me.</p>
+
+    <p>The system found ten clinically significant findings. My PCP, through no fault of his own, would have caught three or four of them. The rest — the genetic cancer surveillance, the cardiovascular risk reclassification, the insight about my daughter — would have remained invisible indefinitely.</p>
+
+    <p>Within days, I was acting on recommendations I'd never received in years of annual physicals. Not because I was suddenly more motivated. Because for the first time, someone told me what actually mattered and why.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">The future of medicine is going to be extraordinary. Meridian is the bridge to get there.</p>
+
+    <p>Gene therapies, epigenetic reprogramming, AI-powered diagnostics — the tools that will transform human health are coming. Some are already here. But none of them matter if you don't survive long enough to benefit from them.</p>
+
+    <p>Meridian exists to keep you in the game. To find what your doctor can't see, act on what matters most, and buy you the years that make the difference — the years between now and the medicine of the future.</p>
+
+    <p>I want to watch my daughter graduate. I want to walk her down the aisle. I want to meet her children. Those aren't metaphors. Those are the stakes. And I know now that the healthcare system I trusted wasn't equipped to keep me on that path. Not because it didn't care. Because it couldn't see.</p>
+
+    <p>I'm just getting started. And I don't want anyone else to find out late what they could have known early.</p>
+
+    <div class="signature">jason yim</div>
+
+    <div class="section-break"></div>
+
+    <!-- WAITLIST -->
+    <div class="waitlist" id="waitlist">
+      <p class="lead">Be first to know.</p>
+      <p>We're building Meridian now. Join the waitlist and we'll keep you updated on our progress — and let you know when we're accepting applications.</p>
+      <form class="waitlist-form" id="waitlistForm" onsubmit="return submitWaitlist(event)">
+        <div class="waitlist-input-row">
+          <input type="text" id="waitlistName" placeholder="First name" required autocomplete="given-name" />
+          <input type="email" id="waitlistEmail" placeholder="Email" required autocomplete="email" />
+          <button type="submit" id="waitlistBtn">Join waitlist</button>
+        </div>
+        <p class="waitlist-status" id="waitlistStatus"></p>
+      </form>
+    </div>
+
+    <div class="section-break"></div>
+
+    <!-- EXPANDABLE SECTIONS -->
+    <div class="expandable">
+      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
+        <h3>The Four Pillars</h3>
+        <span class="toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <p><strong>Genetics.</strong> A 167-gene panel that screens for hereditary cancer syndromes, cardiac conditions, and actionable variants. Your PCP will never order this.</p>
+        <p><strong>Blood.</strong> 85+ biomarkers including Lp(a), ApoB, fasting insulin, and markers that standard panels miss. Twenty percent of the population has an elevated Lp(a) that their doctor has never tested for.</p>
+        <p><strong>Wearables.</strong> Continuous heart rate, HRV, sleep architecture, and activity data. Not a snapshot — a film.</p>
+        <p><strong>History.</strong> Structured family history, symptoms, medications, supplements, and lifestyle data. The context that makes everything else interpretable.</p>
+      </div>
+    </div>
+
+    <div class="expandable">
+      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
+        <h3>The AI Layer</h3>
+        <span class="toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <p>Meridian's analysis isn't a single model making a single pass. It's a multi-model board review — multiple AI systems analyzing your data independently, then debating their findings adversarially. The result is stress-tested before a physician ever sees it.</p>
+        <p>The AI holds every relevant clinical guideline — NCCN, ACMG, AHA, USPSTF — simultaneously. No physician memorizes all of these. The system applies all of them to your specific data.</p>
+        <p>Then it ranks. Not just what could be done, but what produces the largest expected improvement in your life, given your specific risk profile. Three priorities. Clear next steps. One physician to execute.</p>
+      </div>
+    </div>
+
+    <div class="expandable">
+      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
+        <h3>The Physician</h3>
+        <span class="toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <p>AI doesn't replace the doctor. It gives the doctor superpowers.</p>
+        <p>Meridian's physician reviews the AI's synthesis, applies clinical judgment, catches what the model missed, and approves the final plan. They deliver your results personally — not through a portal, not through a notification. A physician who knows your name, your data, and your priorities.</p>
+        <p>The specialist referral becomes the exception. When you need someone's hands — a procedure, a surgery, a physical exam — you see a specialist. Everything else, your empowered physician handles.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer id="contact">
+  <p>MERIDIAN &nbsp;·&nbsp; San Diego, CA</p>
+</footer>
+
+<script>
+// Scroll reveal — fade up as elements enter viewport
+document.addEventListener('DOMContentLoaded', () => {
+  // Add reveal class to all content elements in the vision section
+  const selectors = [
+    '.vision-content p',
+    '.vision-content .section-break',
+    '.vision-content .pull-quote',
+    '.vision-content .belief',
+    '.vision-content .stats-grid',
+    '.vision-content .expandable',
+    '.vision-content .waitlist',
+    '.vision-content .signature',
+    '.vision-content h2'
+  ];
+  
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('reveal');
+    });
+  });
+
+  // Also reveal individual stat cards with stagger
+  document.querySelectorAll('.stat').forEach((el, i) => {
+    el.classList.add('reveal', 'delay-' + Math.min(i, 3));
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+</script>
+
+<script>
+// Waitlist → Google Form (no-cors POST, responses go to Google Sheets)
+const GFORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdUp9HtvxvZMyPTYLjaO-L3oyTrzy3O47BI3FLk78mBFxX5JQ/formResponse';
+const GFORM_NAME = 'entry.1875581820';
+const GFORM_EMAIL = 'entry.1221701213';
+
+function submitWaitlist(e) {
+  e.preventDefault();
+  const name = document.getElementById('waitlistName').value.trim();
+  const email = document.getElementById('waitlistEmail').value.trim();
+  const btn = document.getElementById('waitlistBtn');
+  const status = document.getElementById('waitlistStatus');
+
+  if (!name || !email) return false;
+
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+  status.textContent = '';
+  status.className = 'waitlist-status';
+
+  const formData = new FormData();
+  formData.append(GFORM_NAME, name);
+  formData.append(GFORM_EMAIL, email);
+
+  fetch(GFORM_ACTION, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors'
+  })
+  .then(() => {
+    status.textContent = "You're on the list. We'll be in touch.";
+    status.className = 'waitlist-status success';
+    btn.textContent = 'Joined ✓';
+    document.getElementById('waitlistEmail').value = '';
+  })
+  .catch(() => {
+    status.textContent = 'Something went wrong. Try again.';
+    status.className = 'waitlist-status error';
+    btn.disabled = false;
+    btn.textContent = 'Join waitlist';
+  });
+
+  return false;
+}
+</script>
+</body>
+</html>
