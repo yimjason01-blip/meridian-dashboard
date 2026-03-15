@@ -19,8 +19,8 @@
     -webkit-font-smoothing: antialiased;
     margin: 0;
     padding: 0;
+    height: 100vh;
     overflow-x: hidden;
-    
   }
 
   /* NAV */
@@ -96,36 +96,6 @@
   }
   .hero-cta:hover { color: #d4d0c8; }
 
-  /* CONTENT SECTIONS */
-  .content {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 48px;
-  }
-
-  /* CHAPTER HEADINGS */
-  .chapter {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-top: 120px;
-    margin-bottom: 40px;
-  }
-  .chapter-num {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #c8ad86;
-    flex-shrink: 0;
-  }
-  .chapter-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    color: #c8ad86;
-    line-height: 1.2;
-  }
-
   /* VISION PAGE */
   .vision-header {
     display: none;
@@ -139,25 +109,7 @@
     max-width: 680px;
     margin: 0 auto;
     padding: 8px 32px 120px;
-    display: none; /* replaced by slides */
   }
-  .content p {
-    margin-top: 28px;
-    margin-bottom: 0;
-    color: rgba(254,255,241,0.94);
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.6;
-  }
-  .content p:first-child {
-    margin-top: 0;
-  }
-  .content p.lead {
-    color: rgba(254,255,241,0.94);
-    font-size: 20px;
-    font-weight: 500;
-  }
-  /* Legacy — keep for old selectors */
   .vision-content h2 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -393,7 +345,6 @@
     .hero { padding: 100px 24px 60px; }
     .vision-header { padding: 48px 0 0; }
     .vision-content { padding: 0 24px 80px; }
-    .content { padding: 0 24px; }
     .waitlist-input-row { flex-direction: column; }
     .waitlist-input-row button { width: 100%; }
     .stats-grid { grid-template-columns: 1fr; }
@@ -547,105 +498,152 @@
   <a href="#vision" class="hero-cta">Read vision →</a>
 </section>
 
-<!-- VISION CONTENT -->
-<div class="content" id="vision">
-
-  <p class="lead">I'm 47. I feel like I'm just getting started.</p>
-  <p>The future is going to be extraordinary. AI is rewriting what's possible in science, in medicine, in how we understand ourselves. Gene therapies that were theoretical five years ago are entering human trials today. The tools to extend and improve human life are advancing faster than at any point in history.</p>
-  <p>I want to be around to see it. I want to participate in it. I want to help build it. And I want my daughter — she's six — to grow up in a world where her father is still making new memories with her, not a world where she's left with old ones.</p>
-
-  <div class="pull-quote">
-    <blockquote>One day, all we will have left is our memories.<br>And we might not even have those.<br><br>But today is not that day.</blockquote>
+<!-- VISION PAGE -->
+<section id="vision">
+  <div class="vision-header">
+    <div class="vision-bg"></div>
   </div>
+  <div class="vision-content">
+    <h2>Vision</h2>
 
-  <p>That's the optimism that drives everything I'm building. Not fear. Not a cold solution to a clinical problem. A bridge to the future — for me, for my family, and for anyone who believes the best years are still ahead.</p>
+    <p class="lead">I'm 47. I feel like I'm just getting started.</p>
 
-  <!-- 01 -->
-  <div class="chapter"><span class="chapter-num">Section 1</span><span class="chapter-title">The Gap</span></div>
-  <p>Last year I took a genetic test — not because anyone told me to, but because I was curious. It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it. No guideline said he should.</p>
-  <p>That single finding changed everything I thought I knew about my health.</p>
-  <p>ATM means my DNA repair machinery is impaired. It means I have a three-fold elevated risk of pancreatic cancer — one of the deadliest cancers there is — and I should have been getting annual surveillance imaging that no one had ever mentioned. It means my daughter has a fifty percent chance of carrying the same variant. It means the statin my doctor casually suggested isn't just for cholesterol — for someone with my genetics, it activates a secondary DNA repair pathway that could matter more than the lipid lowering.</p>
-  <p>None of this was hidden. It was all there in the published research, in the clinical guidelines, waiting for someone to connect my data to the science. But my doctor had fifteen minutes, a basic lab panel, and no genetic data. He never had a chance.</p>
-  <p>I was doing everything right and flying blind at the same time. And it made me wonder — how many other people are in the same position?</p>
+    <p>The future is going to be extraordinary. AI is rewriting what's possible in science, in medicine, in how we understand ourselves. Gene therapies that were theoretical five years ago are entering human trials today. The tools to extend and improve human life are advancing faster than at any point in history.</p>
 
-  <!-- 02 -->
-  <div class="chapter"><span class="chapter-num">Section 2</span><span class="chapter-title">The Problem</span></div>
-  <p>The answer is: almost everyone.</p>
-  <p>I talked to seventeen men like me — founders, executives, physicians — high-performing people in their 40s and 50s who care deeply about their health and have the resources to do something about it.</p>
-  <p>Eighty percent were in physical pain or dealing with increasing injuries. Nearly all of them said the right team would help. Nearly all of them said they couldn't find that team — or couldn't afford the time to coordinate one.</p>
-  <p>These aren't people who lack motivation. They're people who lack a system. They see a PCP who knows one piece. A specialist who knows another. A wearable that tracks a third. No one holds the complete picture. No one connects the dots. And no one tells them what actually matters most.</p>
+    <p>I want to be around to see it. I want to participate in it. I want to help build it. And I want my daughter — she's six — to grow up in a world where her father is still making new memories with her, not a world where she's left with old ones.</p>
 
-  <!-- 03 -->
-  <div class="chapter"><span class="chapter-num">Section 3</span><span class="chapter-title">The Broken System</span></div>
-  <p>The structure of American healthcare was built around a simple idea: your primary care physician is the quarterback. They hold the complete picture. They route you to the right specialist at the right time.</p>
-  <p>That model is broken and everyone knows it.</p>
-  <p>Your PCP has fifteen minutes. They see you once a year. They work from whatever you remember to mention. They don't have your genetic data. They don't review your wearable data. They run a basic panel of twenty biomarkers when eighty-five are commercially available.</p>
-  <p>This isn't a failure of competence. It's a failure of structure. The best PCP in the world, in a fifteen-minute visit, with a basic lab panel, cannot do what needs to be done.</p>
-
-  <!-- 04 -->
-  <div class="chapter"><span class="chapter-num">Section 4</span><span class="chapter-title">What I Believe</span></div>
-  <p>Artificial intelligence can hold the complete picture that no human physician can hold alone. Not because AI is smarter than a doctor — it isn't — but because it can hold genetics, bloodwork, wearable data, family history, and published research simultaneously and find the patterns that matter.</p>
-  <p>A single physician, equipped with this intelligence, gains superpowers. Not the power to replace cardiologists and oncologists, but the power to know when you need one — and why — before you or your current doctor ever would.</p>
-  <p>The value isn't in finding more things. It's in finding the right things and making them actionable. A list of twenty findings is noise. Three priorities, ranked by expected impact on your life, with clear next steps — that's medicine.</p>
-  <p>The specialist referral should be the exception, not the default. Most of what specialists do — interpret, advise, monitor — can be augmented by AI. What remains irreplaceable is their hands. Procedures, surgeries, physical examinations. Everything else is pattern recognition and guideline application, and AI is already better at holding the full context than any single specialist seeing you in isolation.</p>
-  <p>The practice of medicine is about to change fundamentally. Not in the way the last twenty years of "digital health" promised and failed to deliver — with patient portals and appointment reminders and wellness apps. But in the way that actually matters: the analytical function of the physician is becoming a computational problem. And computational problems get solved.</p>
-
-  <!-- 05 -->
-  <div class="chapter"><span class="chapter-num">Section 5</span><span class="chapter-title">What Meridian Does</span></div>
-  <p>Meridian is a health intelligence platform. We collect four types of data that your PCP doesn't have: comprehensive genetics, expanded blood biomarkers, continuous wearable data, and structured personal history. We run that data through a multi-model AI analysis that synthesizes across every domain simultaneously — something no single physician, no matter how brilliant, can do in any number of fifteen-minute visits.</p>
-  <p>Then we give a physician the result. Not a raw data dump. A prioritized, ranked, clinically defensible set of recommendations with clear next steps. The physician reviews it, applies their judgment, catches what the model missed, and approves the plan.</p>
-  <p>The patient receives clarity. Not a wall of findings. Not an unranked list of suggestions. A small number of high-impact actions, explained in language that connects to their life — why this matters for you, specifically, right now.</p>
-
-  <div class="stats-grid" style="margin-top:80px;">
-    <div class="stat">
-      <div class="stat-number">80%</div>
-      <div class="stat-label">of adults 40–60 would receive at least one finding their PCP has not and would not surface</div>
+    <div class="pull-quote">
+      <blockquote>One day, all we will have left is our memories.<br>And we might not even have those.<br><br>But today is not that day.</blockquote>
     </div>
-    <div class="stat">
-      <div class="stat-number">5–8%</div>
-      <div class="stat-label">will discover something life-altering — a genetic variant that changes their cancer screening or cardiac risk</div>
+
+    <p>That's the optimism that drives everything I'm building. Not fear. Not a cold solution to a clinical problem. A bridge to the future — for me, for my family, and for anyone who believes the best years are still ahead.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">But there's a gap between that future and today.</p>
+
+    <p>Last year I took a genetic test — not because anyone told me to, but because I was curious. It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it. No guideline said he should.</p>
+
+    <p>That single finding changed everything I thought I knew about my health.</p>
+
+    <p>ATM means my DNA repair machinery is impaired. It means I have a three-fold elevated risk of pancreatic cancer — one of the deadliest cancers there is — and I should have been getting annual surveillance imaging that no one had ever mentioned. It means my daughter has a fifty percent chance of carrying the same variant. It means the statin my doctor casually suggested isn't just for cholesterol — for someone with my genetics, it activates a secondary DNA repair pathway that could matter more than the lipid lowering.</p>
+
+    <p>None of this was hidden. It was all there in the published research, in the clinical guidelines, waiting for someone to connect my data to the science. But my doctor had fifteen minutes, a basic lab panel, and no genetic data. He never had a chance.</p>
+
+    <p>I was doing everything right and flying blind at the same time. And it made me wonder — how many other people are in the same position?</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">The answer is: almost everyone.</p>
+
+    <p>I talked to seventeen men like me — founders, executives, physicians — high-performing people in their 40s and 50s who care deeply about their health and have the resources to do something about it.</p>
+
+    <p>Eighty percent were in physical pain or dealing with increasing injuries. Nearly all of them said the right team would help. Nearly all of them said they couldn't find that team — or couldn't afford the time to coordinate one.</p>
+
+    <p>These aren't people who lack motivation. They're people who lack a system. They see a PCP who knows one piece. A specialist who knows another. A wearable that tracks a third. No one holds the complete picture. No one connects the dots. And no one tells them what actually matters most.</p>
+
+    <p>The structure of American healthcare was built around a simple idea: your primary care physician is the quarterback. They hold the complete picture. They route you to the right specialist at the right time.</p>
+
+    <p>That model is broken and everyone knows it.</p>
+
+    <p>Your PCP has fifteen minutes. They see you once a year. They work from whatever you remember to mention. They don't have your genetic data. They don't review your wearable data. They run a basic panel of twenty biomarkers when eighty-five are commercially available.</p>
+
+    <p>This isn't a failure of competence. It's a failure of structure. The best PCP in the world, in a fifteen-minute visit, with a basic lab panel, cannot do what needs to be done.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">Here is what I believe.</p>
+
+    <div class="belief">
+      <p>Artificial intelligence can hold the complete picture that no human physician can hold alone. Not because AI is smarter than a doctor — it isn't — but because it can hold genetics, bloodwork, wearable data, family history, and published research simultaneously and find the patterns that matter.</p>
     </div>
-    <div class="stat">
-      <div class="stat-number">4</div>
-      <div class="stat-label">data pillars — genetics, blood, wearables, and history — held simultaneously by AI</div>
+
+    <div class="belief">
+      <p>A single physician, equipped with this intelligence, gains superpowers. Not the power to replace cardiologists and oncologists, but the power to know when you need one — and why — before you or your current doctor ever would.</p>
     </div>
-    <div class="stat">
-      <div class="stat-number">15 min</div>
-      <div class="stat-label">is all your PCP has. Meridian has your complete picture.</div>
+
+    <div class="belief">
+      <p>The value isn't in finding more things. It's in finding the right things and making them actionable. A list of twenty findings is noise. Three priorities, ranked by expected impact on your life, with clear next steps — that's medicine.</p>
     </div>
-  </div>
 
-  <!-- 06 -->
-  <div class="chapter"><span class="chapter-num">Section 6</span><span class="chapter-title">Proof</span></div>
-  <p>We tested this on one patient first. Me.</p>
-  <p>The system found ten clinically significant findings. My PCP, through no fault of his own, would have caught three or four of them. The rest — the genetic cancer surveillance, the cardiovascular risk reclassification, the insight about my daughter — would have remained invisible indefinitely.</p>
-  <p>Within days, I was acting on recommendations I'd never received in years of annual physicals. Not because I was suddenly more motivated. Because for the first time, someone told me what actually mattered and why.</p>
+    <div class="belief">
+      <p>The specialist referral should be the exception, not the default. Most of what specialists do — interpret, advise, monitor — can be augmented by AI. What remains irreplaceable is their hands. Procedures, surgeries, physical examinations. Everything else is pattern recognition and guideline application, and AI is already better at holding the full context than any single specialist seeing you in isolation.</p>
+    </div>
 
-  <!-- 07 -->
-  <div class="chapter"><span class="chapter-num">Section 7</span><span class="chapter-title">The Bridge</span></div>
-  <p>Gene therapies, epigenetic reprogramming, AI-powered diagnostics — the tools that will transform human health are coming. Some are already here. But none of them matter if you don't survive long enough to benefit from them.</p>
-  <p>Meridian exists to keep you in the game. To find what your doctor can't see, act on what matters most, and buy you the years that make the difference — the years between now and the medicine of the future.</p>
-  <p>I want to watch my daughter graduate. I want to walk her down the aisle. I want to meet her children. Those aren't metaphors. Those are the stakes. And I know now that the healthcare system I trusted wasn't equipped to keep me on that path. Not because it didn't care. Because it couldn't see.</p>
-  <p>I'm just getting started. And I don't want anyone else to find out late what they could have known early.</p>
+    <div class="belief">
+      <p>The practice of medicine is about to change fundamentally. Not in the way the last twenty years of "digital health" promised and failed to deliver — with patient portals and appointment reminders and wellness apps. But in the way that actually matters: the analytical function of the physician is becoming a computational problem. And computational problems get solved.</p>
+    </div>
 
-  <div class="signature">jason yim</div>
+    <div class="section-break"></div>
 
-  <!-- WAITLIST -->
-  <div class="waitlist" id="waitlist" style="margin-top:120px;">
-    <p class="lead">Be first to know.</p>
-    <p>We're building Meridian now. Join the waitlist and we'll keep you updated on our progress — and let you know when we're accepting applications.</p>
-    <form class="waitlist-form" id="waitlistForm" onsubmit="return submitWaitlist(event)">
-      <div class="waitlist-input-row">
-        <input type="text" id="waitlistName" placeholder="First name" required autocomplete="given-name" />
-        <input type="email" id="waitlistEmail" placeholder="Email" required autocomplete="email" />
-        <button type="submit" id="waitlistBtn">Join waitlist</button>
+    <p class="lead">What Meridian does.</p>
+
+    <p>Meridian is a health intelligence platform. We collect four types of data that your PCP doesn't have: comprehensive genetics, expanded blood biomarkers, continuous wearable data, and structured personal history. We run that data through a multi-model AI analysis that synthesizes across every domain simultaneously — something no single physician, no matter how brilliant, can do in any number of fifteen-minute visits.</p>
+
+    <p>Then we give a physician the result. Not a raw data dump. A prioritized, ranked, clinically defensible set of recommendations with clear next steps. The physician reviews it, applies their judgment, catches what the model missed, and approves the plan.</p>
+
+    <p>The patient receives clarity. Not a wall of findings. Not an unranked list of suggestions. A small number of high-impact actions, explained in language that connects to their life — why this matters for you, specifically, right now.</p>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">80%</div>
+        <div class="stat-label">of adults 40–60 would receive at least one finding their PCP has not and would not surface</div>
       </div>
-      <p class="waitlist-status" id="waitlistStatus"></p>
-    </form>
-  </div>
+      <div class="stat">
+        <div class="stat-number">5–8%</div>
+        <div class="stat-label">will discover something life-altering — a genetic variant that changes their cancer screening or cardiac risk</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">4</div>
+        <div class="stat-label">data pillars — genetics, blood, wearables, and history — held simultaneously by AI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">15 min</div>
+        <div class="stat-label">is all your PCP has. Meridian has your complete picture.</div>
+      </div>
+    </div>
 
-  <!-- EXPANDABLE DETAILS -->
-  <div style="margin-top:120px;">
+    <div class="section-break"></div>
+
+    <p>We tested this on one patient first. Me.</p>
+
+    <p>The system found ten clinically significant findings. My PCP, through no fault of his own, would have caught three or four of them. The rest — the genetic cancer surveillance, the cardiovascular risk reclassification, the insight about my daughter — would have remained invisible indefinitely.</p>
+
+    <p>Within days, I was acting on recommendations I'd never received in years of annual physicals. Not because I was suddenly more motivated. Because for the first time, someone told me what actually mattered and why.</p>
+
+    <div class="section-break"></div>
+
+    <p class="lead">The future of medicine is going to be extraordinary. Meridian is the bridge to get there.</p>
+
+    <p>Gene therapies, epigenetic reprogramming, AI-powered diagnostics — the tools that will transform human health are coming. Some are already here. But none of them matter if you don't survive long enough to benefit from them.</p>
+
+    <p>Meridian exists to keep you in the game. To find what your doctor can't see, act on what matters most, and buy you the years that make the difference — the years between now and the medicine of the future.</p>
+
+    <p>I want to watch my daughter graduate. I want to walk her down the aisle. I want to meet her children. Those aren't metaphors. Those are the stakes. And I know now that the healthcare system I trusted wasn't equipped to keep me on that path. Not because it didn't care. Because it couldn't see.</p>
+
+    <p>I'm just getting started. And I don't want anyone else to find out late what they could have known early.</p>
+
+    <div class="signature">jason yim</div>
+
+    <div class="section-break"></div>
+
+    <!-- WAITLIST -->
+    <div class="waitlist" id="waitlist">
+      <p class="lead">Be first to know.</p>
+      <p>We're building Meridian now. Join the waitlist and we'll keep you updated on our progress — and let you know when we're accepting applications.</p>
+      <form class="waitlist-form" id="waitlistForm" onsubmit="return submitWaitlist(event)">
+        <div class="waitlist-input-row">
+          <input type="text" id="waitlistName" placeholder="First name" required autocomplete="given-name" />
+          <input type="email" id="waitlistEmail" placeholder="Email" required autocomplete="email" />
+          <button type="submit" id="waitlistBtn">Join waitlist</button>
+        </div>
+        <p class="waitlist-status" id="waitlistStatus"></p>
+      </form>
+    </div>
+
+    <div class="section-break"></div>
+
+    <!-- EXPANDABLE SECTIONS -->
     <div class="expandable">
       <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
         <h3>The Four Pillars</h3>
@@ -658,6 +656,7 @@
         <p><strong>History.</strong> Structured family history, symptoms, medications, supplements, and lifestyle data. The context that makes everything else interpretable.</p>
       </div>
     </div>
+
     <div class="expandable">
       <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
         <h3>The AI Layer</h3>
@@ -669,6 +668,7 @@
         <p>Then it ranks. Not just what could be done, but what produces the largest expected improvement in your life, given your specific risk profile. Three priorities. Clear next steps. One physician to execute.</p>
       </div>
     </div>
+
     <div class="expandable">
       <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
         <h3>The Physician</h3>
@@ -680,10 +680,9 @@
         <p>The specialist referral becomes the exception. When you need someone's hands — a procedure, a surgery, a physical exam — you see a specialist. Everything else, your empowered physician handles.</p>
       </div>
     </div>
-  </div>
 
-  <div style="height:120px;"></div>
-</div>
+  </div>
+</section>
 
 <footer id="contact">
   <p>MERIDIAN &nbsp;·&nbsp; San Diego, CA</p>
@@ -694,13 +693,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Add reveal class to all content elements in the vision section
   const selectors = [
-    '.content p',
-    '.content .pull-quote',
-    '.content .chapter',
-    '.content .stats-grid',
-    '.content .expandable',
-    '.content .waitlist',
-    '.content .signature'
+    '.vision-content p',
+    '.vision-content .section-break',
+    '.vision-content .pull-quote',
+    '.vision-content .belief',
+    '.vision-content .stats-grid',
+    '.vision-content .expandable',
+    '.vision-content .waitlist',
+    '.vision-content .signature',
+    '.vision-content h2'
   ];
   
   selectors.forEach(sel => {
