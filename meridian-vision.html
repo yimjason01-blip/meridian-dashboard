@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian</title>
+<title>The Meridian Project</title>
+<meta name="description" content="Superhuman clarity. All of your data. Every relevant study. One thing to do this week.">
+<meta property="og:title" content="The Meridian Project">
+<meta property="og:description" content="Superhuman clarity. All of your data. Every relevant study. One thing to do this week.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://the-meridian-project.com">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Meridian Project">
+<meta name="twitter:description" content="Superhuman clarity. All of your data. Every relevant study. One thing to do this week.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -36,17 +44,21 @@
     z-index: 100;
     background: rgba(10,10,10,0.9);
     backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+  }
+  nav.nav-hidden {
+    transform: translateY(-100%);
   }
   .nav-logo {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #d4d0c8;
   }
   .nav-links a {
-    color: #8a8578;
+    color: #e8e4dc;
     text-decoration: none;
     font-size: 13px;
     letter-spacing: 1px;
@@ -63,7 +75,7 @@
     justify-content: center;
     align-items: flex-start;
     text-align: left;
-    padding: 120px 48px 40px;
+    padding: 120px 48px 60px;
     position: relative;
     max-width: 760px;
     margin: 0 auto;
@@ -88,15 +100,15 @@
   .hero h1 em {
     display: block !important;
     margin-top: 16px;
-    color: #b8a88a;
+    color: #ffffff;
     font-style: italic;
     font-size: 1em;
     line-height: 1.3;
   }
   .hero-cta {
     margin-top: 32px;
-    color: #8a8578;
-    font-size: 13px;
+    color: #d4d0c8;
+    font-size: 14px;
     letter-spacing: 1px;
     text-decoration: none;
     transition: color 0.3s;
@@ -120,14 +132,14 @@
   }
   .chapter-num {
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     color: #c8ad86;
     flex-shrink: 0;
   }
   .chapter-title {
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     color: #c8ad86;
     line-height: 1.2;
@@ -149,19 +161,19 @@
     display: none; /* replaced by slides */
   }
   .content p {
-    margin-top: 28px;
+    margin-top: 30px;
     margin-bottom: 0;
-    color: rgba(254,255,241,0.94);
+    color: rgba(254,255,241,0.97);
     font-size: 18px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.75;
   }
   .content p:first-child {
     margin-top: 0;
   }
   .content p.lead {
-    color: rgba(254,255,241,0.94);
-    font-size: 20px;
+    color: rgba(254,255,241,0.97);
+    font-size: 22px;
     font-weight: 500;
   }
   /* Legacy — keep for old selectors */
@@ -171,7 +183,7 @@
     font-size: 13px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #8a8578;
+    color: #d4d0c8;
     margin-bottom: 48px;
   }
   .vision-content p {
@@ -236,12 +248,12 @@
   .stat-number {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 36px;
-    color: #b8a88a;
+    color: #ffffff;
     margin-bottom: 8px;
   }
   .stat-label {
     font-size: 13px;
-    color: #8a8578;
+    color: #d4d0c8;
     line-height: 1.5;
   }
 
@@ -268,7 +280,7 @@
   }
   .expandable-header .toggle {
     font-size: 20px;
-    color: #8a8578;
+    color: #d4d0c8;
     transition: transform 0.3s;
   }
   .expandable-body {
@@ -292,7 +304,7 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-size: 18px;
-    color: #8a8578;
+    color: #d4d0c8;
   }
 
   /* FOOTER */
@@ -307,12 +319,10 @@
   /* SCROLL REVEAL */
   .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: opacity 0.6s ease;
   }
   .reveal.visible {
     opacity: 1;
-    transform: translateY(0);
   }
   /* Stagger children slightly */
   .reveal.delay-1 { transition-delay: 0.1s; }
@@ -360,7 +370,7 @@
   }
   .waitlist-input-row input[type="text"]:focus,
   .waitlist-input-row input[type="email"]:focus {
-    border-color: #b8a88a;
+    border-color: #ffffff;
   }
   .waitlist-input-row button {
     padding: 14px 24px;
@@ -368,7 +378,7 @@
     font-weight: 600;
     font-family: 'Inter', sans-serif;
     letter-spacing: 0.5px;
-    background: #b8a88a;
+    background: #ffffff;
     color: #0a0a0a;
     border: none;
     border-radius: 8px;
@@ -377,7 +387,7 @@
     transition: background 0.2s, transform 0.1s;
   }
   .waitlist-input-row button:hover {
-    background: #c8b89a;
+    background: #e8e4dc;
   }
   .waitlist-input-row button:active {
     transform: scale(0.97);
@@ -396,51 +406,55 @@
 
   /* MOBILE */
   @media (max-width: 640px) {
-    nav { padding: 16px 24px; }
-    .hero { padding: 100px 24px 60px; align-items: flex-start !important; text-align: left !important; }
+    nav { padding: 10px 16px; gap: 6px; }
+    .nav-logo { font-size: 10px; letter-spacing: 2px; }
+    .nav-links a { font-size: 10px; padding: 5px 12px !important; letter-spacing: 1px !important; margin-left: 8px; }
+    .hero { padding: 80px 24px 40px; align-items: flex-start !important; text-align: left !important; min-height: 100vh !important; justify-content: center !important; }
     .hero h1 { font-size: clamp(22px, 6vw, 28px); text-align: left !important; }
     .hero h1 em { display: block !important; font-size: 1em; }
     .hero-icon { width: 70vw; }
+    .content p { font-size: 18px; line-height: 1.75; }
+    .chapter-num, .chapter-title { font-size: 20px; }
     .vision-header { padding: 48px 0 0; }
     .vision-content { padding: 0 24px 80px; }
     .content { padding: 0 24px; }
     .waitlist-input-row { flex-direction: column; }
     .waitlist-input-row button { width: 100%; }
     .stats-grid { grid-template-columns: 1fr; }
-    .nav-links a { margin-left: 16px; font-size: 12px; }
+
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">Meridian</div>
+  <div class="nav-logo">The Meridian Project</div>
   <div class="nav-links">
-    <a href="#whats-next" onclick="event.preventDefault(); document.getElementById('whats-next').scrollIntoView({behavior:'smooth', block:'start'});" style="border:1px solid rgba(184,168,138,0.3); padding:8px 20px; border-radius:2px; letter-spacing:2px;">What's Next?</a>
+    <a href="#whats-next" onclick="event.preventDefault(); document.getElementById('whats-next').scrollIntoView({behavior:'smooth', block:'start'});" style="border:1px solid rgba(255,255,255,0.4); padding:8px 20px; border-radius:2px; letter-spacing:2px; white-space:nowrap;">What's Next?</a>
   </div>
 </nav>
 
 <!-- HOME / HERO -->
 <section class="hero" id="home">
 
-  <h1>I'm Healthy and I intend to stay that way.<em>Traditional Healthcare is not built for me.</em></h1>
-  <a href="#vision" class="hero-cta">Read vision →</a>
+  <h1>If you're reading this,<em>it's because I think you're like me.</em></h1>
+  <a href="#vision" class="hero-cta">Read vision ↓</a>
 </section>
 
 <!-- VISION CONTENT -->
 <div class="content" id="vision">
 
   <!-- Section 1 -->
-  <div class="chapter"><span class="chapter-num">1</span><span class="chapter-title">What I've Seen Doesn't Make Sense.</span></div>
+  <div class="chapter"><span class="chapter-num">1</span><span class="chapter-title">What I've Seen Isn't Supposed to Happen.</span></div>
   <p>I've seen too many young people die early from diseases we think of as old-people problems. Cancer. Heart disease. Stroke. They weren't old. They had families, plans, decades they expected to have. They made daily sacrifices for a better future that never arrived. Most of them believed they were healthy.</p>
-  <p>I've also seen people in their 70s living extraordinary lives — surfing, building companies, traveling with their grandchildren, fully present and fully alive. About as happy as happy people get…they are my role models. They prove what is possible is far beyond what society accepts as normal.</p>
+  <p>I've also seen people in their 70s living extraordinary lives — surfing, building companies, traveling with their grandchildren, fully present and fully alive. About as happy as happy people get…they are my role models. They prove that what is possible is far beyond what society and modern medicine accepts as normal.</p>
   <p>Both groups might be outliers. But I know which side I want to be on. And I'll do everything I can to stack the deck in my favor.</p>
 
   <!-- Section 2 -->
   <div class="chapter"><span class="chapter-num">2</span><span class="chapter-title">A Problem as Old as Time.</span></div>
   <p>Everyone knows the allegory of the blind men and the elephant. So many of society's problems come from seeing part of the picture and being confident that its interpretation is the "truth."</p>
-  <p>Your physician, even if they're following guidelines, is still only looking at part of your health picture. The question is — what is the whole picture?</p>
-  <p>There are four types of data that really matter: your genome, your blood, your wearable data, and your personal history. Each one alone tells a partial story. When assembled, they create a classic "the sum is greater than the parts" scenario — because there's an additional layer to the story. It's the connections between the data that change the interpretation.</p>
+  <p>Your primary care physician, even if they're following guidelines, is still only looking at part of your health picture. The question is — what is the whole picture?</p>
+  <p>There are four sources of data that really matter to assemble an initial picture: your genome, your blood, your wearable data, and your personal history. Each one alone tells a partial story. When assembled, they create a classic "the sum is greater than the parts" scenario — because there's an additional layer to the story. It's the connections between the data that change the interpretation.</p>
   <p>From interpretation, we need to identify the entire action space.</p>
   <p>From the action space, we need a probabilistic estimate of effect size.</p>
   <p>It's a superhuman task.</p>
@@ -449,45 +463,61 @@
   <div class="chapter"><span class="chapter-num">3</span><span class="chapter-title">Your AI Medical Board</span></div>
   <p>The human mind is too small for the job.</p>
   <p>In the world of AI, we think in terms of "tokens" — essentially the unit of information a model can hold and reason over.</p>
-  <p>If we were to ask a physician to hold the four pillars of personal health data — your genome, your blood, your wearable data, and your history — along with the connections between them, they would have to hold about 300,000 tokens in their mind. That's the equivalent of asking them to read three novels simultaneously and remember how a character in book one connects to an event in book three.</p>
+  <p>If we were to ask a physician to hold the four pillars of personal health data — your genome, your blood, your wearable data, and your history — along with the connections between them, they would have to hold about 300,000 tokens in their mind. That's the equivalent of asking them to read three novels simultaneously and remember how a character in book one connects to an event in book three…for each patient.</p>
   <p>A physician's working memory is limited to about 150 tokens. They have rules, guidelines, and heuristics — some leverage in their favor — but they are knives in a data gunfight.</p>
-  <p>The context window of a frontier scientific reasoning AI is over 1,000,000 tokens.</p>
+  <p>The context window of a frontier scientific-reasoning AI is over 1,000,000 tokens.</p>
   <p>But saying "AI" is the answer fails to acknowledge the pitfalls of AI. AIs are not omniscient. They are not oracles. Yes, each one is likely now smarter than any single person on earth, and their rate of improvement is almost incomprehensible. However, just like a person, there is bias, incompleteness of information, weighting of values. Stating something to be objectively true is harder than it sounds.</p>
-  <p>Humans, throughout time, have had the intellectual honesty to pursue systems that overcome their own flaws in high-stakes decisions. Borrowing from methods developed by tumor medical boards, the CIA, and boards of publicly traded companies, we've built an AI board review system that makes Anthropic, Gemini, Grok, Open AI, and Perplexity debate over your data and its interpretation to arrive at the most objective truth.</p>
+  <p>Humans, throughout time, have had the intellectual honesty to pursue systems that overcome their own flaws in high-stakes decisions. Borrowing from methods developed by tumor medical boards, the CIA, and boards of publicly traded companies, we've built an AI board review system that orchestrates 4 frontier scientific-reasoning AI models in a truth-maximizing debate over your data interpretation.</p>
   <p>From there, your AI medical board identifies the entire action space worth considering based on your risk profile across critical diseases. It ranks them and gives you the few actions that matter most right now. Sometimes it's a simple pill. Sometimes it's more information — imaging, diagnostics — to bring a critical part of the picture into focus. It's what you need to do now.</p>
+
+  <!-- Pull Quote -->
+  <div class="pull-quote" style="margin:100px 0; padding:60px 20px; text-align:center;">
+    <p style="font-size:clamp(18px, 3.5vw, 32px); font-weight:300; color:#fff; letter-spacing:0.5px; line-height:1.6; margin:0 auto; max-width:700px;">
+      The product is clarity.<br>
+      <span style="font-weight:500;">Superhuman clarity.</span>
+    </p>
+    <p style="font-size:clamp(18px, 3.5vw, 32px); color:#ffffff; font-weight:300; letter-spacing:0.5px; line-height:1.6; margin:30px auto 0; max-width:700px;">
+      All of your data. Every relevant study. One thing to do this week.
+    </p>
+  </div>
 
   <!-- Section 4 -->
   <div class="chapter"><span class="chapter-num">4</span><span class="chapter-title">The Meridian MD</span></div>
-  <p>Our physician reads the synthesis. Catches what the AI missed. Applies the human judgment that AI can't. Approves the plan. Then delivers it to you — personally. Not through a portal. Not through a notification. A conversation with someone who knows your name and your data.</p>
+  <p>I believe that physicians are among the best of us. They exist at the intersection of minds brilliant enough to comprehend and hearts compassionate enough to serve. The system we're building does not replace the physician…it elevates them. If most primary care physicians are serving by pedaling a bicycle, the Meridian MD is serving while driving an F1 car. It's harder, not easier…it's also a lot more rewarding.</p>
+  <p>Meridian MDs are the judge of the debate — conductors of an AI symphony. They pose questions back to the AI medical board. They apply the human judgment and 'gut check' that AI can't. Then, they deliver it to you — personally. A conversation with someone who knows your name, your data, and your motivation to thrive.</p>
   <p>When you need a specialist's hands — a procedure, an imaging study, a physical exam — that's when you see a specialist. Everything else, your physician handles. Because for the first time, they actually can.</p>
 
   <!-- Section 5 -->
   <div class="chapter"><span class="chapter-num">5</span><span class="chapter-title">My Current Picture</span></div>
-  <p>Last year I took a genetic test out of curiosity. It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it.</p>
-  <p>That one finding changed everything. Three-fold elevated risk of pancreatic cancer — I should have been getting annual surveillance imaging for years. A DNA repair pathway that makes a statin work differently in my body than my doctor thought. And my daughter — she's six — has a fifty percent chance of carrying the same variant.</p>
-  <p>I ran my own data through the system we built. It found ten clinically significant findings. My doctor, through no fault of his own, would have caught three or four. The rest would have stayed invisible indefinitely.</p>
-  <p>Within days, I was acting on things I'd never been told in years of annual physicals. Not because I was suddenly more motivated. Because someone finally showed me the whole picture.</p>
+  <p>Last year I took a clinical-grade genetic test out of curiosity (not your consumer-grade 23andMe bullshit). It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it.</p>
+  <p>I combined this with the rest of my data (blood labs, wearable, personal/family history) and ran it through the system we built. It found ten clinically significant findings. My doctor, through no fault of his own, would have caught three or four. The rest of them, the ones that lead me towards an early death, would have stayed invisible indefinitely.</p>
+  <p>Three-fold elevated risk of pancreatic cancer — I should have been getting annual surveillance imaging for years. A DNA repair pathway that makes a statin work differently in my body than my doctor thought. A low resting heart rate that doctors have dismissed as 'you're very fit' — completely reframed with urgency.</p>
+  <p>I can tell you right now that clarity is not comfortable. However, for me, the stakes are very high and I cannot remain a passenger.</p>
 
   <!-- Section 6 -->
-  <div class="chapter"><span class="chapter-num">6</span><span class="chapter-title">Life isn't a Picture…it's a Movie.</span></div>
-  <p>Your life is a movie, not a picture.</p>
-  <p>An annual physical is a snapshot. One frame. And your doctor makes decisions from that single frame without seeing the thousands that came before it or the trajectory they reveal.</p>
-  <p>Meridian watches the movie. Continuous data. Trends over time. The slow changes that a yearly visit can never catch — the biomarker creeping upward, the sleep pattern shifting, the early signal buried in noise. Disease doesn't arrive suddenly. It develops in frames that nobody's watching.</p>
-  <p>We watch them.</p>
+  <div class="chapter"><span class="chapter-num">6</span><span class="chapter-title">My life is not a picture.</span></div>
+  <p>My life is a movie, not a picture.</p>
+  <p>There are a few things I need to do asap. Once those are done, they provide new information…they pull a critical part of the picture into focus. However, now the picture has changed. It needs to be processed again, my medical board must reconvene. They will perform the superhuman act again, my physician will be the maestro. The future uncertainty of my life will start to collapse.</p>
+  <p>The virtuous cycle starts.</p>
 
   <!-- Section 7 -->
   <div class="chapter" id="whats-next" style="scroll-margin-top:20px;"><span class="chapter-num">7</span><span class="chapter-title">What's Next</span></div>
   <p>Everything I've shared so far is based on the V1 prototype — built on my own data, with my own risk profile. It works. But it's just the beginning.</p>
-  <p>This week I'm kicking off V2. Expanded gene sequencing. Comprehensive lab panels. One additional frontier model joining the AI medical board. Each iteration brings the picture into sharper focus.</p>
-  <p>I expect to open Meridian to our first class by the end of Q2. If you want to stay up to date on our progress, sign up below.</p>
+  <p>This week I'm kicking off V2. Expanded gene sequencing. Comprehensive lab panels. Continuous stream of data from my Apple Watch. One additional frontier model joining the AI medical board. One step closer to helping friends and family achieve clarity…if they want it.</p>
+  <p>I expect to open Meridian to a small circle by the end of Q2. If you want to stay up to date on our progress, sign up below.</p>
 
-  <div class="signature">Jason Yim<br><span style="font-size:13px; color:#8a8578;">CEO LASO Health<br>Meridian Patient 0</span></div>
+  <div class="signature">
+    <img src="signature.png" alt="Jason Yim" style="width:180px; filter:invert(1) brightness(1.2); opacity:1; margin-bottom:8px;">
+    <br><span style="font-size:17px; color:#e8e4dc; font-weight:400;">Jason Yim</span>
+    <br><span style="font-size:17px; color:#d4d0c8; font-weight:400;">CEO LASO Health<br>The Meridian Project | Patient #1</span>
+  </div>
 
   <!-- SIGNUP -->
   <div class="waitlist" id="waitlist" style="margin-top:80px;">
     <form class="waitlist-form" id="waitlistForm" onsubmit="return submitWaitlist(event)">
       <div class="waitlist-input-row">
-        <input type="text" id="waitlistName" placeholder="First name" required autocomplete="given-name" />
+        <input type="text" id="waitlistFirst" placeholder="First name" required autocomplete="given-name" />
+        <input type="text" id="waitlistLast" placeholder="Last name" required autocomplete="family-name" />
         <input type="email" id="waitlistEmail" placeholder="Email" required autocomplete="email" />
         <button type="submit" id="waitlistBtn">Send me the next chapter</button>
       </div>
@@ -495,14 +525,31 @@
     </form>
   </div>
 
-  <div style="height:120px;"></div>
+  <div style="height:60px;"></div>
 </div>
 
 <footer id="contact">
-  <p>MERIDIAN &nbsp;·&nbsp; San Diego, CA</p>
+  <p>THE MERIDIAN PROJECT &nbsp;·&nbsp; San Diego, CA</p>
 </footer>
 
 <script>
+// Auto-hide nav on scroll down, show on scroll up (with threshold)
+(function() {
+  let lastScroll = 0;
+  const nav = document.querySelector('nav');
+  const threshold = 10;
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY;
+    const diff = current - lastScroll;
+    if (diff > threshold && current > 80) {
+      nav.classList.add('nav-hidden');
+    } else if (diff < -threshold || current < 80) {
+      nav.classList.remove('nav-hidden');
+    }
+    lastScroll = current;
+  }, { passive: true });
+})();
+
 // Scroll reveal — fade up as elements enter viewport
 document.addEventListener('DOMContentLoaded', () => {
   // Add reveal class to all content elements in the vision section
@@ -550,12 +597,13 @@ const GFORM_EMAIL = 'entry.1221701213';
 
 function submitWaitlist(e) {
   e.preventDefault();
-  const name = document.getElementById('waitlistName').value.trim();
+  const first = document.getElementById('waitlistFirst').value.trim();
+  const last = document.getElementById('waitlistLast').value.trim();
   const email = document.getElementById('waitlistEmail').value.trim();
   const btn = document.getElementById('waitlistBtn');
   const status = document.getElementById('waitlistStatus');
 
-  if (!name || !email) return false;
+  if (!first || !last || !email) return false;
 
   btn.disabled = true;
   btn.textContent = 'Joining...';
@@ -563,7 +611,7 @@ function submitWaitlist(e) {
   status.className = 'waitlist-status';
 
   const formData = new FormData();
-  formData.append(GFORM_NAME, name);
+  formData.append(GFORM_NAME, first + ' ' + last);
   formData.append(GFORM_EMAIL, email);
 
   fetch(GFORM_ACTION, {
@@ -572,7 +620,7 @@ function submitWaitlist(e) {
     mode: 'no-cors'
   })
   .then(() => {
-    status.textContent = "You're on the list. We'll be in touch.";
+    status.textContent = "Got it. I'll send you the next chapter when it's ready.";
     status.className = 'waitlist-status success';
     btn.textContent = 'Joined ✓';
     document.getElementById('waitlistEmail').value = '';
