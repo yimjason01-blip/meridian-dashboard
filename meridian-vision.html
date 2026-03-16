@@ -8,6 +8,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-padding-top: 20px; }
 
   body {
     background: #0a0a0a;
@@ -60,10 +61,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     padding: 120px 48px 40px;
     position: relative;
+    max-width: 760px;
+    margin: 0 auto;
   }
   .hero-icon {
     width: min(90vw, 600px);
@@ -77,14 +80,18 @@
   .hero h1 {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 400;
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1.4;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.3;
     max-width: 600px;
     color: #e8e4dc;
   }
   .hero h1 em {
+    display: block !important;
+    margin-top: 16px;
     color: #b8a88a;
     font-style: italic;
+    font-size: 1em;
+    line-height: 1.3;
   }
   .hero-cta {
     margin-top: 32px;
@@ -113,7 +120,7 @@
   }
   .chapter-num {
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 500;
     color: #c8ad86;
     flex-shrink: 0;
@@ -390,7 +397,10 @@
   /* MOBILE */
   @media (max-width: 640px) {
     nav { padding: 16px 24px; }
-    .hero { padding: 100px 24px 60px; }
+    .hero { padding: 100px 24px 60px; align-items: flex-start !important; text-align: left !important; }
+    .hero h1 { font-size: clamp(22px, 6vw, 28px); text-align: left !important; }
+    .hero h1 em { display: block !important; font-size: 1em; }
+    .hero-icon { width: 70vw; }
     .vision-header { padding: 48px 0 0; }
     .vision-content { padding: 0 24px 80px; }
     .content { padding: 0 24px; }
@@ -406,143 +416,14 @@
 <nav>
   <div class="nav-logo">Meridian</div>
   <div class="nav-links">
-    <a href="#waitlist" style="border:1px solid rgba(184,168,138,0.3); padding:8px 20px; border-radius:2px; letter-spacing:2px;">Join Waitlist</a>
+    <a href="#whats-next" onclick="event.preventDefault(); document.getElementById('whats-next').scrollIntoView({behavior:'smooth', block:'start'});" style="border:1px solid rgba(184,168,138,0.3); padding:8px 20px; border-radius:2px; letter-spacing:2px;">What's Next?</a>
   </div>
 </nav>
 
 <!-- HOME / HERO -->
 <section class="hero" id="home">
-  <div class="hero-icon" id="heroGrid">
-    <svg id="gridSvg" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    </svg>
-  </div>
-  <script>
-  (function() {
-    const svg = document.getElementById('gridSvg');
-    const cols = 80;
-    const rows = 24;
-    const cellSize = 7;
-    const gap = 1;
-    const total = cols * rows;
-    const viewW = cols * (cellSize + gap) - gap;
-    const viewH = rows * (cellSize + gap) - gap;
-    svg.setAttribute('viewBox', `0 0 ${viewW} ${viewH}`);
 
-    // ~5% highlighted — the "needles", scattered randomly
-    const needleCount = Math.floor(total * 0.025);
-    const needleIndices = new Set();
-    // Use seeded positions for consistency across reloads
-    const seed = [17,89,156,247,338,
-                  67,178,265,352,427,
-                  53,145,233,321,411];
-    seed.forEach(i => { if (i < total) needleIndices.add(i); });
-    // Fill remaining randomly with minimum spacing
-    while (needleIndices.size < needleCount) {
-      const candidate = Math.floor(Math.random() * total);
-      needleIndices.add(candidate);
-    }
-
-    // Store needle positions for connection lines
-    const needlePositions = [];
-
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const idx = r * cols + c;
-        const x = c * (cellSize + gap);
-        const y = r * (cellSize + gap);
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', x);
-        rect.setAttribute('y', y);
-        rect.setAttribute('width', cellSize);
-        rect.setAttribute('height', cellSize);
-        rect.setAttribute('rx', 1.5);
-
-        if (needleIndices.has(idx)) {
-          rect.setAttribute('fill', '#b8a88a');
-          rect.setAttribute('opacity', '0.9');
-          const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-          anim.setAttribute('attributeName', 'opacity');
-          anim.setAttribute('values', '0.6;1;0.6');
-          anim.setAttribute('dur', (2 + Math.random() * 2).toFixed(1) + 's');
-          anim.setAttribute('repeatCount', 'indefinite');
-          rect.appendChild(anim);
-          // Store center of this needle
-          needlePositions.push({ x: x + cellSize/2, y: y + cellSize/2 });
-        } else {
-          rect.setAttribute('fill', '#d4d0c8');
-          rect.setAttribute('opacity', (0.04 + Math.random() * 0.06).toFixed(3));
-        }
-        svg.appendChild(rect);
-      }
-    }
-    // Draw connection lines — prioritize distant connections to show cross-domain synthesis
-    const connected = new Set();
-    const lineGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    lineGroup.setAttribute('opacity', '0');
-    svg.insertBefore(lineGroup, svg.firstChild);
-
-    // For each needle, connect to 1 distant needle (skip nearest neighbors)
-    // Only half the needles get a connection
-    const connectCount = Math.floor(needlePositions.length / 2);
-    const shuffled = needlePositions.map((p, i) => i).sort(() => Math.random() - 0.5);
-    const toConnect = shuffled.slice(0, connectCount);
-
-    toConnect.forEach(i => {
-      const a = needlePositions[i];
-      // Sort by distance, pick from the far half (not nearest)
-      const distances = needlePositions
-        .map((b, j) => ({ j, dist: Math.hypot(a.x - b.x, a.y - b.y) }))
-        .filter(d => d.j !== i)
-        .sort((x, y) => x.dist - y.dist);
-
-      // Skip the nearest 30% — connect to something in the middle-to-far range
-      const farStart = Math.floor(distances.length * 0.3);
-      for (let k = farStart; k < distances.length; k++) {
-        const d = distances[k];
-        const key = [Math.min(i, d.j), Math.max(i, d.j)].join('-');
-        if (connected.has(key)) continue;
-        connected.add(key);
-
-        const b = needlePositions[d.j];
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', a.x);
-        line.setAttribute('y1', a.y);
-        line.setAttribute('x2', b.x);
-        line.setAttribute('y2', b.y);
-        line.setAttribute('stroke', '#d4c8a0');
-        line.setAttribute('stroke-width', '1.2');
-        line.setAttribute('opacity', '0.6');
-
-        const len = Math.hypot(b.x - a.x, b.y - a.y);
-        line.setAttribute('stroke-dasharray', len);
-        line.setAttribute('stroke-dashoffset', len);
-        const animDraw = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-        animDraw.setAttribute('attributeName', 'stroke-dashoffset');
-        animDraw.setAttribute('from', len);
-        animDraw.setAttribute('to', '0');
-        animDraw.setAttribute('dur', '2s');
-        animDraw.setAttribute('begin', (2.5 + Math.random() * 2).toFixed(1) + 's');
-        animDraw.setAttribute('fill', 'freeze');
-        line.appendChild(animDraw);
-
-        lineGroup.appendChild(line);
-        break; // one connection per needle
-      }
-    });
-
-    // Fade in the line group after initial delay
-    const fadeIn = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-    fadeIn.setAttribute('attributeName', 'opacity');
-    fadeIn.setAttribute('from', '0');
-    fadeIn.setAttribute('to', '1');
-    fadeIn.setAttribute('dur', '1s');
-    fadeIn.setAttribute('begin', '2s');
-    fadeIn.setAttribute('fill', 'freeze');
-    lineGroup.appendChild(fadeIn);
-
-  })();
-  </script>
-  <h1>I'm Healthy and I intend to stay that way.<br><em>Modern Healthcare is not built for me.</em></h1>
+  <h1>I'm Healthy and I intend to stay that way.<em>Traditional Healthcare is not built for me.</em></h1>
   <a href="#vision" class="hero-cta">Read vision →</a>
 </section>
 
@@ -551,15 +432,14 @@
 
   <!-- Section 1 -->
   <div class="chapter"><span class="chapter-num">1</span><span class="chapter-title">What I've Seen Doesn't Make Sense.</span></div>
-  <p>I've seen too many young people die early from diseases we think of as old-people problems. Cancer. Heart disease. Stroke. They weren't old. They had families, plans, decades they expected to have. They made daily sacrifices for a better future that never arrived.</p>
-  <p>I've also seen people in their 70s living extraordinary lives — surfing, building companies, traveling with their grandchildren, fully present and fully alive. About as happy as happy people get…they are my role models.</p>
+  <p>I've seen too many young people die early from diseases we think of as old-people problems. Cancer. Heart disease. Stroke. They weren't old. They had families, plans, decades they expected to have. They made daily sacrifices for a better future that never arrived. Most of them believed they were healthy.</p>
+  <p>I've also seen people in their 70s living extraordinary lives — surfing, building companies, traveling with their grandchildren, fully present and fully alive. About as happy as happy people get…they are my role models. They prove what is possible is far beyond what society accepts as normal.</p>
   <p>Both groups might be outliers. But I know which side I want to be on. And I'll do everything I can to stack the deck in my favor.</p>
 
   <!-- Section 2 -->
   <div class="chapter"><span class="chapter-num">2</span><span class="chapter-title">A Problem as Old as Time.</span></div>
   <p>Everyone knows the allegory of the blind men and the elephant. So many of society's problems come from seeing part of the picture and being confident that its interpretation is the "truth."</p>
-  <p>The same goes for your health and the hazards you need to navigate. What if you could see the whole picture?</p>
-  <p>Your physician, even if they're following guidelines, is still only looking at part of it. The question is — what is the whole picture?</p>
+  <p>Your physician, even if they're following guidelines, is still only looking at part of your health picture. The question is — what is the whole picture?</p>
   <p>There are four types of data that really matter: your genome, your blood, your wearable data, and your personal history. Each one alone tells a partial story. When assembled, they create a classic "the sum is greater than the parts" scenario — because there's an additional layer to the story. It's the connections between the data that change the interpretation.</p>
   <p>From interpretation, we need to identify the entire action space.</p>
   <p>From the action space, we need a probabilistic estimate of effect size.</p>
@@ -570,10 +450,10 @@
   <p>The human mind is too small for the job.</p>
   <p>In the world of AI, we think in terms of "tokens" — essentially the unit of information a model can hold and reason over.</p>
   <p>If we were to ask a physician to hold the four pillars of personal health data — your genome, your blood, your wearable data, and your history — along with the connections between them, they would have to hold about 300,000 tokens in their mind. That's the equivalent of asking them to read three novels simultaneously and remember how a character in book one connects to an event in book three.</p>
-  <p>A physician's working memory is limited to about 150 tokens. They have rules, guidelines, and heuristics — some leverage in their favor — but it's knives in a gunfight.</p>
+  <p>A physician's working memory is limited to about 150 tokens. They have rules, guidelines, and heuristics — some leverage in their favor — but they are knives in a data gunfight.</p>
   <p>The context window of a frontier scientific reasoning AI is over 1,000,000 tokens.</p>
-  <p>But saying "AI" is the answer fails to acknowledge the pitfalls of AI. AIs are not omniscient. They are not oracles. Yes, each is likely now smarter than any single person on earth, and the rate of improvement is almost incomprehensible. However, just like a person, there is bias, incompleteness of information, weighting of values. Being objectively true is harder than it sounds.</p>
-  <p>Humans, throughout time, have had the intellectual honesty to pursue systems that overcome their own flaws in high-stakes decisions. Borrowing from methods developed by tumor medical boards, the CIA, and boards of publicly traded companies, we've built an AI board review system that makes Anthropic, Gemini, Grok, GPT, and Perplexity debate over your data and its interpretation to arrive at the most objective truth.</p>
+  <p>But saying "AI" is the answer fails to acknowledge the pitfalls of AI. AIs are not omniscient. They are not oracles. Yes, each one is likely now smarter than any single person on earth, and their rate of improvement is almost incomprehensible. However, just like a person, there is bias, incompleteness of information, weighting of values. Stating something to be objectively true is harder than it sounds.</p>
+  <p>Humans, throughout time, have had the intellectual honesty to pursue systems that overcome their own flaws in high-stakes decisions. Borrowing from methods developed by tumor medical boards, the CIA, and boards of publicly traded companies, we've built an AI board review system that makes Anthropic, Gemini, Grok, Open AI, and Perplexity debate over your data and its interpretation to arrive at the most objective truth.</p>
   <p>From there, your AI medical board identifies the entire action space worth considering based on your risk profile across critical diseases. It ranks them and gives you the few actions that matter most right now. Sometimes it's a simple pill. Sometimes it's more information — imaging, diagnostics — to bring a critical part of the picture into focus. It's what you need to do now.</p>
 
   <!-- Section 4 -->
@@ -582,78 +462,37 @@
   <p>When you need a specialist's hands — a procedure, an imaging study, a physical exam — that's when you see a specialist. Everything else, your physician handles. Because for the first time, they actually can.</p>
 
   <!-- Section 5 -->
-  <div class="chapter"><span class="chapter-num">5</span><span class="chapter-title">My Story</span></div>
+  <div class="chapter"><span class="chapter-num">5</span><span class="chapter-title">My Current Picture</span></div>
   <p>Last year I took a genetic test out of curiosity. It came back with a pathogenic variant in a gene called ATM. I'd never heard of it. My doctor hadn't tested for it.</p>
   <p>That one finding changed everything. Three-fold elevated risk of pancreatic cancer — I should have been getting annual surveillance imaging for years. A DNA repair pathway that makes a statin work differently in my body than my doctor thought. And my daughter — she's six — has a fifty percent chance of carrying the same variant.</p>
   <p>I ran my own data through the system we built. It found ten clinically significant findings. My doctor, through no fault of his own, would have caught three or four. The rest would have stayed invisible indefinitely.</p>
   <p>Within days, I was acting on things I'd never been told in years of annual physicals. Not because I was suddenly more motivated. Because someone finally showed me the whole picture.</p>
 
   <!-- Section 6 -->
-  <div class="chapter"><span class="chapter-num">6</span><span class="chapter-title">The Film</span></div>
+  <div class="chapter"><span class="chapter-num">6</span><span class="chapter-title">Life isn't a Picture…it's a Movie.</span></div>
   <p>Your life is a movie, not a picture.</p>
   <p>An annual physical is a snapshot. One frame. And your doctor makes decisions from that single frame without seeing the thousands that came before it or the trajectory they reveal.</p>
   <p>Meridian watches the movie. Continuous data. Trends over time. The slow changes that a yearly visit can never catch — the biomarker creeping upward, the sleep pattern shifting, the early signal buried in noise. Disease doesn't arrive suddenly. It develops in frames that nobody's watching.</p>
   <p>We watch them.</p>
 
   <!-- Section 7 -->
-  <div class="chapter"><span class="chapter-num">7</span><span class="chapter-title">What's Next</span></div>
-  <p>I'm building Meridian because this should exist and it doesn't. Not as a luxury. Not as a biohacking gadget. As the basic infrastructure for staying alive long enough to benefit from everything that's coming — gene therapies, epigenetic medicine, AI diagnostics that will make today look primitive.</p>
-  <p>The future of medicine is going to be extraordinary. But you have to be around for it.</p>
-  <p>I don't want anyone else to find out late what they could have known early.</p>
-  <p>If this resonates, we're building it now. I'd love for you to be one of the first to see it.</p>
+  <div class="chapter" id="whats-next" style="scroll-margin-top:20px;"><span class="chapter-num">7</span><span class="chapter-title">What's Next</span></div>
+  <p>Everything I've shared so far is based on the V1 prototype — built on my own data, with my own risk profile. It works. But it's just the beginning.</p>
+  <p>This week I'm kicking off V2. Expanded gene sequencing. Comprehensive lab panels. One additional frontier model joining the AI medical board. Each iteration brings the picture into sharper focus.</p>
+  <p>I expect to open Meridian to our first class by the end of Q2. If you want to stay up to date on our progress, sign up below.</p>
 
-  <div class="signature">jason yim</div>
+  <div class="signature">Jason Yim<br><span style="font-size:13px; color:#8a8578;">CEO LASO Health<br>Meridian Patient 0</span></div>
 
-  <!-- WAITLIST -->
-  <div class="waitlist" id="waitlist" style="margin-top:120px;">
-    <p class="lead">Be first to know.</p>
-    <p>We're building Meridian now. Join the waitlist and we'll keep you updated on our progress — and let you know when we're accepting applications.</p>
+  <!-- SIGNUP -->
+  <div class="waitlist" id="waitlist" style="margin-top:80px;">
     <form class="waitlist-form" id="waitlistForm" onsubmit="return submitWaitlist(event)">
       <div class="waitlist-input-row">
         <input type="text" id="waitlistName" placeholder="First name" required autocomplete="given-name" />
         <input type="email" id="waitlistEmail" placeholder="Email" required autocomplete="email" />
-        <button type="submit" id="waitlistBtn">Join waitlist</button>
+        <button type="submit" id="waitlistBtn">Send me the next chapter</button>
       </div>
       <p class="waitlist-status" id="waitlistStatus"></p>
     </form>
-  </div>
-
-  <!-- EXPANDABLE DETAILS -->
-  <div style="margin-top:120px;">
-    <div class="expandable">
-      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>The Four Pillars</h3>
-        <span class="toggle">+</span>
-      </div>
-      <div class="expandable-body">
-        <p><strong>Genetics.</strong> A 167-gene panel that screens for hereditary cancer syndromes, cardiac conditions, and actionable variants. Your PCP will never order this.</p>
-        <p><strong>Blood.</strong> 85+ biomarkers including Lp(a), ApoB, fasting insulin, and markers that standard panels miss. Twenty percent of the population has an elevated Lp(a) that their doctor has never tested for.</p>
-        <p><strong>Wearables.</strong> Continuous heart rate, HRV, sleep architecture, and activity data. Not a snapshot — a film.</p>
-        <p><strong>History.</strong> Structured family history, symptoms, medications, supplements, and lifestyle data. The context that makes everything else interpretable.</p>
-      </div>
-    </div>
-    <div class="expandable">
-      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>The AI Layer</h3>
-        <span class="toggle">+</span>
-      </div>
-      <div class="expandable-body">
-        <p>Meridian's analysis isn't a single model making a single pass. It's a multi-model board review — multiple AI systems analyzing your data independently, then debating their findings adversarially. The result is stress-tested before a physician ever sees it.</p>
-        <p>The AI holds every relevant clinical guideline — NCCN, ACMG, AHA, USPSTF — simultaneously. No physician memorizes all of these. The system applies all of them to your specific data.</p>
-        <p>Then it ranks. Not just what could be done, but what produces the largest expected improvement in your life, given your specific risk profile. Three priorities. Clear next steps. One physician to execute.</p>
-      </div>
-    </div>
-    <div class="expandable">
-      <div class="expandable-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>The Physician</h3>
-        <span class="toggle">+</span>
-      </div>
-      <div class="expandable-body">
-        <p>AI doesn't replace the doctor. It gives the doctor superpowers.</p>
-        <p>Meridian's physician reviews the AI's synthesis, applies clinical judgment, catches what the model missed, and approves the final plan. They deliver your results personally — not through a portal, not through a notification. A physician who knows your name, your data, and your priorities.</p>
-        <p>The specialist referral becomes the exception. When you need someone's hands — a procedure, a surgery, a physical exam — you see a specialist. Everything else, your empowered physician handles.</p>
-      </div>
-    </div>
   </div>
 
   <div style="height:120px;"></div>
