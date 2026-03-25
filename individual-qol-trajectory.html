@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Individual Quality of Life Trajectory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F6FAFD;
+      --card: #FFFFFF;
+      --navy: #11234B;
+      --teal: #0D8086;
+      --mint: #A5EAD1;
+      --sky: #DDF4F5;
+      --amber: #F6C86B;
+      --coral: #E87A6A;
+      --text: #243049;
+      --muted: #5B6780;
+      --grid: #D9E3EC;
+      --line-soft: #9FB2C6;
+      --shadow: 0 20px 50px rgba(17,35,75,0.08);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(180deg, #F8FCFF 0%, #EFF6FB 100%);
+      color: var(--text);
+      padding: 28px;
+    }
+
+    .frame {
+      max-width: 1450px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #E7EEF5;
+    }
+
+    .hero {
+      padding: 38px 42px 24px;
+      background: radial-gradient(circle at top left, rgba(165,234,209,0.35), transparent 34%), linear-gradient(135deg, #F7FCFF 0%, #F2F8FC 100%);
+      border-bottom: 1px solid #E6EDF4;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(13,128,134,0.08);
+      padding: 9px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 52px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: var(--navy);
+      max-width: 920px;
+    }
+
+    .sub {
+      margin-top: 14px;
+      max-width: 900px;
+      font-size: 20px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.8fr);
+      gap: 0;
+    }
+
+    .chart-wrap {
+      padding: 24px 18px 28px 26px;
+      border-right: 1px solid #E8EEF4;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FBFDFF 100%);
+    }
+
+    .chart-card {
+      position: relative;
+      border-radius: 24px;
+      background: #FBFDFF;
+      border: 1px solid #E5EDF4;
+      padding: 16px 18px 20px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 8px 6px 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .swatch {
+      width: 26px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--navy);
+    }
+
+    .swatch.smooth { background: var(--line-soft); border: 1px dashed #8EA4BC; height: 0; width: 28px; }
+    .swatch.recovery { background: var(--amber); }
+    .swatch.events { width: 10px; height: 10px; border-radius: 999px; background: var(--coral); }
+
+    svg { width: 100%; height: auto; display: block; }
+
+    .notes {
+      padding: 28px 28px 30px;
+      background: #FAFCFE;
+    }
+
+    .panel-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+
+    .idea {
+      background: white;
+      border: 1px solid #E5EDF4;
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+      margin-bottom: 14px;
+    }
+
+    .idea h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.2;
+      color: var(--navy);
+    }
+
+    .idea p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mini {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+      background: var(--teal);
+    }
+
+    .footer-band {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 0 26px 28px;
+      background: #FAFCFE;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #E5EDF4;
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--navy);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: 1fr; }
+      .chart-wrap { border-right: 0; border-bottom: 1px solid #E8EEF4; }
+      .footer-band { grid-template-columns: 1fr; }
+      h1 { font-size: 40px; }
+      .sub { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <section class="hero">
+      <div class="eyebrow">Meridian concept · individual reality</div>
+      <h1>An individual life usually doesn’t decline as a smooth curve.</h1>
+      <div class="sub">There’s an underlying drift in capacity. What people actually feel is a jagged lived trajectory: plateaus, event-driven drops, and partial recoveries. Meridian’s value is in keeping the baseline higher, reducing the drops, and improving the rebound.</div>
+    </section>
+
+    <section class="grid">
+      <div class="chart-wrap">
+        <div class="chart-card">
+          <div class="legend">
+            <div class="legend-item"><span class="swatch smooth"></span>Underlying reserve / latent capacity</div>
+            <div class="legend-item"><span class="swatch"></span>Actual lived quality of life</div>
+            <div class="legend-item"><span class="swatch recovery"></span>Partial recovery</div>
+            <div class="legend-item"><span class="swatch events"></span>Acute event</div>
+          </div>
+
+          <svg viewBox="0 0 980 620" aria-label="Individual quality of life trajectory chart">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 Z" fill="#C45C4D"></path>
+              </marker>
+              <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#10234B" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+
+            <rect x="110" y="40" width="810" height="500" rx="20" fill="#FFFFFF"></rect>
+
+            <g stroke="var(--grid)" stroke-width="1">
+              <line x1="160" y1="110" x2="900" y2="110" />
+              <line x1="160" y1="190" x2="900" y2="190" />
+              <line x1="160" y1="270" x2="900" y2="270" />
+              <line x1="160" y1="350" x2="900" y2="350" />
+              <line x1="160" y1="430" x2="900" y2="430" />
+              <line x1="160" y1="510" x2="900" y2="510" />
+              <line x1="160" y1="510" x2="160" y2="90" />
+              <line x1="280" y1="510" x2="280" y2="90" />
+              <line x1="400" y1="510" x2="400" y2="90" />
+              <line x1="520" y1="510" x2="520" y2="90" />
+              <line x1="640" y1="510" x2="640" y2="90" />
+              <line x1="760" y1="510" x2="760" y2="90" />
+              <line x1="880" y1="510" x2="880" y2="90" />
+            </g>
+
+            <g font-family="Inter, sans-serif" font-size="14" fill="#637089" font-weight="600">
+              <text x="66" y="115">Do anything</text>
+              <text x="47" y="195">Active &amp; independent</text>
+              <text x="83" y="275">Slowing down</text>
+              <text x="70" y="355">Needs managing</text>
+              <text x="92" y="435">Dependent</text>
+              <text x="105" y="515">0</text>
+
+              <text x="150" y="550">45</text>
+              <text x="270" y="550">52</text>
+              <text x="390" y="550">58</text>
+              <text x="510" y="550">64</text>
+              <text x="630" y="550">70</text>
+              <text x="750" y="550">76</text>
+              <text x="870" y="550">82</text>
+            </g>
+
+            <text x="485" y="595" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#5B6780" font-weight="700">Age</text>
+            <text x="28" y="305" transform="rotate(-90 28 305)" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#5B6780" font-weight="700">Quality of life</text>
+
+            <path d="M160 130
+                     C225 135, 260 150, 280 165
+                     S360 195, 400 220
+                     S485 255, 520 280
+                     S602 315, 640 350
+                     S725 392, 760 420
+                     S838 462, 880 500"
+                  fill="none" stroke="#9FB2C6" stroke-width="4" stroke-dasharray="10 8" />
+
+            <path d="M160 120
+                     L235 120
+                     L280 120
+                     L280 178
+                     Q290 184 300 188
+                     L338 192
+                     L370 192
+                     L400 192
+                     L400 240
+                     Q412 248 422 252
+                     L455 258
+                     L490 262
+                     L520 266
+                     L520 328
+                     Q532 314 545 304
+                     L575 296
+                     L610 292
+                     L640 292
+                     L640 362
+                     Q652 372 665 380
+                     L700 390
+                     L735 398
+                     L760 405
+                     L760 454
+                     Q772 468 786 480
+                     L825 490
+                     L880 505"
+                  fill="none" stroke="#11234B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#softShadow)" />
+
+            <path d="M520 328 Q532 314 545 304 L575 296 L610 292 L640 292" fill="none" stroke="#F6C86B" stroke-width="8" stroke-linecap="round" />
+
+            <circle cx="280" cy="120" r="8" fill="#E87A6A" />
+            <circle cx="400" cy="192" r="8" fill="#E87A6A" />
+            <circle cx="520" cy="266" r="8" fill="#E87A6A" />
+            <circle cx="640" cy="292" r="8" fill="#E87A6A" />
+            <circle cx="760" cy="405" r="8" fill="#E87A6A" />
+
+            <g font-family="Inter, sans-serif">
+              <line x1="280" y1="120" x2="262" y2="85" stroke="#C45C4D" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="174" y="70" fill="#11234B" font-size="16" font-weight="800">Event 1</text>
+              <text x="174" y="90" fill="#5B6780" font-size="14">Metabolic drift becomes visible</text>
+
+              <line x1="400" y1="192" x2="428" y2="142" stroke="#C45C4D" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="434" y="132" fill="#11234B" font-size="16" font-weight="800">Event 2</text>
+              <text x="434" y="152" fill="#5B6780" font-size="14">Injury / pain / functional setback</text>
+
+              <line x1="520" y1="266" x2="478" y2="382" stroke="#D9A43F" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="382" y="405" fill="#11234B" font-size="16" font-weight="800">Recovery</text>
+              <text x="382" y="425" fill="#5B6780" font-size="14">Rehab, treatment, behavior change</text>
+
+              <line x1="640" y1="292" x2="672" y2="242" stroke="#C45C4D" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="678" y="230" fill="#11234B" font-size="16" font-weight="800">Event 3</text>
+              <text x="678" y="250" fill="#5B6780" font-size="14">Cardiac event / cancer / surgery</text>
+
+              <line x1="760" y1="405" x2="790" y2="340" stroke="#C45C4D" stroke-width="2.5" marker-end="url(#arrow)" />
+              <text x="798" y="328" fill="#11234B" font-size="16" font-weight="800">Event 4</text>
+              <text x="798" y="348" fill="#5B6780" font-size="14">Late-life dependence threshold</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <aside class="notes">
+        <div class="panel-title">What this is saying</div>
+
+        <div class="idea">
+          <h3>The gray line is the hidden truth.</h3>
+          <p>Your underlying physiologic reserve usually changes gradually. That’s the part driven by fitness, metabolic health, vascular load, cognition, muscle, and resilience.</p>
+        </div>
+
+        <div class="idea">
+          <h3>The navy line is what life feels like.</h3>
+          <p>People experience life in chunks: “I was fine.” “Then something happened.” “I got some of it back.” “Then another thing happened.” That’s why the lived path is jagged.</p>
+        </div>
+
+        <div class="idea">
+          <h3>The Meridian opportunity</h3>
+          <p>Keep the hidden baseline higher for longer. Reduce the odds and severity of big drops. Improve the rebound after setbacks.</p>
+
+          <div class="mini-list">
+            <div class="mini"><span class="dot"></span><span><strong style="color:#11234B;">Before the event:</strong> detect risk earlier and delay the drop.</span></div>
+            <div class="mini"><span class="dot" style="background:#F6C86B"></span><span><strong style="color:#11234B;">After the event:</strong> accelerate recovery and preserve more function.</span></div>
+            <div class="mini"><span class="dot" style="background:#E87A6A"></span><span><strong style="color:#11234B;">Across the whole life:</strong> compress the years spent dependent.</span></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="footer-band">
+      <div class="stat">
+        <strong>Not a staircase only</strong>
+        <span>The baseline is still continuous. The discrete events are layered on top of it.</span>
+      </div>
+      <div class="stat">
+        <strong>Not pure randomness</strong>
+        <span>Those step-downs are often made more or less likely by the baseline you’ve built.</span>
+      </div>
+      <div class="stat">
+        <strong>Best pitch implication</strong>
+        <span>Meridian is not just adding years. It is protecting the years where life still feels like your life.</span>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

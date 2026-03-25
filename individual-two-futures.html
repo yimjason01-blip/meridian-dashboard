@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Person, Three Branches — Individual Quality of Life</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F3F8FC;
+      --card: #FFFFFF;
+      --navy: #11234B;
+      --teal: #0D8086;
+      --mint: #A5EAD1;
+      --soft: #DAEEF2;
+      --amber: #F5C66A;
+      --coral: #E57B68;
+      --red: #D85B4A;
+      --gray: #8B9CB1;
+      --grid: #DDE6EE;
+      --text: #22324A;
+      --muted: #627089;
+      --shadow: 0 18px 48px rgba(17,35,75,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #F7FBFE 0%, #EEF5FA 100%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      padding: 28px;
+    }
+    .frame {
+      max-width: 1460px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid #E6EEF5;
+    }
+    .hero {
+      padding: 36px 42px 28px;
+      background: radial-gradient(circle at top left, rgba(165,234,209,0.25), transparent 34%), linear-gradient(135deg, #F9FDFF 0%, #F1F7FB 100%);
+      border-bottom: 1px solid #E7EEF5;
+    }
+    .eyebrow {
+      display: inline-flex;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(13,128,134,0.08);
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 54px;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+      color: var(--navy);
+      max-width: 980px;
+    }
+    .sub {
+      margin-top: 14px;
+      max-width: 960px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(320px, .8fr);
+    }
+    .left { padding: 22px 24px 28px; border-right: 1px solid #E8EEF4; }
+    .card {
+      border: 1px solid #E5EDF4;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FBFDFF 100%);
+      overflow: hidden;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      padding: 18px 20px 10px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .item { display: flex; align-items: center; gap: 10px; }
+    .bar { width: 28px; height: 5px; border-radius: 999px; background: var(--navy); }
+    .bar.default { background: var(--coral); }
+    .bar.delta { background: var(--mint); }
+    svg { width: 100%; height: auto; display: block; }
+    .right { padding: 26px 26px 30px; background: #FAFCFE; }
+    .label {
+      font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+    }
+    .box {
+      background: white; border: 1px solid #E5EDF4; border-radius: 20px; padding: 18px 18px 16px; margin-bottom: 14px;
+    }
+    .box h3 { margin: 0 0 8px; color: var(--navy); font-size: 20px; line-height: 1.2; }
+    .box p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 15px; }
+    .mini-list { display: grid; gap: 10px; margin-top: 14px; }
+    .mini { display: grid; grid-template-columns: 16px 1fr; gap: 10px; color: var(--muted); font-size: 15px; line-height: 1.45; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; margin-top: 6px; background: var(--teal); }
+    .footer {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; padding: 0 24px 24px; background: #FAFCFE;
+    }
+    .stat { background: white; border: 1px solid #E5EDF4; border-radius: 18px; padding: 16px; }
+    .stat strong { display:block; margin-bottom: 6px; color: var(--navy); font-size: 15px; }
+    .stat span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: 1fr; }
+      .left { border-right: 0; border-bottom: 1px solid #E8EEF4; }
+      .footer { grid-template-columns: 1fr; }
+      h1 { font-size: 42px; }
+      .sub { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <section class="hero">
+      <div class="eyebrow">One person · three possible branches</div>
+      <h1>The same person can end up on a very different life arc.</h1>
+      <div class="sub">This is one person at 45, shown across three possible branches: worst-case downside, expected high-risk path, and Meridian-shifted upside. The point is not three different people. It is how much the same life can diverge depending on hidden risk, fitness trajectory, and whether critical disease gets intercepted in time.</div>
+    </section>
+
+    <section class="grid">
+      <div class="left">
+        <div class="card">
+          <div class="legend">
+            <div class="item"><span class="bar" style="background:#C9493D;"></span>Worst-case branch of the same person</div>
+            <div class="item"><span class="bar default"></span>Expected high-risk branch of the same person</div>
+            <div class="item"><span class="bar"></span>Meridian-shifted branch of the same person</div>
+            <div class="item"><span class="bar delta"></span>High-function years preserved in the better branch</div>
+          </div>
+
+          <svg viewBox="0 0 1040 650" aria-label="Two futures quality of life chart">
+            <defs>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#11234B" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+
+            <rect x="108" y="40" width="860" height="520" rx="22" fill="#fff"/>
+
+            <g stroke="#DDE6EE" stroke-width="1">
+              <line x1="170" y1="110" x2="930" y2="110"/>
+              <line x1="170" y1="190" x2="930" y2="190"/>
+              <line x1="170" y1="270" x2="930" y2="270"/>
+              <line x1="170" y1="350" x2="930" y2="350"/>
+              <line x1="170" y1="430" x2="930" y2="430"/>
+              <line x1="170" y1="510" x2="930" y2="510"/>
+              <line x1="170" y1="510" x2="170" y2="90"/>
+              <line x1="280" y1="510" x2="280" y2="90"/>
+              <line x1="390" y1="510" x2="390" y2="90"/>
+              <line x1="500" y1="510" x2="500" y2="90"/>
+              <line x1="610" y1="510" x2="610" y2="90"/>
+              <line x1="720" y1="510" x2="720" y2="90"/>
+              <line x1="830" y1="510" x2="830" y2="90"/>
+              <line x1="930" y1="510" x2="930" y2="90"/>
+            </g>
+
+            <g font-family="Inter, sans-serif" font-size="14" fill="#647188" font-weight="600">
+              <text x="82" y="115">Do anything</text>
+              <text x="62" y="195">Active &amp; independent</text>
+              <text x="103" y="275">Slowing down</text>
+              <text x="89" y="355">Needs managing</text>
+              <text x="112" y="435">Dependent</text>
+
+              <text x="160" y="548">45</text>
+              <text x="270" y="548">50</text>
+              <text x="380" y="548">55</text>
+              <text x="490" y="548">60</text>
+              <text x="600" y="548">65</text>
+              <text x="710" y="548">70</text>
+              <text x="820" y="548">75</text>
+              <text x="920" y="548">80</text>
+            </g>
+
+            <text x="550" y="595" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#5B6780">Age</text>
+            <text x="34" y="305" transform="rotate(-90 34 305)" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#5B6780">Quality of life</text>
+
+            <!-- Shaded preserved years area -->
+            <path d="M170 135
+                     C220 138, 250 145, 280 152
+                     S350 163, 390 172
+                     S460 190, 500 205
+                     S570 226, 610 252
+                     S680 284, 720 320
+                     S790 360, 830 405
+                     S885 445, 930 490
+                     L930 510
+                     C880 505, 840 490, 830 485
+                     S760 468, 720 455
+                     S645 430, 610 412
+                     S535 380, 500 360
+                     S425 318, 390 300
+                     S312 265, 280 245
+                     S205 200, 170 180 Z"
+                  fill="rgba(165,234,209,0.60)" />
+
+            <!-- Worst path: early catastrophic death -->
+            <path d="M170 205
+                     L235 218
+                     L280 238
+                     L280 286
+                     L332 300
+                     L390 316
+                     L390 386
+                     L445 395
+                     L500 410
+                     L500 458
+                     L560 468
+                     L610 478"
+                  fill="none" stroke="#C9493D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <path d="M610 478 L610 510" fill="none" stroke="#C9493D" stroke-width="8" stroke-linecap="round"/>
+
+            <circle cx="280" cy="238" r="8" fill="#C9493D" />
+            <circle cx="390" cy="316" r="8" fill="#C9493D" />
+            <circle cx="500" cy="410" r="8" fill="#C9493D" />
+            <circle cx="610" cy="478" r="8" fill="#C9493D" />
+
+            <!-- Meridian path -->
+            <path d="M170 135
+                     C220 138, 250 145, 280 152
+                     S350 163, 390 172
+                     S460 190, 500 205
+                     S570 226, 610 252
+                     S680 284, 720 320
+                     S790 360, 830 405
+                     S885 445, 930 490"
+                  fill="none" stroke="#11234B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow)"/>
+
+            <!-- Default path with disease-driven step functions -->
+            <path d="M170 180
+                     L230 188
+                     L280 205
+                     L280 238
+                     L332 246
+                     L390 262
+                     L390 302
+                     L445 310
+                     L500 326
+                     L500 370
+                     L560 378
+                     L610 392
+                     L610 432
+                     L665 438
+                     L720 448
+                     L720 474
+                     L790 484
+                     L860 495
+                     L930 510"
+                  fill="none" stroke="#E57B68" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Event markers default -->
+            <circle cx="280" cy="205" r="8" fill="#D85B4A" />
+            <circle cx="390" cy="262" r="8" fill="#D85B4A" />
+            <circle cx="500" cy="326" r="8" fill="#D85B4A" />
+            <circle cx="610" cy="392" r="8" fill="#D85B4A" />
+            <circle cx="720" cy="448" r="8" fill="#D85B4A" />
+
+            <!-- Intercept points meridian -->
+            <circle cx="390" cy="172" r="8" fill="#0D8086" />
+            <circle cx="500" cy="205" r="8" fill="#0D8086" />
+            <circle cx="720" cy="320" r="8" fill="#0D8086" />
+
+            <!-- Labels -->
+            <g font-family="Inter, sans-serif">
+              <rect x="212" y="130" width="206" height="54" rx="14" fill="#11234B" opacity="0.96"/>
+              <text x="228" y="152" fill="#fff" font-size="15" font-weight="800">Meridian path</text>
+              <text x="228" y="172" fill="#D8E3F0" font-size="13">Higher baseline, later major drop</text>
+
+              <rect x="246" y="318" width="238" height="54" rx="14" fill="#E57B68" opacity="0.96"/>
+              <text x="262" y="340" fill="#fff" font-size="15" font-weight="800">Default high-risk path</text>
+              <text x="262" y="360" fill="#FFE6E1" font-size="13">Early narrowing, earlier disability</text>
+
+              <rect x="216" y="410" width="278" height="54" rx="14" fill="#C9493D" opacity="0.96"/>
+              <text x="232" y="432" fill="#fff" font-size="15" font-weight="800">Worst-case branch</text>
+              <text x="232" y="452" fill="#FFE6E1" font-size="13">Major event early, life ends much sooner</text>
+
+              <text x="352" y="145" fill="#0D8086" font-size="14" font-weight="800">ApoB / BP / glucose / imaging risk made visible</text>
+              <text x="518" y="194" fill="#0D8086" font-size="14" font-weight="800">Fitness rises toward elite-for-age</text>
+              <text x="742" y="306" fill="#0D8086" font-size="14" font-weight="800">Still active and independent</text>
+
+              <text x="252" y="228" fill="#D85B4A" font-size="13" font-weight="800">Prediabetes / insulin resistance</text>
+              <text x="366" y="292" fill="#D85B4A" font-size="13" font-weight="800">Hypertension + low capacity</text>
+              <text x="478" y="362" fill="#D85B4A" font-size="13" font-weight="800">Atherosclerosis / first real limitation</text>
+              <text x="588" y="425" fill="#D85B4A" font-size="13" font-weight="800">MI / stroke / cancer treatment</text>
+              <text x="698" y="470" fill="#D85B4A" font-size="13" font-weight="800">Heart failure / frailty / dependence</text>
+
+              <text x="252" y="260" fill="#C9493D" font-size="13" font-weight="800">Unchecked metabolic collapse</text>
+              <text x="366" y="348" fill="#C9493D" font-size="13" font-weight="800">Early major event or aggressive cancer</text>
+              <text x="478" y="440" fill="#C9493D" font-size="13" font-weight="800">Function collapses after the hit</text>
+              <text x="626" y="498" fill="#C9493D" font-size="13" font-weight="800">Early death</text>
+            </g>
+
+            <!-- Threshold lines -->
+            <line x1="170" y1="270" x2="930" y2="270" stroke="#A8BACB" stroke-width="2" stroke-dasharray="8 8" opacity="0.7"/>
+            <text x="938" y="274" font-family="Inter, sans-serif" font-size="13" fill="#647188" font-weight="700">50-ish level where life starts narrowing</text>
+          </svg>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="label">What this visual is trying to say</div>
+
+        <div class="box">
+          <h3>The upside is not cosmetic.</h3>
+          <p>If the same high-risk person builds elite-for-age fitness and catches major disease earlier, the gain is not just “better labs.” It is a later first drop, fewer catastrophic branches, and more life spent physically capable.</p>
+        </div>
+
+        <div class="box">
+          <h3>Why the default path falls early</h3>
+          <div class="mini-list">
+            <div class="mini"><span class="dot" style="background:#E57B68"></span><span>Bottom-quartile fitness amplifies metabolic drift and fragility.</span></div>
+            <div class="mini"><span class="dot" style="background:#E57B68"></span><span>Cardiovascular and cancer risk stay hidden until they become events.</span></div>
+            <div class="mini"><span class="dot" style="background:#E57B68"></span><span>Once the first major hit lands, the whole future path shifts downward.</span></div>
+          </div>
+        </div>
+
+        <div class="box">
+          <h3>What Meridian changes first</h3>
+          <div class="mini-list">
+            <div class="mini"><span class="dot"></span><span><strong style="color:#11234B;">Protect the downside:</strong> find the critical risk before the event.</span></div>
+            <div class="mini"><span class="dot"></span><span><strong style="color:#11234B;">Lift capacity:</strong> move fitness from bottom quartile toward elite-for-age.</span></div>
+            <div class="mini"><span class="dot"></span><span><strong style="color:#11234B;">Preserve the band that matters:</strong> more years where life still feels like your life.</span></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="footer">
+      <div class="stat">
+        <strong>Honest claim</strong>
+        <span>This is not “become superhuman.” It is “stop living on the bad branch of the tree.”</span>
+      </div>
+      <div class="stat">
+        <strong>Inspirational claim</strong>
+        <span>The same person can plausibly move from early narrowing in the 50s/60s to staying active into the 70s.</span>
+      </div>
+      <div class="stat">
+        <strong>Most important design question</strong>
+        <span>Does this feel like a real human future or does it still feel too tidy and illustrative?</span>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
