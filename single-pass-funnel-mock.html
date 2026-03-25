@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board Review — Single Pass Funnel Mock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --midnight:#08131E;--ocean:#123146;--slate:#1B2B38;
+      --brass:#DDBE89;--gold:#CDA56C;--parchment:#F3E5C8;
+      --teal:#5CA1A0;--sea:#7FD0C8;
+      --green:#6ED39A;--warn:#F2B43B;--crit:#F46B6B;--info:#7BA7FF;
+      --text:#EDF4FA;--dim:#9BB0C2;--hairline:rgba(255,255,255,0.08);--fog:rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:24px;font-family:'Inter',system-ui,sans-serif;background:var(--midnight);color:var(--text)}
+    .page{max-width:1100px;margin:0 auto}
+    .back{color:var(--dim);font-size:14px;cursor:pointer;text-decoration:none}
+    h1{margin:8px 0 4px;font-size:28px;letter-spacing:-.02em}
+    .meta{color:var(--dim);font-size:14px;margin-bottom:28px}
+
+    /* funnel connector */
+    .funnel-step{position:relative;margin-bottom:0}
+    .funnel-connector{width:2px;height:24px;background:var(--hairline);margin:0 0 0 40px}
+
+    /* section */
+    .section{background:var(--slate);border:1px solid var(--hairline);border-radius:22px;overflow:hidden}
+    .section-head{padding:20px 26px 16px;display:flex;align-items:center;gap:14px}
+    .step-num{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+    .section-head h2{margin:0;font-size:18px;font-weight:700;flex:1}
+    .section-head .count{font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px}
+    .section-body{padding:0 26px 22px}
+
+    /* finding card */
+    .finding{background:var(--ocean);border:1px solid var(--hairline);border-radius:16px;padding:18px 20px;margin-bottom:10px}
+    .finding:last-child{margin-bottom:0}
+    .finding-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+    .finding-meta{font-size:13px;color:var(--dim);line-height:1.5}
+    .finding-models{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+    .model-chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--dim)}
+    .model-chip.active{background:rgba(93,161,160,0.2);color:var(--sea)}
+    .model-chip.inactive{background:rgba(255,255,255,0.03);color:#5a6a7a}
+
+    /* agreement badge */
+    .agree-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px}
+    .agree-dot{width:8px;height:8px;border-radius:999px;background:var(--green)}
+
+    /* disagreement badge */
+    .disagree-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--warn);margin-bottom:8px}
+    .disagree-dot{width:8px;height:8px;border-radius:999px;background:var(--warn)}
+
+    /* resolved badge */
+    .resolved-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:8px}
+    .resolved-dot{width:8px;height:8px;border-radius:999px;background:var(--teal)}
+
+    /* your call badge */
+    .yourcall-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--crit);margin-bottom:8px}
+    .yourcall-dot{width:8px;height:8px;border-radius:999px;background:var(--crit)}
+
+    /* arrow */
+    .arrow{text-align:center;color:var(--dim);font-size:13px;padding:8px 0;font-weight:600;letter-spacing:.04em}
+    .arrow span{display:inline-block;opacity:0.5}
+
+    /* sub-sections */
+    .sub-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding:10px 0 8px;border-bottom:1px solid var(--hairline);margin-bottom:12px}
+
+    /* representative */
+    .rep{background:var(--slate);border:1px solid var(--hairline);border-radius:22px;overflow:hidden;margin-top:24px}
+    .rep-head{padding:18px 26px;border-bottom:1px solid var(--hairline);display:flex;align-items:center;gap:12px}
+    .rep-avatar{width:36px;height:36px;border-radius:999px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:white;flex-shrink:0}
+    .rep-name{font-size:15px;font-weight:700}
+    .rep-role{font-size:13px;color:var(--dim)}
+    .rep-body{padding:20px 26px}
+    .rep-msg{background:var(--ocean);border:1px solid var(--hairline);border-radius:14px;padding:16px;font-size:14px;line-height:1.65;color:var(--text);margin-bottom:14px}
+    .rep-msg strong{color:var(--brass)}
+    .rep-input{display:flex;gap:10px}
+    .rep-input input{flex:1;background:var(--ocean);border:1px solid var(--hairline);border-radius:10px;padding:12px 16px;color:var(--text);font-size:14px;font-family:inherit}
+    .rep-input input::placeholder{color:#5a6a7a}
+    .rep-input button{background:var(--teal);color:white;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer}
+
+    /* telemetry bar */
+    .tele{display:flex;gap:12px;justify-content:flex-end;margin-bottom:20px;flex-wrap:wrap}
+    .tele-chip{font-size:12px;color:var(--dim);background:rgba(255,255,255,0.03);border:1px solid var(--hairline);padding:5px 12px;border-radius:999px}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <span class="back">← Back to Projects</span>
+  <h1>Protocol v5.3 Review</h1>
+  <div class="meta">Single pass · Completed 1 min ago · test 10</div>
+
+  <div class="tele">
+    <span class="tele-chip">187s elapsed</span>
+    <span class="tele-chip">$1.15 total</span>
+    <span class="tele-chip">106k tokens</span>
+  </div>
+
+  <!-- ==================== STEP 1: BLIND ANALYSIS ==================== -->
+  <div class="funnel-step">
+    <div class="section">
+      <div class="section-head">
+        <div class="step-num" style="background:rgba(93,161,160,0.15);color:var(--teal);">1</div>
+        <h2>Blind Analysis</h2>
+        <span class="count" style="background:rgba(255,255,255,0.06);color:var(--dim);">4 models responded independently</span>
+      </div>
+      <div class="section-body">
+
+        <div class="sub-label" style="color:var(--green);">✓ Agreements — independently reached the same conclusion</div>
+
+        <div class="finding">
+          <div class="agree-badge"><span class="agree-dot"></span>Unanimous verdict</div>
+          <div class="finding-title">Board verdict: REVISE</div>
+          <div class="finding-meta">3 of 4 models independently said REVISE. 1 said SHIP.</div>
+          <div class="finding-models">
+            <span class="model-chip active">Opus 4.6 · REVISE</span>
+            <span class="model-chip active">GPT-5.4 · REVISE</span>
+            <span class="model-chip inactive">Grok-4.1 · SHIP</span>
+            <span class="model-chip active">Gemini 3.1 Pro · REVISE</span>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+        <div class="sub-label" style="color:var(--warn);">⚠ Disagreements — models diverged on these proposals</div>
+
+        <div class="finding">
+          <div class="disagree-badge"><span class="disagree-dot"></span>Proposed by 2 of 4 models</div>
+          <div class="finding-title">Evidence staleness / sufficiency gate</div>
+          <div class="finding-meta">Opus proposed mid-review staleness re-check. GPT-5.4 proposed an evidence sufficiency gate. Related but different scopes — both about catching evidence problems before shipping.</div>
+          <div class="finding-models">
+            <span class="model-chip active">Opus 4.6</span>
+            <span class="model-chip active">GPT-5.4</span>
+            <span class="model-chip inactive">Grok-4.1</span>
+            <span class="model-chip inactive">Gemini 3.1 Pro</span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="disagree-badge"><span class="disagree-dot"></span>Proposed by 2 of 4 models</div>
+          <div class="finding-title">Operationalize the Conviction Gate criterion</div>
+          <div class="finding-meta">Opus and Gemini both proposed tightening the Conviction Gate — Opus wants a structured test for "substantive counter-argument," Gemini wants a Comparator adjudication step. Same core concern, different solutions.</div>
+          <div class="finding-models">
+            <span class="model-chip active">Opus 4.6</span>
+            <span class="model-chip inactive">GPT-5.4</span>
+            <span class="model-chip inactive">Grok-4.1</span>
+            <span class="model-chip active">Gemini 3.1 Pro</span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="disagree-badge"><span class="disagree-dot"></span>Proposed by 1 of 4 models</div>
+          <div class="finding-title">Allow 3-way tension framing in Phase 4</div>
+          <div class="finding-meta">Gemini proposed allowing 3-way framing instead of binary reduction. No other model raised this.</div>
+          <div class="finding-models">
+            <span class="model-chip inactive">Opus 4.6</span>
+            <span class="model-chip inactive">GPT-5.4</span>
+            <span class="model-chip inactive">Grok-4.1</span>
+            <span class="model-chip active">Gemini 3.1 Pro</span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="disagree-badge"><span class="disagree-dot"></span>Proposed by 1 of 4 models</div>
+          <div class="finding-title">Source-dependency metadata for evidence</div>
+          <div class="finding-meta">GPT-5.4 proposed requiring metadata to distinguish true corroboration from duplicated upstream sources. No other model raised this.</div>
+          <div class="finding-models">
+            <span class="model-chip inactive">Opus 4.6</span>
+            <span class="model-chip active">GPT-5.4</span>
+            <span class="model-chip inactive">Grok-4.1</span>
+            <span class="model-chip inactive">Gemini 3.1 Pro</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><span>▼</span> Disagreements enter debate <span>▼</span></div>
+
+  <!-- ==================== STEP 2: RESOLVED ==================== -->
+  <div class="funnel-step">
+    <div class="section">
+      <div class="section-head">
+        <div class="step-num" style="background:rgba(93,161,160,0.15);color:var(--teal);">2</div>
+        <h2>Resolved Through Debate</h2>
+        <span class="count" style="background:rgba(110,211,154,0.12);color:var(--green);">1 disagreement resolved</span>
+      </div>
+      <div class="section-body">
+
+        <div class="finding">
+          <div class="resolved-badge"><span class="resolved-dot"></span>Resolved — board converged after 2 rounds</div>
+          <div class="finding-title">Add mid-review evidence staleness check</div>
+          <div class="finding-meta">Re-validate freshness timestamps against wall-clock time before Phase 6 output. All 4 models ultimately agreed (4 for, 0 against) after debate.</div>
+          <div class="finding-meta" style="margin-top:6px;color:var(--teal);">Resolution: Unanimous after convergence — all models adopted this proposal.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><span>▼</span> Remaining disagreements couldn't be resolved <span>▼</span></div>
+
+  <!-- ==================== STEP 3: YOUR CALL ==================== -->
+  <div class="funnel-step">
+    <div class="section" style="border-color:rgba(244,107,107,0.3);">
+      <div class="section-head">
+        <div class="step-num" style="background:rgba(244,107,107,0.15);color:var(--crit);">3</div>
+        <h2>Your Call</h2>
+        <span class="count" style="background:rgba(244,107,107,0.12);color:var(--crit);">1 decision needs you</span>
+      </div>
+      <div class="section-body">
+
+        <div class="finding" style="border-color:rgba(244,107,107,0.2);">
+          <div class="yourcall-badge"><span class="yourcall-dot"></span>Board split — couldn't resolve after 2 rounds</div>
+          <div class="finding-title">Operationalize the Conviction Gate's "substantive counter-argument" criterion</div>
+          <div class="finding-meta">Should the protocol define a structured test for what counts as a substantive counter-argument in the Conviction Gate? Opus and Gemini say yes (prevents inconsistent gate behavior). Grok says the current flexibility is a feature, not a bug.</div>
+          <div class="finding-models" style="margin-top:10px">
+            <span class="model-chip" style="background:rgba(110,211,154,0.12);color:var(--green);">FOR: Opus 4.6, GPT-5.4, Gemini 3.1 Pro</span>
+            <span class="model-chip" style="background:rgba(244,107,107,0.12);color:var(--crit);">AGAINST: Grok-4.1</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BOARD REPRESENTATIVE ==================== -->
+  <div class="rep">
+    <div class="rep-head">
+      <div class="rep-avatar">BR</div>
+      <div>
+        <div class="rep-name">Board Representative</div>
+        <div class="rep-role">Informed by this review's full deliberation</div>
+      </div>
+    </div>
+    <div class="rep-body">
+      <div class="rep-msg">
+        <strong>Executive Summary:</strong> The board mostly agreed this protocol needs revision — 3 of 4 models said REVISE independently. The one clear win from debate: add a mid-review evidence staleness check before shipping output. All 4 models converged on that after 2 rounds.<br><br>
+        The open question is whether to formalize the Conviction Gate criterion. Three models want a structured test; Grok argues the flexibility is intentional. This is a real design tradeoff — more structure prevents inconsistency but may also over-constrain the gate.<br><br>
+        <strong>My recommendation:</strong> Adopt the staleness check. On the Conviction Gate question, the 3-vs-1 split suggests it's worth doing, but read the tension framing before deciding how rigid to make it.
+      </div>
+      <div class="rep-input">
+        <input type="text" placeholder="Ask the board representative anything about this review..." />
+        <button>Ask</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

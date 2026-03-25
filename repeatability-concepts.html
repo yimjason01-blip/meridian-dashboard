@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repeatability Visual Concepts — 10 Runs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#11234B; --teal:#0D8086; --mint:#A5EAD1; --gold:#F5C66A;
+      --coral:#E57B68; --red:#C9493D; --bg:#F4F9FC; --card:#FFFFFF;
+      --grid:#DDE7EF; --text:#24324A; --muted:#62718A; --dim:#8B9CB1;
+      --surface:#F8FAFC; --border:#E5EDF4;
+      --shadow:0 12px 32px rgba(17,35,75,0.07);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:28px;font-family:'Inter',system-ui,sans-serif;background:linear-gradient(180deg,#F8FCFF,#EEF5FA);color:var(--text)}
+    h1{font-size:48px;letter-spacing:-.04em;color:var(--navy);margin:0 0 8px}
+    .sub{color:var(--muted);font-size:18px;line-height:1.5;max-width:900px;margin-bottom:36px}
+    .concept{background:var(--card);border:1px solid var(--border);border-radius:28px;box-shadow:var(--shadow);margin-bottom:32px;overflow:hidden}
+    .concept-header{padding:28px 32px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#FBFDFF,#F8FAFC)}
+    .concept-header h2{margin:0 0 6px;font-size:28px;color:var(--navy);letter-spacing:-.02em}
+    .concept-header p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
+    .concept-body{padding:28px 32px 32px}
+
+    /* ===== CONCEPT 1: HEAT MAP ===== */
+    .heatmap{width:100%;border-collapse:separate;border-spacing:4px}
+    .heatmap th{font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;padding:6px 8px;text-align:center}
+    .heatmap th.finding{text-align:left;min-width:280px}
+    .heatmap td{padding:0;text-align:center}
+    .heatmap td.label{text-align:left;font-size:14px;font-weight:600;color:var(--text);padding:8px 8px;white-space:nowrap}
+    .heatmap td.label .freq{font-size:12px;font-weight:500;color:var(--dim);margin-left:8px}
+    .dot-cell{width:36px;height:36px;border-radius:10px;margin:0 auto}
+    .dot-cell.on-10{background:#0D8086}
+    .dot-cell.on-9{background:#10907A}
+    .dot-cell.on-8{background:#2BA37A}
+    .dot-cell.on-7{background:#5CB97A}
+    .dot-cell.on-6{background:#8AD08A}
+    .dot-cell.on-5{background:#F5C66A}
+    .dot-cell.on-4{background:#F0A95E}
+    .dot-cell.on-3{background:#E8895A}
+    .dot-cell.on-2{background:#E57B68}
+    .dot-cell.on-1{background:#C9493D}
+    .dot-cell.off{background:#F0F3F6}
+
+    /* ===== CONCEPT 2: CONCENTRIC RINGS ===== */
+    .rings-container{display:flex;align-items:center;gap:48px}
+    .rings-chart{flex-shrink:0}
+    .rings-legend{flex:1}
+    .ring-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .ring-swatch{width:20px;height:20px;border-radius:999px;flex-shrink:0}
+    .ring-label{font-size:15px;color:var(--text);line-height:1.4}
+    .ring-label strong{display:block;font-size:13px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+
+    /* ===== CONCEPT 3: RANKED LIST ===== */
+    .ranked-list{list-style:none;padding:0;margin:0}
+    .ranked-item{display:grid;grid-template-columns:1fr 140px 60px;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+    .ranked-item:last-child{border-bottom:none}
+    .ranked-finding{font-size:15px;font-weight:600;color:var(--text)}
+    .ranked-bar-track{height:12px;border-radius:999px;background:#F0F3F6;overflow:hidden}
+    .ranked-bar-fill{height:100%;border-radius:999px}
+    .ranked-count{font-size:14px;font-weight:700;color:var(--dim);text-align:right}
+
+    /* ===== CONCEPT 4: CONSENSUS STACK ===== */
+    .stack{display:flex;flex-direction:column;gap:0;border-radius:20px;overflow:hidden;border:1px solid var(--border)}
+    .stack-layer{padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+    .stack-label{font-size:15px;font-weight:700;color:var(--text)}
+    .stack-items{font-size:14px;color:var(--muted);text-align:right;max-width:60%}
+    .stack-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;margin-left:8px}
+  </style>
+</head>
+<body>
+
+<h1>Repeatability: Four Visual Concepts</h1>
+<div class="sub">Each concept shows the same mock data: 10 runs produced 8 distinct findings. Some appeared in every run, some in most, some in only one or two. The question: which visual helps you grok the whole picture fastest?</div>
+
+<!-- ==================== CONCEPT 1 ==================== -->
+<div class="concept">
+  <div class="concept-header">
+    <h2>1 · Heat Map</h2>
+    <p>One row per finding. One column per run. Lit = appeared. Your eye reads solid rows as bedrock, patchy rows as uncertain, and single dots as noise.</p>
+  </div>
+  <div class="concept-body" style="overflow-x:auto;">
+    <table class="heatmap">
+      <thead>
+        <tr>
+          <th class="finding">Finding</th>
+          <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label">Add evidence sufficiency gate <span class="freq">10/10</span></td>
+          <td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td>
+          <td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Define "substantive counter-argument" <span class="freq">10/10</span></td>
+          <td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td>
+          <td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td><td><div class="dot-cell on-10"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Mid-review evidence injection <span class="freq">8/10</span></td>
+          <td><div class="dot-cell on-8"></div></td><td><div class="dot-cell on-8"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-8"></div></td><td><div class="dot-cell on-8"></div></td>
+          <td><div class="dot-cell on-8"></div></td><td><div class="dot-cell on-8"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-8"></div></td><td><div class="dot-cell on-8"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Low-confidence convergence block <span class="freq">7/10</span></td>
+          <td><div class="dot-cell on-7"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-7"></div></td><td><div class="dot-cell on-7"></div></td><td><div class="dot-cell on-7"></div></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell on-7"></div></td><td><div class="dot-cell on-7"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-7"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Dynamic comparator rotation <span class="freq">5/10</span></td>
+          <td><div class="dot-cell on-5"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-5"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-5"></div></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell on-5"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-5"></div></td><td><div class="dot-cell off"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Conviction gate quorum rule <span class="freq">4/10</span></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell on-4"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-4"></div></td><td><div class="dot-cell off"></div></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell on-4"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-4"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Weighted field disagreement scoring <span class="freq">2/10</span></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-2"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell on-2"></div></td><td><div class="dot-cell off"></div></td>
+        </tr>
+        <tr>
+          <td class="label">Add pharmacogenomics to Phase 1 <span class="freq">1/10</span></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td>
+          <td><div class="dot-cell off"></div></td><td><div class="dot-cell on-1"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td><td><div class="dot-cell off"></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== CONCEPT 2 ==================== -->
+<div class="concept">
+  <div class="concept-header">
+    <h2>2 · Concentric Rings</h2>
+    <p>Center = appeared in every run. Each ring outward = less frequent. The size of the core relative to the whole tells you how stable the review is.</p>
+  </div>
+  <div class="concept-body">
+    <div class="rings-container">
+      <svg class="rings-chart" width="420" height="420" viewBox="0 0 420 420">
+        <!-- outermost: 1-2 runs -->
+        <circle cx="210" cy="210" r="200" fill="#FDE8E4" stroke="#E5EDF4" stroke-width="1"/>
+        <!-- 3-5 runs -->
+        <circle cx="210" cy="210" r="155" fill="#FEF3DC" stroke="#E5EDF4" stroke-width="1"/>
+        <!-- 6-8 runs -->
+        <circle cx="210" cy="210" r="110" fill="#DAEEF2" stroke="#E5EDF4" stroke-width="1"/>
+        <!-- 9-10 runs (core) -->
+        <circle cx="210" cy="210" r="65" fill="#0D8086" stroke="none"/>
+
+        <text x="210" y="200" text-anchor="middle" font-family="Inter" font-size="22" font-weight="800" fill="white">2</text>
+        <text x="210" y="222" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="rgba(255,255,255,0.8)">CORE</text>
+
+        <text x="210" y="145" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0D8086">2 findings</text>
+        <text x="210" y="162" text-anchor="middle" font-family="Inter" font-size="12" fill="#62718A">6–8 of 10 runs</text>
+
+        <text x="210" y="78" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#B8860B">2 findings</text>
+        <text x="210" y="95" text-anchor="middle" font-family="Inter" font-size="12" fill="#62718A">3–5 of 10 runs</text>
+
+        <text x="210" y="30" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#C9493D">2 findings</text>
+        <text x="210" y="47" text-anchor="middle" font-family="Inter" font-size="12" fill="#62718A">1–2 of 10 runs</text>
+      </svg>
+
+      <div class="rings-legend">
+        <div class="ring-row">
+          <div class="ring-swatch" style="background:#0D8086"></div>
+          <div class="ring-label">
+            <strong>Core (9–10 runs)</strong>
+            Add evidence sufficiency gate · Define "substantive counter-argument"
+          </div>
+        </div>
+        <div class="ring-row">
+          <div class="ring-swatch" style="background:#DAEEF2;border:2px solid #0D8086"></div>
+          <div class="ring-label">
+            <strong>Strong (6–8 runs)</strong>
+            Mid-review evidence injection · Low-confidence convergence block
+          </div>
+        </div>
+        <div class="ring-row">
+          <div class="ring-swatch" style="background:#FEF3DC;border:2px solid #D4A520"></div>
+          <div class="ring-label">
+            <strong>Mixed (3–5 runs)</strong>
+            Dynamic comparator rotation · Conviction gate quorum rule
+          </div>
+        </div>
+        <div class="ring-row">
+          <div class="ring-swatch" style="background:#FDE8E4;border:2px solid #C9493D"></div>
+          <div class="ring-label">
+            <strong>Weak (1–2 runs)</strong>
+            Weighted field disagreement scoring · Add pharmacogenomics to Phase 1
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CONCEPT 3 ==================== -->
+<div class="concept">
+  <div class="concept-header">
+    <h2>3 · Ranked List with Confidence Bars</h2>
+    <p>Every unique finding, sorted by how often it appeared. One list. One sort order. One visual signal. No reassembly required.</p>
+  </div>
+  <div class="concept-body">
+    <ul class="ranked-list">
+      <li class="ranked-item">
+        <span class="ranked-finding">Add evidence sufficiency gate</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:100%;background:#0D8086"></div></div>
+        <span class="ranked-count">10/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Define "substantive counter-argument"</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:100%;background:#0D8086"></div></div>
+        <span class="ranked-count">10/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Mid-review evidence injection</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:80%;background:#2BA37A"></div></div>
+        <span class="ranked-count">8/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Low-confidence convergence block</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:70%;background:#5CB97A"></div></div>
+        <span class="ranked-count">7/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Dynamic comparator rotation</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:50%;background:#F5C66A"></div></div>
+        <span class="ranked-count">5/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Conviction gate quorum rule</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:40%;background:#F0A95E"></div></div>
+        <span class="ranked-count">4/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Weighted field disagreement scoring</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:20%;background:#E57B68"></div></div>
+        <span class="ranked-count">2/10</span>
+      </li>
+      <li class="ranked-item">
+        <span class="ranked-finding">Add pharmacogenomics to Phase 1</span>
+        <div class="ranked-bar-track"><div class="ranked-bar-fill" style="width:10%;background:#C9493D"></div></div>
+        <span class="ranked-count">1/10</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== CONCEPT 4 ==================== -->
+<div class="concept">
+  <div class="concept-header">
+    <h2>4 · Consensus Stack</h2>
+    <p>Geological layers. Bottom = bedrock (every run agreed). Top = sand (one-off findings). The thickness and solidity of the bottom tells you how much of the review you can trust.</p>
+  </div>
+  <div class="concept-body">
+    <div class="stack">
+      <div class="stack-layer" style="background:#FDE8E4;min-height:50px;">
+        <div>
+          <span class="stack-label" style="color:#C9493D">Appeared once or twice</span>
+          <span class="stack-tag" style="background:rgba(201,73,61,0.15);color:#C9493D">Noise</span>
+        </div>
+        <div class="stack-items">Weighted field disagreement scoring · Add pharmacogenomics to Phase 1</div>
+      </div>
+      <div class="stack-layer" style="background:#FEF3DC;min-height:60px;">
+        <div>
+          <span class="stack-label" style="color:#B8860B">Appeared in ~half</span>
+          <span class="stack-tag" style="background:rgba(184,134,11,0.15);color:#B8860B">Uncertain</span>
+        </div>
+        <div class="stack-items">Dynamic comparator rotation · Conviction gate quorum rule</div>
+      </div>
+      <div class="stack-layer" style="background:#DAEEF2;min-height:70px;">
+        <div>
+          <span class="stack-label" style="color:#0D8086">Appeared in most runs</span>
+          <span class="stack-tag" style="background:rgba(13,128,134,0.15);color:#0D8086">Strong</span>
+        </div>
+        <div class="stack-items">Mid-review evidence injection · Low-confidence convergence block</div>
+      </div>
+      <div class="stack-layer" style="background:#0D8086;min-height:90px;">
+        <div>
+          <span class="stack-label" style="color:white">Every single run</span>
+          <span class="stack-tag" style="background:rgba(255,255,255,0.2);color:white">Bedrock</span>
+        </div>
+        <div class="stack-items" style="color:rgba(255,255,255,0.85)">Add evidence sufficiency gate · Define "substantive counter-argument"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

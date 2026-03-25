@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project: Protocol v5.3 Review — 10 Runs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#11234B;--teal:#0D8086;--mint:#A5EAD1;--gold:#F5C66A;
+      --coral:#E57B68;--red:#C9493D;--bg:#0D1117;--surface:#161B22;
+      --surface2:#1C2128;--border:#30363D;--text:#E6EDF3;--dim:#8B949E;
+      --green:#2EA043;--shadow:0 8px 24px rgba(0,0,0,0.3);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:24px;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text)}
+
+    .page{max-width:1200px;margin:0 auto}
+
+    /* header */
+    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .header h1{margin:0;font-size:28px;letter-spacing:-.02em}
+    .header .meta{color:var(--dim);font-size:14px}
+    .back{color:var(--dim);font-size:14px;text-decoration:none;cursor:pointer}
+    .back:hover{color:var(--text)}
+
+    /* summary strip */
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+    .sum-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px}
+    .sum-card .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:6px}
+    .sum-card .value{font-size:24px;font-weight:800;color:var(--text)}
+    .sum-card .sub{font-size:13px;color:var(--dim);margin-top:4px}
+
+    /* section */
+    .section{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden}
+    .section-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .section-header h2{margin:0;font-size:18px;font-weight:700}
+    .section-header .badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+    .section-body{padding:18px 22px}
+
+    /* heat map */
+    .hm{width:100%;border-collapse:separate;border-spacing:3px}
+    .hm th{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;padding:6px 6px;text-align:center}
+    .hm th.f{text-align:left;min-width:260px}
+    .hm td{padding:0;text-align:center}
+    .hm td.fl{text-align:left;font-size:13px;font-weight:600;color:var(--text);padding:6px 8px;cursor:pointer}
+    .hm td.fl:hover{color:var(--teal)}
+    .hm td.fl .fr{font-size:11px;font-weight:500;color:var(--dim);margin-left:6px}
+    .cell{width:28px;height:28px;border-radius:7px;margin:0 auto;cursor:pointer;transition:transform .1s}
+    .cell:hover{transform:scale(1.15)}
+    .cell.on{background:#0D8086}
+    .cell.off{background:#21262D}
+    .cell.on.c10{background:#0D8086}
+    .cell.on.c9{background:#10907A}
+    .cell.on.c8{background:#2BA37A}
+    .cell.on.c7{background:#5CB97A}
+    .cell.on.c6{background:#8AD08A}
+    .cell.on.c5{background:#F5C66A}
+    .cell.on.c4{background:#F0A95E}
+    .cell.on.c3{background:#E8895A}
+    .cell.on.c2{background:#E57B68}
+    .cell.on.c1{background:#C9493D}
+
+    /* representative */
+    .rep{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+    .rep-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+    .rep-header .avatar{width:36px;height:36px;border-radius:999px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white}
+    .rep-header .name{font-size:15px;font-weight:700}
+    .rep-header .role{font-size:13px;color:var(--dim)}
+    .rep-body{padding:18px 22px}
+    .rep-msg{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;font-size:14px;line-height:1.6;color:var(--text)}
+    .rep-msg strong{color:var(--gold)}
+    .rep-input{display:flex;gap:10px;margin-top:14px}
+    .rep-input input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:14px;font-family:inherit}
+    .rep-input input::placeholder{color:var(--dim)}
+    .rep-input button{background:var(--teal);color:white;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer}
+
+    /* runs drawer */
+    .runs{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .runs-header{padding:16px 22px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+    .runs-header h2{margin:0;font-size:16px;font-weight:700;color:var(--dim)}
+    .runs-header .arrow{color:var(--dim);font-size:14px}
+    .runs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:16px 22px}
+    .run-tile{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:border-color .15s}
+    .run-tile:hover{border-color:var(--teal)}
+    .run-tile .num{font-size:16px;font-weight:800;color:var(--text)}
+    .run-tile .verdict{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+    .run-tile .verdict.conv{color:var(--green)}
+    .run-tile .verdict.needs{color:var(--gold)}
+    .run-tile .verdict.err{color:var(--red)}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div style="margin-bottom:8px"><span class="back">← Back to Projects</span></div>
+  <div class="header">
+    <div>
+      <h1>Protocol v5.3 Review</h1>
+      <div class="meta">10-run repeatability · Completed 2 min ago · $8.42 total</div>
+    </div>
+  </div>
+
+  <!-- ========== IN-PROGRESS STATE ========== -->
+  <div class="section" style="margin-bottom:28px;border-color:#30363D;">
+    <div class="section-header" style="background:var(--surface2);">
+      <h2 style="font-size:16px;">⏳ Progress — Pass 7 of 10</h2>
+      <span style="font-size:13px;color:var(--dim);">Elapsed 14:32 · $5.89 so far</span>
+    </div>
+    <div class="section-body">
+      <!-- progress bar -->
+      <div style="background:#21262D;border-radius:999px;height:14px;overflow:hidden;margin-bottom:16px;">
+        <div style="width:63%;height:100%;border-radius:999px;background:linear-gradient(90deg,#0D8086,#2BA37A);transition:width .3s;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--dim);margin-bottom:20px;">
+        <span>Pass 7/10 · Phase 2: Classification</span>
+        <span>63%</span>
+      </div>
+
+      <!-- token tiles -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Grok 4.1</div>
+          <div style="font-size:13px;color:var(--text);">38.2k in · 4.1k out</div>
+          <div style="font-size:12px;color:var(--teal);margin-top:2px;">$0.62</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">GPT-5.4</div>
+          <div style="font-size:13px;color:var(--text);">42.8k in · 5.3k out</div>
+          <div style="font-size:12px;color:var(--gold);margin-top:2px;">$2.14</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Opus 4.6</div>
+          <div style="font-size:13px;color:var(--text);">31.5k in · 6.2k out</div>
+          <div style="font-size:12px;color:var(--green);margin-top:2px;">$2.41</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Gemini 3.1 Pro</div>
+          <div style="font-size:13px;color:var(--text);">29.1k in · 3.8k out</div>
+          <div style="font-size:12px;color:var(--gold);margin-top:2px;">$0.72</div>
+        </div>
+      </div>
+
+      <!-- log tail -->
+      <div style="background:#0D1117;border:1px solid var(--border);border-radius:10px;padding:12px;font-family:monospace;font-size:12px;color:var(--dim);max-height:140px;overflow-y:auto;line-height:1.7;">
+        <div>Pass 6/10 · Complete — CONVERGED (Output A) — 204s, $0.77</div>
+        <div>Pass 7/10 · Starting</div>
+        <div>Pass 7/10 · Phase 1: Independent Assessment — 4 models</div>
+        <div>Pass 7/10 · [Phase 1] Grok-4.1: REVISE (0.88)</div>
+        <div>Pass 7/10 · [Phase 1] GPT-5.4: REVISE (0.82)</div>
+        <div>Pass 7/10 · [Phase 1] Opus 4.6: REVISE (0.72)</div>
+        <div>Pass 7/10 · [Phase 1] Gemini 3.1 Pro: REVISE (0.95)</div>
+        <div>Pass 7/10 · [Phase 1] Complete — 4/4 models (132s, $0.52)</div>
+        <div style="color:var(--teal);">Pass 7/10 · Phase 2: Classification — Comparator classifying...</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px 0 28px;color:var(--dim);font-size:14px;font-weight:600;letter-spacing:.03em;">
+    ↓ Results appear below when all 10 passes complete ↓
+  </div>
+
+  <!-- SUMMARY STRIP -->
+  <div class="summary">
+    <div class="sum-card">
+      <div class="label">Runs</div>
+      <div class="value">10</div>
+      <div class="sub">9 completed · 1 degraded</div>
+    </div>
+    <div class="sum-card">
+      <div class="label">Distinct Findings</div>
+      <div class="value">8</div>
+      <div class="sub">2 bedrock · 2 strong · 2 mixed · 2 noise</div>
+    </div>
+    <div class="sum-card">
+      <div class="label">Verdict Stability</div>
+      <div class="value">80%</div>
+      <div class="sub">8/10 runs reached same top-line</div>
+    </div>
+    <div class="sum-card">
+      <div class="label">Recommendation Overlap</div>
+      <div class="value">62%</div>
+      <div class="sub">Moderate consistency in specifics</div>
+    </div>
+  </div>
+
+  <!-- HEAT MAP: AGREED -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Agreed — Converged findings</h2>
+      <span class="badge" style="background:rgba(46,160,67,0.15);color:#2EA043">3 findings</span>
+    </div>
+    <div class="section-body" style="overflow-x:auto">
+      <table class="hm">
+        <thead><tr><th class="f">Finding</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="fl">Add evidence sufficiency gate <span class="fr">10/10</span></td>
+            <td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td>
+            <td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td>
+          </tr>
+          <tr>
+            <td class="fl">Define "substantive counter-argument" <span class="fr">10/10</span></td>
+            <td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td>
+            <td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td><td><div class="cell on c10"></div></td>
+          </tr>
+          <tr>
+            <td class="fl">Mid-review evidence injection <span class="fr">8/10</span></td>
+            <td><div class="cell on c8"></div></td><td><div class="cell on c8"></div></td><td><div class="cell off"></div></td><td><div class="cell on c8"></div></td><td><div class="cell on c8"></div></td>
+            <td><div class="cell on c8"></div></td><td><div class="cell on c8"></div></td><td><div class="cell off"></div></td><td><div class="cell on c8"></div></td><td><div class="cell on c8"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HEAT MAP: RESOLVED (TYPE 1) -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Resolved — Board debated, then converged</h2>
+      <span class="badge" style="background:rgba(245,198,106,0.15);color:#D4A520">2 findings</span>
+    </div>
+    <div class="section-body" style="overflow-x:auto">
+      <table class="hm">
+        <thead><tr><th class="f">Finding</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="fl">Low-confidence convergence block <span class="fr">7/10</span></td>
+            <td><div class="cell on c7"></div></td><td><div class="cell off"></div></td><td><div class="cell on c7"></div></td><td><div class="cell on c7"></div></td><td><div class="cell on c7"></div></td>
+            <td><div class="cell off"></div></td><td><div class="cell on c7"></div></td><td><div class="cell on c7"></div></td><td><div class="cell off"></div></td><td><div class="cell on c7"></div></td>
+          </tr>
+          <tr>
+            <td class="fl">Dynamic comparator rotation <span class="fr">5/10</span></td>
+            <td><div class="cell on c5"></div></td><td><div class="cell off"></div></td><td><div class="cell on c5"></div></td><td><div class="cell off"></div></td><td><div class="cell on c5"></div></td>
+            <td><div class="cell off"></div></td><td><div class="cell on c5"></div></td><td><div class="cell off"></div></td><td><div class="cell on c5"></div></td><td><div class="cell off"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HEAT MAP: YOUR CALL (TYPE 2) -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Your Call — Board couldn't resolve, needs you</h2>
+      <span class="badge" style="background:rgba(229,123,104,0.15);color:#E57B68">3 findings</span>
+    </div>
+    <div class="section-body" style="overflow-x:auto">
+      <table class="hm">
+        <thead><tr><th class="f">Finding</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="fl">Conviction gate quorum rule <span class="fr">4/10</span></td>
+            <td><div class="cell off"></div></td><td><div class="cell on c4"></div></td><td><div class="cell off"></div></td><td><div class="cell on c4"></div></td><td><div class="cell off"></div></td>
+            <td><div class="cell off"></div></td><td><div class="cell on c4"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell on c4"></div></td>
+          </tr>
+          <tr>
+            <td class="fl">Weighted field disagreement scoring <span class="fr">2/10</span></td>
+            <td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell on c2"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td>
+            <td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell on c2"></div></td><td><div class="cell off"></div></td>
+          </tr>
+          <tr>
+            <td class="fl">Add pharmacogenomics to Phase 1 <span class="fr">1/10</span></td>
+            <td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td>
+            <td><div class="cell off"></div></td><td><div class="cell on c1"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td><td><div class="cell off"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOARD REPRESENTATIVE -->
+  <div class="rep">
+    <div class="rep-header">
+      <div class="avatar">BR</div>
+      <div>
+        <div class="name">Board Representative</div>
+        <div class="role">Informed by all 10 runs</div>
+      </div>
+    </div>
+    <div class="rep-body">
+      <div class="rep-msg">
+        <strong>Executive Summary:</strong> Across 10 runs, the board consistently identified two high-confidence improvements: adding an evidence sufficiency gate and defining what counts as a "substantive counter-argument." These showed up in every single run — they're real.<br><br>
+        Mid-review evidence injection appeared in 8/10 runs and is likely worth adopting, though two runs didn't surface it (both were the runs where Gemini timed out, so it may be model-coverage-dependent).<br><br>
+        The Type 2 items are less stable. The conviction gate quorum rule only appeared in 4/10 runs — the board is genuinely split on whether this matters. Weighted field disagreement scoring and pharmacogenomics additions are likely noise (2/10 and 1/10 respectively).<br><br>
+        <strong>My recommendation:</strong> adopt the top 2 without further debate. Discuss the evidence injection and low-confidence convergence block. Ignore the bottom 2 unless you have a specific reason to care.
+      </div>
+      <div class="rep-input">
+        <input type="text" placeholder="Ask the board representative anything about these results..." />
+        <button>Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDIVIDUAL RUNS (collapsed drawer) -->
+  <div class="runs">
+    <div class="runs-header">
+      <h2>Individual Run Results</h2>
+      <span class="arrow">▾ Expand</span>
+    </div>
+    <div class="runs-grid">
+      <div class="run-tile"><div class="num">Run 1</div><div class="verdict conv">Converged</div></div>
+      <div class="run-tile"><div class="num">Run 2</div><div class="verdict needs">Needs Decision</div></div>
+      <div class="run-tile"><div class="num">Run 3</div><div class="verdict conv">Converged</div></div>
+      <div class="run-tile"><div class="num">Run 4</div><div class="verdict needs">Needs Decision</div></div>
+      <div class="run-tile"><div class="num">Run 5</div><div class="verdict conv">Converged</div></div>
+      <div class="run-tile"><div class="num">Run 6</div><div class="verdict conv">Converged</div></div>
+      <div class="run-tile"><div class="num">Run 7</div><div class="verdict needs">Needs Decision</div></div>
+      <div class="run-tile"><div class="num">Run 8</div><div class="verdict conv">Converged</div></div>
+      <div class="run-tile"><div class="num">Run 9</div><div class="verdict err">Degraded</div></div>
+      <div class="run-tile"><div class="num">Run 10</div><div class="verdict needs">Needs Decision</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
