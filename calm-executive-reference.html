@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calm Executive — Design System Reference</title>
+<link rel="stylesheet" href="calm-executive.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--ce-font);
+    background: var(--ce-bg-base);
+    color: var(--ce-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Reference page layout */
+  .ref-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 64px 48px 120px;
+  }
+
+  .ref-header {
+    margin-bottom: 64px;
+  }
+  .ref-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .ref-header p {
+    font-size: 16px;
+    color: var(--ce-text-muted);
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  /* Section divider */
+  .ref-section {
+    margin-bottom: 72px;
+  }
+  .ref-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ce-accent);
+    margin-bottom: 8px;
+  }
+  .ref-section-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .ref-section-desc {
+    font-size: 14px;
+    color: var(--ce-text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 560px;
+  }
+
+  /* Swatches */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .swatch-card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--ce-border);
+    background: #fff;
+  }
+  .swatch-block {
+    height: 80px;
+  }
+  .swatch-info {
+    padding: 12px 14px;
+  }
+  .swatch-name {
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--ce-text);
+    margin-bottom: 2px;
+  }
+  .swatch-value {
+    font-size: 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--ce-text-muted);
+  }
+
+  /* Typography specimens */
+  .type-specimen {
+    margin-bottom: 28px;
+    padding: 28px 32px;
+    background: #fff;
+    border: 1px solid var(--ce-border);
+    border-radius: 16px;
+  }
+  .type-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .type-tag {
+    font-size: 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--ce-text-muted);
+    background: rgba(16,32,48,0.04);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* Spacing demo */
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .spacing-label {
+    width: 80px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ce-text-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    flex-shrink: 0;
+  }
+  .spacing-bar {
+    height: 28px;
+    background: rgba(42,99,255,0.12);
+    border-radius: 6px;
+    border: 1px solid rgba(42,99,255,0.2);
+  }
+  .spacing-px {
+    font-size: 11px;
+    color: var(--ce-text-muted);
+    font-family: ui-monospace, Menlo, monospace;
+  }
+
+  /* Component showcase */
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .showcase-single {
+    margin-bottom: 24px;
+  }
+  .showcase-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ce-text-subtle);
+    margin-bottom: 12px;
+  }
+
+  /* Surface demos */
+  .surface-demo {
+    min-height: 200px;
+    border-radius: var(--ce-radius-container);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .surface-demo .tag {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+  .surface-demo .name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Radius demos */
+  .radius-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .radius-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .radius-box {
+    width: 80px;
+    height: 80px;
+    background: rgba(42,99,255,0.08);
+    border: 2px solid rgba(42,99,255,0.2);
+  }
+  .radius-label {
+    font-size: 11px;
+    font-family: ui-monospace, Menlo, monospace;
+    color: var(--ce-text-muted);
+    text-align: center;
+  }
+
+  /* Full-width atmospheric demo */
+  .atmo-demo {
+    border-radius: var(--ce-radius-container);
+    overflow: hidden;
+    border: 1px solid var(--ce-border);
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 860px) {
+    .ref-page { padding: 32px 20px 80px; }
+    .showcase-grid { grid-template-columns: 1fr; }
+    .swatch-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="ref-page">
+
+  <!-- Header -->
+  <div class="ref-header">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ce-teal);margin-bottom:12px;">Design System Reference</div>
+    <h1>Calm Executive</h1>
+    <p>The design language for Meridian's executive-facing surfaces. Quiet authority through restraint, atmospheric gradients, and material contrast. Reference energy: Linear, Apple, executive software, strategy dashboards.</p>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 1. COLOR PALETTE                            -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">01</div>
+    <div class="ref-section-title">Color palette</div>
+    <div class="ref-section-desc">Strategic calm + crisp signal. Color earns its space — used for atmosphere and hierarchy, not decoration.</div>
+
+    <div style="font-size:13px;font-weight:650;color:var(--ce-text);margin-bottom:12px;">Core</div>
+    <div class="swatch-grid" style="margin-bottom:24px;">
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#f7fafc;"></div>
+        <div class="swatch-info"><div class="swatch-name">Base</div><div class="swatch-value">#f7fafc</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#eef3f7;"></div>
+        <div class="swatch-info"><div class="swatch-name">Warm</div><div class="swatch-value">#eef3f7</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#edf2f8;"></div>
+        <div class="swatch-info"><div class="swatch-name">Cool</div><div class="swatch-value">#edf2f8</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#0f2234;"></div>
+        <div class="swatch-info"><div class="swatch-name">Navy</div><div class="swatch-value">#0f2234</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#5d7488;"></div>
+        <div class="swatch-info"><div class="swatch-name">Muted text</div><div class="swatch-value">#5d7488</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#4f667b;"></div>
+        <div class="swatch-info"><div class="swatch-name">Subtle text</div><div class="swatch-value">#4f667b</div></div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:650;color:var(--ce-text);margin-bottom:12px;">Signal</div>
+    <div class="swatch-grid" style="margin-bottom:24px;">
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#2a63ff;"></div>
+        <div class="swatch-info"><div class="swatch-name">Accent / Blue</div><div class="swatch-value">#2a63ff</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#37c0a5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Teal</div><div class="swatch-value">#37c0a5</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#B86E00;"></div>
+        <div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-value">#B86E00</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#C62828;"></div>
+        <div class="swatch-info"><div class="swatch-name">Danger</div><div class="swatch-value">#C62828</div></div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:650;color:var(--ce-text);margin-bottom:12px;">Atmospheric gradients</div>
+    <div class="swatch-grid">
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:rgba(49,116,255,0.13);"></div>
+        <div class="swatch-info"><div class="swatch-name">Atmo Blue</div><div class="swatch-value">rgba(49,116,255,0.13)</div></div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:rgba(44,183,160,0.10);"></div>
+        <div class="swatch-info"><div class="swatch-name">Atmo Teal</div><div class="swatch-value">rgba(44,183,160,0.10)</div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 2. TYPOGRAPHY                               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">02</div>
+    <div class="ref-section-title">Typography</div>
+    <div class="ref-section-desc">Inter across the board. Authority comes from weight contrast and spacing, not from mixing font families.</div>
+
+    <div class="type-specimen">
+      <div class="ce-display">The board has reduced noise.</div>
+      <div class="type-meta">
+        <span class="type-tag">Display</span>
+        <span class="type-tag">clamp(34px, 5vw, 54px)</span>
+        <span class="type-tag">700</span>
+        <span class="type-tag">–0.045em</span>
+        <span class="type-tag">lh 0.97</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="ce-headline">Designed for executives who want signal, not theater.</div>
+      <div class="type-meta">
+        <span class="type-tag">Headline</span>
+        <span class="type-tag">clamp(28px, 4vw, 44px)</span>
+        <span class="type-tag">700</span>
+        <span class="type-tag">–0.04em</span>
+        <span class="type-tag">lh 1.08</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="ce-title">Programs with active weight</div>
+      <div class="type-meta">
+        <span class="type-tag">Title</span>
+        <span class="type-tag">20px</span>
+        <span class="type-tag">700</span>
+        <span class="type-tag">–0.02em</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="ce-body">Compared with the first pass, this one breathes more. There is still restraint, but the color story is richer and the modules don't all look like the same flat card repeated sixteen times.</div>
+      <div class="type-meta">
+        <span class="type-tag">Body</span>
+        <span class="type-tag">15px</span>
+        <span class="type-tag">lh 1.6</span>
+        <span class="type-tag">color: #5d7488</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="ce-small">Tier 1 control cases are now explicitly part of the roadmap.</div>
+      <div class="type-meta">
+        <span class="type-tag">Small</span>
+        <span class="type-tag">13px</span>
+        <span class="type-tag">lh 1.5</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="ce-kicker">Clarity system</div>
+      <div class="type-meta">
+        <span class="type-tag">Kicker</span>
+        <span class="type-tag">11px</span>
+        <span class="type-tag">600</span>
+        <span class="type-tag">0.14em</span>
+        <span class="type-tag">uppercase</span>
+        <span class="type-tag">color: accent</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 3. SPACING                                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">03</div>
+    <div class="ref-section-title">Spacing rhythm</div>
+    <div class="ref-section-desc">Consistent scale. More air between sections, tighter within modules.</div>
+
+    <div class="spacing-row">
+      <div class="spacing-label">xs</div>
+      <div class="spacing-bar" style="width:8px;"></div>
+      <div class="spacing-px">8px</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">sm</div>
+      <div class="spacing-bar" style="width:14px;"></div>
+      <div class="spacing-px">14px</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">md</div>
+      <div class="spacing-bar" style="width:22px;"></div>
+      <div class="spacing-px">22px</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">lg</div>
+      <div class="spacing-bar" style="width:32px;"></div>
+      <div class="spacing-px">32px</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">xl</div>
+      <div class="spacing-bar" style="width:48px;"></div>
+      <div class="spacing-px">48px</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-label">2xl</div>
+      <div class="spacing-bar" style="width:64px;"></div>
+      <div class="spacing-px">64px</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 4. BORDER RADII                             -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">04</div>
+    <div class="ref-section-title">Border radii</div>
+    <div class="ref-section-desc">Rounder at larger scales, crisper at smaller. Containers breathe; modules feel precise.</div>
+
+    <div class="radius-row">
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:28px;"></div>
+        <div class="radius-label">container<br>28px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:20px;"></div>
+        <div class="radius-label">card<br>20px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:16px;"></div>
+        <div class="radius-label">module<br>16px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:12px;"></div>
+        <div class="radius-label">sm<br>12px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius:999px;"></div>
+        <div class="radius-label">pill<br>999px</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 5. SURFACES                                 -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">05</div>
+    <div class="ref-section-title">Surfaces</div>
+    <div class="ref-section-desc">Three atmospheric surfaces. The gradients are subtle — they create a feeling, not a visible color band.</div>
+
+    <div class="showcase-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="surface-demo ce-surface" style="border:1px solid var(--ce-border);border-radius:20px;">
+        <div class="tag" style="color:var(--ce-accent);">Default</div>
+        <div class="name" style="color:var(--ce-text);">ce-surface</div>
+      </div>
+      <div class="surface-demo ce-surface--alt" style="border:1px solid var(--ce-border);border-radius:20px;">
+        <div class="tag" style="color:var(--ce-accent);">Alternate</div>
+        <div class="name" style="color:var(--ce-text);">ce-surface--alt</div>
+      </div>
+      <div class="surface-demo ce-surface--white" style="border:1px solid var(--ce-border);border-radius:20px;">
+        <div class="tag" style="color:var(--ce-text-muted);">White</div>
+        <div class="name" style="color:var(--ce-text);">ce-surface--white</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 6. HERO                                     -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">06</div>
+    <div class="ref-section-title">Hero block</div>
+    <div class="ref-section-desc">The opening statement. Atmospheric gradient, kicker, big headline, supporting body. This is where trust begins.</div>
+
+    <div class="ce-hero">
+      <div class="ce-hero__kicker">Clarity system</div>
+      <div class="ce-hero__headline">Designed for executives who want signal, not software theater.</div>
+      <div class="ce-hero__body">Compared with the first pass, this one breathes more. There is still restraint, but the color story is richer and the modules don't all look like the same flat card repeated sixteen times.</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 7. CARDS                                    -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">07</div>
+    <div class="ref-section-title">Cards & panels</div>
+    <div class="ref-section-desc">Semi-transparent white with soft shadow. Not flat white boxes — they have material and depth.</div>
+
+    <div class="showcase-grid">
+      <div>
+        <div class="showcase-label">Default card</div>
+        <div class="ce-card">
+          <div class="ce-title" style="margin-bottom:8px;">Programs</div>
+          <div class="ce-body">Validator fallback and active-project visibility now in place. System behavior is gaining executive trust.</div>
+        </div>
+      </div>
+      <div>
+        <div class="showcase-label">Elevated card</div>
+        <div class="ce-card ce-card--elevated">
+          <div class="ce-title" style="margin-bottom:8px;">Decision surface</div>
+          <div class="ce-body">Should ambiguous-domain repeatability tests be blocked until Tier 1 control cases are green?</div>
+        </div>
+      </div>
+      <div>
+        <div class="showcase-label">Compact card</div>
+        <div class="ce-card ce-card--compact">
+          <div class="ce-title" style="margin-bottom:6px;">Quick summary</div>
+          <div class="ce-small">Three matters require judgment. Two are stable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 8. CHIPS & PILLS                            -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">08</div>
+    <div class="ref-section-title">Chips & pills</div>
+    <div class="ref-section-desc">Status indicators. Quiet by default, colored when carrying signal.</div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <span class="ce-chip">Glance mode · 3 decisions</span>
+      <span class="ce-chip ce-chip--accent">Recommended focus</span>
+      <span class="ce-chip ce-chip--teal">Stable</span>
+      <span class="ce-chip ce-chip--signal-good" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Included</span>
+      <span class="ce-chip ce-chip--signal-warn" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Partial</span>
+      <span class="ce-chip ce-chip--signal-bad" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">No</span>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 9. METRICS                                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">09</div>
+    <div class="ref-section-title">Metrics</div>
+    <div class="ref-section-desc">Data at a glance. Label above, value below. The card carries the weight.</div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="ce-metric">
+        <div class="ce-metric__label">Needs decision</div>
+        <div class="ce-metric__value">3</div>
+      </div>
+      <div class="ce-metric">
+        <div class="ce-metric__label">In progress</div>
+        <div class="ce-metric__value">2</div>
+      </div>
+      <div class="ce-metric">
+        <div class="ce-metric__label">Reliability</div>
+        <div class="ce-metric__value">91%</div>
+      </div>
+      <div class="ce-metric">
+        <div class="ce-metric__label">Median time</div>
+        <div class="ce-metric__value">4.2m</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <div class="showcase-label">Extra-large metric (hero numbers)</div>
+      <div style="display:flex;gap:24px;align-items:baseline;">
+        <div>
+          <div class="ce-metric__value--xl" style="color:var(--ce-teal);font-weight:800;">+6</div>
+          <div class="ce-body" style="margin-top:4px;">more years of doing anything</div>
+        </div>
+        <div>
+          <div class="ce-metric__value--xl" style="color:#D94F4F;font-weight:800;">−3</div>
+          <div class="ce-body" style="margin-top:4px;">fewer years of decline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 10. LIST ROWS                               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">10</div>
+    <div class="ref-section-title">List rows</div>
+    <div class="ref-section-desc">Decision items, project entries, priority queues. Tag + topic + optional description.</div>
+
+    <div style="display:grid;gap:12px;max-width:600px;">
+      <div class="ce-row">
+        <div class="ce-row__tag ce-accent">Your call</div>
+        <div class="ce-row__topic">Do repeatability tests on ambiguous topics count before Tier 1 control calibration?</div>
+      </div>
+      <div class="ce-row">
+        <div class="ce-row__tag ce-teal">Stable</div>
+        <div class="ce-row__topic">Board review engine</div>
+        <div class="ce-row__desc">Validator fallback and active-project visibility now in place.</div>
+      </div>
+      <div class="ce-row">
+        <div class="ce-row__tag" style="color:var(--ce-accent);">Possible next move</div>
+        <div class="ce-row__topic">Executive Summary mode with "glance vs engage" framing</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 11. ICON CONTAINERS                         -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">11</div>
+    <div class="ref-section-title">Icon containers</div>
+    <div class="ref-section-desc">Rounded squares with tinted backgrounds. Contain SVG icons at 22px stroke.</div>
+
+    <div style="display:flex;gap:16px;align-items:center;">
+      <div class="ce-icon ce-icon--teal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#37c0a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      </div>
+      <div class="ce-icon ce-icon--accent">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2a63ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+      </div>
+      <div class="ce-icon ce-icon--teal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#37c0a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      </div>
+      <div class="ce-icon ce-icon--accent">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2a63ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M9 8h6l2 13H7L9 8z"></path><path d="M8 14h8"></path></svg>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 12. TABLE                                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">12</div>
+    <div class="ref-section-title">Comparison table</div>
+    <div class="ref-section-desc">For competitive landscape slides. Highlighted column for Meridian, signal chips in cells.</div>
+
+    <table class="ce-table" style="max-width:800px;">
+      <thead>
+        <tr>
+          <th style="width:120px;"></th>
+          <th class="ce-table__highlight">Meridian</th>
+          <th>Competitor A</th>
+          <th>Competitor B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ce-table__row-label">Cost</td>
+          <td class="ce-table__highlight-col" style="font-weight:700;">$1,800–$2,400/yr</td>
+          <td style="color:var(--ce-text-muted);">$10,500–$85,000/yr</td>
+          <td style="color:var(--ce-text-muted);">$4,345–$25,000/yr</td>
+        </tr>
+        <tr>
+          <td class="ce-table__row-label">Wearables</td>
+          <td class="ce-table__highlight-col"><span class="ce-chip ce-chip--signal-good" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Continuous</span></td>
+          <td><span class="ce-chip ce-chip--signal-warn" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Partial</span></td>
+          <td><span class="ce-chip ce-chip--signal-bad" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">No</span></td>
+        </tr>
+        <tr>
+          <td class="ce-table__row-label">AI Risk Model</td>
+          <td class="ce-table__highlight-col"><span class="ce-chip ce-chip--signal-good" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Multi-model board</span></td>
+          <td><span class="ce-chip ce-chip--signal-good" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">Proprietary</span></td>
+          <td><span class="ce-chip ce-chip--signal-bad" style="border:none;font-weight:600;font-size:12px;padding:4px 12px;border-radius:20px;">No</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- 13. COMPOSED EXAMPLE                        -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ref-section">
+    <div class="ref-section-label">13</div>
+    <div class="ref-section-title">Composed example</div>
+    <div class="ref-section-desc">A mini board surface using every component together — hero, metrics, rows, chips — to show how they interact.</div>
+
+    <div class="atmo-demo ce-surface" style="padding:32px;">
+      <!-- Mock topbar -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div style="font-size:20px;font-weight:700;letter-spacing:-0.03em;color:var(--ce-text);">Meridian Board</div>
+        <span class="ce-chip">Glance mode · 3 active decisions</span>
+      </div>
+
+      <!-- Hero -->
+      <div class="ce-hero" style="margin-bottom:20px;">
+        <div class="ce-hero__kicker">Clarity system</div>
+        <div class="ce-hero__headline" style="font-size:clamp(22px,3vw,36px);">Designed for executives who want signal, not software theater.</div>
+        <div class="ce-hero__body">Compared with the first pass, this one breathes more. The color story is richer and the modules don't all look like the same flat card.</div>
+      </div>
+
+      <!-- Metrics -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+        <div class="ce-metric">
+          <div class="ce-metric__label">Needs decision</div>
+          <div class="ce-metric__value">3</div>
+        </div>
+        <div class="ce-metric">
+          <div class="ce-metric__label">In progress</div>
+          <div class="ce-metric__value">2</div>
+        </div>
+        <div class="ce-metric">
+          <div class="ce-metric__label">Reliability</div>
+          <div class="ce-metric__value">91%</div>
+        </div>
+      </div>
+
+      <!-- Two-column content -->
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px;">
+        <div class="ce-card ce-card--compact">
+          <div class="ce-title" style="font-size:16px;margin-bottom:10px;">Programs</div>
+          <div style="display:grid;gap:10px;">
+            <div class="ce-row">
+              <div class="ce-row__tag ce-accent">Recommended focus</div>
+              <div class="ce-row__topic">Repeatability testing</div>
+              <div class="ce-row__desc">Tier 1 control cases now in roadmap.</div>
+            </div>
+            <div class="ce-row">
+              <div class="ce-row__tag ce-teal">Stable</div>
+              <div class="ce-row__topic">Board review engine</div>
+              <div class="ce-row__desc">Validator fallback in place.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ce-card ce-card--compact">
+          <div class="ce-title" style="font-size:16px;margin-bottom:10px;">Decision surface</div>
+          <div style="display:grid;gap:10px;">
+            <div class="ce-row">
+              <div class="ce-row__tag ce-accent">Your call</div>
+              <div class="ce-row__topic">Block ambiguous-domain tests until Tier 1 is green?</div>
+            </div>
+            <div class="ce-row">
+              <div class="ce-row__tag" style="color:var(--ce-accent);">Possible next move</div>
+              <div class="ce-row__topic">Executive Summary mode</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

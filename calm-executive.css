@@ -1,0 +1,489 @@
+/*  ═══════════════════════════════════════════════════════
+    Calm Executive Design System
+    Extracted from: executive-style-studies-v2.html (Direction 03)
+    Reference energy: Linear, Apple, executive software
+    ═══════════════════════════════════════════════════════ */
+
+/* ─── 1. TOKENS ─── */
+:root {
+  /* Palette */
+  --ce-bg-base:        #f7fafc;
+  --ce-bg-warm:        #eef3f7;
+  --ce-bg-cool:        #edf2f8;
+  --ce-navy:           #0f2234;
+  --ce-text:           #0f2234;
+  --ce-text-muted:     #5d7488;
+  --ce-text-subtle:    #4f667b;
+  --ce-accent:         #2a63ff;
+  --ce-teal:           #37c0a5;
+  --ce-border:         rgba(16, 32, 48, 0.08);
+  --ce-border-strong:  rgba(16, 32, 48, 0.12);
+
+  /* Atmospheric gradients — the "quiet authority" feeling */
+  --ce-atmo-blue:      rgba(49, 116, 255, 0.13);
+  --ce-atmo-teal:      rgba(44, 183, 160, 0.10);
+
+  /* Card materials — semi-transparent, not flat */
+  --ce-card-bg:        rgba(255, 255, 255, 0.84);
+  --ce-card-shadow:    0 10px 30px rgba(16, 32, 48, 0.04);
+  --ce-card-shadow-lg: 0 28px 70px rgba(16, 32, 48, 0.06);
+  --ce-card-border:    1px solid var(--ce-border);
+
+  /* Hero surface */
+  --ce-hero-bg:        linear-gradient(135deg,
+                          rgba(42, 99, 255, 0.06),
+                          rgba(255, 255, 255, 0.92));
+  --ce-hero-border:    1px solid rgba(16, 32, 48, 0.07);
+
+  /* Container / mock surface */
+  --ce-surface-bg:     linear-gradient(180deg,
+                          rgba(255, 255, 255, 0.92),
+                          rgba(246, 250, 252, 0.96));
+
+  /* Status pills */
+  --ce-chip-bg:        rgba(16, 32, 48, 0.04);
+  --ce-chip-border:    rgba(16, 32, 48, 0.08);
+  --ce-chip-color:     #4f667b;
+
+  /* ─── Typography scale ─── */
+  --ce-font:           'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Display — the big hero statement */
+  --ce-display-size:   clamp(34px, 5vw, 54px);
+  --ce-display-weight: 700;
+  --ce-display-lh:     0.97;
+  --ce-display-ls:     -0.045em;
+
+  /* Headline — slide/section titles */
+  --ce-headline-size:  clamp(28px, 4vw, 44px);
+  --ce-headline-weight: 700;
+  --ce-headline-lh:    1.08;
+  --ce-headline-ls:    -0.04em;
+
+  /* Title — card/module headings */
+  --ce-title-size:     20px;
+  --ce-title-weight:   700;
+  --ce-title-ls:       -0.02em;
+
+  /* Body */
+  --ce-body-size:      15px;
+  --ce-body-lh:        1.6;
+
+  /* Small body */
+  --ce-small-size:     13px;
+  --ce-small-lh:       1.5;
+
+  /* Kicker — uppercase labels above headlines */
+  --ce-kicker-size:    11px;
+  --ce-kicker-ls:      0.14em;
+  --ce-kicker-weight:  600;
+
+  /* Label — pill/chip text */
+  --ce-label-size:     12px;
+  --ce-label-ls:       0.08em;
+
+  /* ─── Spacing rhythm ─── */
+  --ce-space-xs:       8px;
+  --ce-space-sm:       14px;
+  --ce-space-md:       22px;
+  --ce-space-lg:       32px;
+  --ce-space-xl:       48px;
+  --ce-space-2xl:      64px;
+
+  /* ─── Radii ─── */
+  --ce-radius-container: 28px;
+  --ce-radius-card:      20px;
+  --ce-radius-module:    16px;
+  --ce-radius-pill:      999px;
+  --ce-radius-sm:        12px;
+
+  /* ─── Transitions ─── */
+  --ce-ease:           cubic-bezier(0.22, 1, 0.36, 1);
+  --ce-duration:       0.3s;
+}
+
+
+/* ─── 2. BASE SURFACE ─── */
+/* RULE: One gradient per element. Never stack blue + teal on the same surface. */
+
+.ce-surface {
+  font-family: var(--ce-font);
+  background:
+    radial-gradient(circle at 15% 0%, var(--ce-atmo-blue), transparent 30%),
+    linear-gradient(180deg, var(--ce-bg-warm) 0%, var(--ce-bg-base) 58%, var(--ce-bg-cool) 100%);
+  color: var(--ce-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Alternate surface — teal atmosphere instead of blue */
+.ce-surface--alt {
+  background:
+    radial-gradient(circle at 85% 20%, var(--ce-atmo-teal), transparent 30%),
+    linear-gradient(135deg, var(--ce-bg-warm) 0%, var(--ce-bg-base) 50%, var(--ce-bg-cool) 100%);
+}
+
+/* Clean white surface */
+.ce-surface--white {
+  background: #fff;
+}
+
+
+/* ─── 3. TYPOGRAPHY ─── */
+
+.ce-display {
+  font-family: var(--ce-font);
+  font-size: var(--ce-display-size);
+  font-weight: var(--ce-display-weight);
+  line-height: var(--ce-display-lh);
+  letter-spacing: var(--ce-display-ls);
+  color: var(--ce-text);
+}
+
+.ce-headline {
+  font-family: var(--ce-font);
+  font-size: var(--ce-headline-size);
+  font-weight: var(--ce-headline-weight);
+  line-height: var(--ce-headline-lh);
+  letter-spacing: var(--ce-headline-ls);
+  color: var(--ce-text);
+}
+
+.ce-title {
+  font-family: var(--ce-font);
+  font-size: var(--ce-title-size);
+  font-weight: var(--ce-title-weight);
+  letter-spacing: var(--ce-title-ls);
+  color: var(--ce-text);
+}
+
+.ce-body {
+  font-family: var(--ce-font);
+  font-size: var(--ce-body-size);
+  line-height: var(--ce-body-lh);
+  color: var(--ce-text-muted);
+}
+
+.ce-small {
+  font-family: var(--ce-font);
+  font-size: var(--ce-small-size);
+  line-height: var(--ce-small-lh);
+  color: var(--ce-text-muted);
+}
+
+.ce-kicker {
+  font-family: var(--ce-font);
+  font-size: var(--ce-kicker-size);
+  font-weight: var(--ce-kicker-weight);
+  letter-spacing: var(--ce-kicker-ls);
+  text-transform: uppercase;
+  color: var(--ce-accent);
+}
+
+/* Color accents for inline text */
+.ce-accent { color: var(--ce-accent); }
+.ce-teal   { color: var(--ce-teal); }
+.ce-muted  { color: var(--ce-text-muted); }
+
+
+/* ─── 4. CARDS & PANELS ─── */
+
+.ce-card {
+  background: var(--ce-card-bg);
+  border: var(--ce-card-border);
+  border-radius: var(--ce-radius-card);
+  box-shadow: var(--ce-card-shadow);
+  padding: var(--ce-space-lg);
+}
+
+.ce-card--elevated {
+  box-shadow: var(--ce-card-shadow-lg);
+}
+
+.ce-card--compact {
+  padding: var(--ce-space-md);
+}
+
+
+/* ─── 5. HERO BLOCK ─── */
+
+.ce-hero {
+  background: var(--ce-hero-bg);
+  border: var(--ce-hero-border);
+  border-radius: var(--ce-radius-card);
+  padding: var(--ce-space-lg);
+}
+
+.ce-hero__kicker {
+  font-size: var(--ce-kicker-size);
+  font-weight: var(--ce-kicker-weight);
+  letter-spacing: var(--ce-kicker-ls);
+  text-transform: uppercase;
+  color: var(--ce-accent);
+  margin-bottom: var(--ce-space-xs);
+}
+
+.ce-hero__headline {
+  font-size: var(--ce-display-size);
+  font-weight: var(--ce-display-weight);
+  line-height: var(--ce-display-lh);
+  letter-spacing: var(--ce-display-ls);
+  color: var(--ce-text);
+  margin: 10px 0 12px;
+}
+
+.ce-hero__body {
+  font-size: var(--ce-body-size);
+  line-height: var(--ce-body-lh);
+  color: var(--ce-text-muted);
+  max-width: 720px;
+}
+
+
+/* ─── 6. CHIPS & PILLS ─── */
+
+.ce-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--ce-radius-pill);
+  font-size: var(--ce-label-size);
+  font-weight: 600;
+  letter-spacing: var(--ce-label-ls);
+  text-transform: uppercase;
+  background: var(--ce-chip-bg);
+  border: 1px solid var(--ce-chip-border);
+  color: var(--ce-chip-color);
+}
+
+.ce-chip--accent {
+  background: rgba(42, 99, 255, 0.08);
+  border-color: rgba(42, 99, 255, 0.16);
+  color: var(--ce-accent);
+}
+
+.ce-chip--teal {
+  background: rgba(55, 192, 165, 0.08);
+  border-color: rgba(55, 192, 165, 0.16);
+  color: var(--ce-teal);
+}
+
+.ce-chip--signal-good { background: #E0F0FF; color: #2a63ff; }
+.ce-chip--signal-warn { background: #FFF3E0; color: #B86E00; }
+.ce-chip--signal-bad  { background: #FCEAEC; color: #C62828; }
+
+
+/* ─── 7. METRICS ─── */
+
+.ce-metric {
+  background: var(--ce-card-bg);
+  border: var(--ce-card-border);
+  border-radius: var(--ce-radius-module);
+  box-shadow: var(--ce-card-shadow);
+  padding: var(--ce-space-sm) var(--ce-space-md);
+}
+
+.ce-metric__label {
+  font-size: var(--ce-kicker-size);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ce-text-subtle);
+  opacity: 0.65;
+}
+
+.ce-metric__value {
+  margin-top: 6px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ce-text);
+}
+
+.ce-metric__value--xl {
+  font-size: clamp(48px, 8vw, 80px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+
+/* ─── 8. LIST ROWS ─── */
+
+.ce-row {
+  background: var(--ce-card-bg);
+  border: var(--ce-card-border);
+  border-radius: var(--ce-radius-module);
+  box-shadow: var(--ce-card-shadow);
+  padding: var(--ce-space-sm) var(--ce-space-md);
+  display: grid;
+  gap: 5px;
+}
+
+.ce-row__tag {
+  font-size: var(--ce-kicker-size);
+  font-weight: var(--ce-kicker-weight);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.ce-row__topic {
+  font-size: 15px;
+  line-height: 1.28;
+  font-weight: 650;
+  color: var(--ce-text);
+}
+
+.ce-row__desc {
+  font-size: var(--ce-small-size);
+  line-height: var(--ce-small-lh);
+  color: var(--ce-text-muted);
+}
+
+
+/* ─── 9. LAYOUT HELPERS ─── */
+
+.ce-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--ce-space-lg);
+}
+
+.ce-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ce-space-lg);
+}
+
+.ce-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ce-space-md);
+}
+
+.ce-stack {
+  display: grid;
+  gap: var(--ce-space-sm);
+}
+
+.ce-center {
+  text-align: center;
+}
+
+/* Full-viewport slide */
+.ce-slide {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--ce-space-2xl) var(--ce-space-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.ce-slide__number {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(16, 32, 48, 0.15);
+  letter-spacing: 1px;
+}
+
+
+/* ─── 10. ICON CONTAINERS ─── */
+
+.ce-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ce-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ce-icon--teal {
+  background: rgba(55, 192, 165, 0.10);
+}
+
+.ce-icon--accent {
+  background: rgba(42, 99, 255, 0.10);
+}
+
+
+/* ─── 11. TABLE ─── */
+
+.ce-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+  background: #fff;
+  border-radius: var(--ce-radius-module);
+  overflow: hidden;
+  box-shadow: var(--ce-card-shadow);
+  text-align: left;
+}
+
+.ce-table th {
+  background: var(--ce-navy);
+  padding: 20px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(236, 242, 253, 0.5);
+}
+
+.ce-table th.ce-table__highlight {
+  background: var(--ce-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ce-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #EDEFF3;
+}
+
+.ce-table td.ce-table__highlight-col {
+  background: rgba(42, 99, 255, 0.04);
+}
+
+.ce-table .ce-table__row-label {
+  font-weight: 700;
+  color: var(--ce-navy);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+
+/* ─── 12. DIVIDER ─── */
+
+.ce-divider {
+  height: 1px;
+  background: var(--ce-border);
+  margin: var(--ce-space-lg) 0;
+}
+
+
+/* ─── 13. RESPONSIVE ─── */
+
+@media (max-width: 960px) {
+  .ce-grid-2 { grid-template-columns: 1fr; }
+  .ce-grid-3 { grid-template-columns: 1fr; }
+  .ce-slide   { padding: var(--ce-space-lg) var(--ce-space-md); }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --ce-space-lg: 20px;
+    --ce-space-xl: 32px;
+    --ce-space-2xl: 40px;
+  }
+}
