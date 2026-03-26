@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — Demo</title>
+<title>The Meridian Project</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -63,7 +63,7 @@
 
   .charts-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 40px;
     width: 100%;
     max-width: 1200px;
@@ -148,7 +148,7 @@
 <!-- SLIDE 1 -->
 <div class="slide">
   <div class="slide-headline">
-    The story of your future is written<br>on top of <span>two curves.</span>
+    The story of your future is written<br>on top of <span>one curve.</span>
   </div>
 
   <div class="charts-row">
@@ -159,24 +159,12 @@
       <canvas id="qolChart" height="320"></canvas>
       <div class="chart-legend">
         <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--teal);"></div>
+          <div class="chart-legend-line" style="background:var(--accent);"></div>
           <div class="chart-legend-label">Average American</div>
         </div>
       </div>
     </div>
 
-    <!-- Survival Probability -->
-    <div class="chart-card">
-      <div class="chart-label">Probability of survival</div>
-      <div class="chart-desc">Your likelihood of being alive at each age, based on your health profile.</div>
-      <canvas id="survChart" height="320"></canvas>
-      <div class="chart-legend">
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--navy);"></div>
-          <div class="chart-legend-label">Survival probability (%)</div>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="slide-num">01</div>
 </div>
@@ -184,13 +172,13 @@
 
 
 <div class="slide-brand">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="44" style="display:block;"><style>.s1-bt{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.s1-m{font-weight:700;fill:#0f2234}.s1-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="s1-bt"><tspan class="s1-m">meridian</tspan> <tspan class="s1-h">health</tspan></text></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 100" height="44" style="display:block;"><style>.s1-bt{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.s1-m{font-weight:700;fill:#0f2234}.s1-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="s1-bt"><tspan class="s1-m">The Meridian Project</tspan></text></svg>
 </div>
 
 <!-- SLIDE 2 -->
 <div class="slide" style="background:var(--navy);">
   <div class="slide-headline" style="color:#ECF2FD;">
-    Those curves are shaped by<br>your <span style="color:var(--mint);">blood</span>, <span style="color:var(--mint);">behavior</span>,<br>and <span style="color:var(--mint);">DNA.</span>
+    That curve is shaped by your <span style="color:var(--mint);">blood</span>,<br><span style="color:var(--mint);">behavior</span>, and <span style="color:var(--mint);">DNA.</span>
   </div>
 
   <div style="display:flex;justify-content:center;gap:48px;max-width:960px;">
@@ -222,7 +210,7 @@
 <!-- SLIDE 3 -->
 <div class="slide">
   <div class="slide-headline">
-    If you know what to do,<br>you can <span>bend the curves.</span>
+    If you know what to do,<br>you can <span>shift and bend the curve.</span>
   </div>
 
   <div class="charts-row">
@@ -237,28 +225,12 @@
           <div class="chart-legend-label">Average American</div>
         </div>
         <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--teal);"></div>
+          <div class="chart-legend-line" style="background:var(--accent);"></div>
           <div class="chart-legend-label">Best possible</div>
         </div>
       </div>
     </div>
 
-    <!-- Survival Probability — with intervention -->
-    <div class="chart-card">
-      <div class="chart-label">Probability of survival</div>
-      <div class="chart-desc">The gap between the lines is what knowing — and acting — buys you.</div>
-      <canvas id="survChart2" height="320"></canvas>
-      <div class="chart-legend">
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:#CBD0DB;"></div>
-          <div class="chart-legend-label">Average American</div>
-        </div>
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--navy);"></div>
-          <div class="chart-legend-label">Best possible</div>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="slide-num">03</div>
 </div>
@@ -283,7 +255,7 @@
           <span style="font-size:13px;font-weight:600;color:rgba(236,242,253,0.5);">Average American</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:28px;height:3px;background:var(--mint);border-radius:2px;"></div>
+          <div style="width:28px;height:3px;background:var(--accent);border-radius:2px;"></div>
           <span style="font-size:13px;font-weight:600;color:rgba(236,242,253,0.5);">Best possible</span>
         </div>
       </div>
@@ -448,91 +420,93 @@
 </div>
 
 <!-- SLIDE 4d: COMPETITIVE LANDSCAPE -->
-<div class="slide" style="background:#F5F9FF;padding:48px 60px;">
-  <div style="max-width:1060px;width:100%;text-align:center;">
-    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:var(--navy);letter-spacing:-2px;line-height:1.15;">
-      Meridian vs. <span style="color:var(--teal);">the market.</span>
+<div class="slide" style="background:var(--bg);padding:48px 60px;">
+  <div style="max-width:1060px;width:100%;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);margin-bottom:8px;">Competitive landscape</div>
+      <div style="font-size:42px;font-weight:700;color:var(--navy);letter-spacing:-0.045em;line-height:1.08;">Meridian vs. the market.</div>
     </div>
-    <div style="font-size:15px;color:#54566B;margin-top:10px;margin-bottom:40px;">Annual pricing. <span style="color:#2a63ff;font-weight:600;">●</span> Included &nbsp; <span style="color:#B86E00;font-weight:600;">●</span> Partial &nbsp; <span style="color:#C62828;font-weight:600;">●</span> No</div>
 
-    <table style="width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);text-align:left;">
-      <thead>
-        <tr>
-          <th style="background:var(--navy);padding:20px 20px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.6px;color:rgba(236,242,253,0.5);width:130px;border-radius:14px 0 0 0;"></th>
-          <th style="background:var(--teal);padding:20px 20px;font-weight:700;font-size:14px;color:#fff;min-width:160px;">Meridian</th>
-          <th style="background:var(--navy);padding:20px 18px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(236,242,253,0.5);">Fountain Life</th>
-          <th style="background:var(--navy);padding:20px 18px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(236,242,253,0.5);">Wild Health</th>
-          <th style="background:var(--navy);padding:20px 18px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(236,242,253,0.5);">Your PCP</th>
-          <th style="background:var(--navy);padding:20px 18px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(236,242,253,0.5);border-radius:0 14px 0 0;">Function</th>
-        </tr>
-      </thead>
-      <tbody style="line-height:1.5;">
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Cost</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);font-weight:700;color:var(--navy);">$1,800–$2,400/yr</td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;color:#54566B;">$10,500–$85,000/yr</td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;color:#54566B;">$4,345–$25,000/yr</td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;color:#54566B;">$20–50/visit</td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;color:#54566B;">~$360/yr</td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Wearables</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Continuous</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Via Zori AI</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">$25K tier only</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Genetics</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Invitae 167-gene panel</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">WGS</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">700K SNPs</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Blood labs</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Quest Elite · 100 markers · 2×/yr</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">100+ · 1×/yr</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">68+ · 4×/yr</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">~20 · 1×/yr</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">160+ · 2×/yr</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">AI risk model</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">OpenEvidence + Claude Opus 4.6</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Zori AI (FM-LLM)</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Guidelines</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Medical action plan</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Prioritized by effect size</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">MD + coach + AI</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">MD + coach</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Standard of care</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Imaging</td>
-          <td style="padding:18px 20px;border-bottom:1px solid #EDEFF3;background:rgba(13,128,134,0.04);"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Add-on</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">MRI · CT · DEXA</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">$25K tier only</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FFF3E0;color:#B86E00;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Referral</span></td>
-          <td style="padding:18px 18px;border-bottom:1px solid #EDEFF3;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">No</span></td>
-        </tr>
-        <tr>
-          <td style="padding:18px 20px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">Access</td>
-          <td style="padding:18px 20px;background:rgba(13,128,134,0.04);"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Fully virtual</span></td>
-          <td style="padding:18px 18px;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">5 clinics</span></td>
-          <td style="padding:18px 18px;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Virtual</span></td>
-          <td style="padding:18px 18px;"><span style="background:#FCEAEC;color:#C62828;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">In-person</span></td>
-          <td style="padding:18px 18px;"><span style="background:#E0F5EC;color:#2a63ff;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;">Virtual</span></td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:16px 20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);width:130px;"></th>
+            <th style="padding:16px 20px;font-size:13px;font-weight:700;color:var(--accent);background:rgba(42,99,255,0.04);">Meridian</th>
+            <th style="padding:16px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">Fountain Life</th>
+            <th style="padding:16px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">Wild Health</th>
+            <th style="padding:16px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">Your PCP</th>
+            <th style="padding:16px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);">Function</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Cost</td>
+            <td style="padding:14px 20px;font-weight:700;color:var(--text);background:rgba(42,99,255,0.04);">$1,800–$2,400/yr</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">$10,500–$85K</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">$4,345–$25K</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">$20–50/visit</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">~$360/yr</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Wearables</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">Continuous</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">Via Zori AI</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">$25K tier</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Genetics</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">167-gene panel</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">WGS</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">700K SNPs</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Blood labs</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">100 markers · 2×/yr</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">100+ · 1×/yr</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">68+ · 4×/yr</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">~20 · 1×/yr</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">160+ · 2×/yr</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">AI risk model</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">Multi-model board</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">Zori AI</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">Guidelines</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Action plan</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">Ranked by effect size</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">MD + coach + AI</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">MD + coach</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">Standard of care</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(16,32,48,0.05);">
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Imaging</td>
+            <td style="padding:14px 20px;font-weight:500;color:var(--text-muted);background:rgba(42,99,255,0.04);">Add-on</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">MRI · CT · DEXA</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">$25K tier</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">Referral</td>
+            <td style="padding:14px 16px;color:rgba(16,32,48,0.25);">—</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Access</td>
+            <td style="padding:14px 20px;font-weight:600;color:var(--text);background:rgba(42,99,255,0.04);">Fully virtual</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">5 clinics</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">Virtual</td>
+            <td style="padding:14px 16px;color:var(--text-muted);">In-person</td>
+            <td style="padding:14px 16px;color:var(--text-secondary);">Virtual</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="slide-num">04d</div>
 </div>
@@ -682,7 +656,7 @@
       <!-- Meridian parent -->
       <div style="background:var(--navy);border-radius:20px 0 0 20px;padding:40px 48px 40px 64px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:340px;min-height:120px;">
         <div style="display:flex;align-items:flex-end;height:50px;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 95" height="50" style="transform:translateY(8px);"><style>.wm-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.wm-m{font-weight:700;fill:#fff}.wm-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="wm-text"><tspan class="wm-m">meridian</tspan> <tspan class="wm-h">health</tspan></text></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 95" height="50" style="transform:translateY(8px);"><style>.wm-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.wm-m{font-weight:700;fill:#fff}.wm-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="wm-text"><tspan class="wm-m">The Meridian Project</tspan></text></svg>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-transform:uppercase;font-weight:600;margin-top:14px;">Health Intelligence</div>
       </div>
@@ -786,6 +760,7 @@
 
   function setupCanvas(id) {
     const c = document.getElementById(id);
+    if (!c) return { ctx: null, W: 0, H: 0 };
     const parent = c.parentElement;
     const ps = getComputedStyle(parent);
     const W = parent.clientWidth - (parseFloat(ps.paddingLeft)||0) - (parseFloat(ps.paddingRight)||0);
@@ -863,61 +838,7 @@
     ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
   }
 
-  // === SURVIVAL PROBABILITY CHART ===
-  {
-    const { ctx, W, H } = setupCanvas('survChart');
-    const pad = { top: 30, right: 24, bottom: 50, left: 50 };
-    const cw = W - pad.left - pad.right;
-    const ch = H - pad.top - pad.bottom;
-    const minAge = 30, maxAge = 95;
-
-    function xA(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * cw; }
-    function yP(pct) { return pad.top + ((100 - pct) / 100) * ch; }
-
-    // Average American male: life expectancy ~76-78 from age 30
-    // Sources: Social Security Actuarial Tables, CDC NVSS
-    const surv = [
-      [30,100],[35,99],[40,98],[45,96.5],[50,94.5],[55,91],
-      [60,86],[65,79],[70,70],[75,58],[78,48],[80,40],[82,30],[85,18],[88,8],[90,3],[92,0]
-    ];
-    const px = surv.map(d => [xA(d[0]), yP(d[1])]);
-
-    // Background
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-
-    // Subtle grid
-    ctx.strokeStyle = '#f0f1f5'; ctx.lineWidth = 1;
-    [0, 25, 50, 75, 100].forEach(p => {
-      ctx.beginPath(); ctx.moveTo(pad.left, yP(p)); ctx.lineTo(pad.left + cw, yP(p)); ctx.stroke();
-    });
-
-    // Shaded area under curve
-    ctx.beginPath();
-    ctx.moveTo(px[0][0], px[0][1]);
-    const m = monoTangents(px);
-    for(let i=0; i<px.length-1; i++) {
-      const dx = px[i+1][0] - px[i][0];
-      ctx.bezierCurveTo(px[i][0]+dx/3, px[i][1]+m[i]*dx/3, px[i+1][0]-dx/3, px[i+1][1]-m[i+1]*dx/3, px[i+1][0], px[i+1][1]);
-    }
-    ctx.lineTo(px[px.length-1][0], yP(0));
-    ctx.lineTo(px[0][0], yP(0));
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(17,35,75,0.06)';
-    ctx.fill();
-
-    // Draw curve
-    drawCurve(ctx, px, '#0f2234', 3.5);
-
-    // Y-axis
-    ctx.font = '500 13px Inter'; ctx.textAlign = 'right'; ctx.fillStyle = '#999';
-    [0, 25, 50, 75, 100].forEach(p => ctx.fillText(p + '%', pad.left - 10, yP(p) + 4));
-
-    // X-axis
-    ctx.textAlign = 'center';
-    for(let age = 30; age <= 90; age += 10) ctx.fillText(age, xA(age), yP(0) + 20);
-    ctx.fillStyle = '#777'; ctx.font = '600 13px Inter';
-    ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
-  }
+  // survChart removed
 
   // === SLIDE 3: QUALITY OF LIFE — TWO CURVES ===
   {
@@ -938,7 +859,7 @@
     // Best version: elite fitness, optimal lipids, proactive screening, good sleep
     const qolOpt = [
       [30,97],[35,97],[40,96],[45,95],[50,94],[55,92],
-      [60,89],[65,85],[70,80],[75,73],[78,65],[80,58],[82,50],[84,38],[86,26],[88,15],[90,6],[92,0]
+      [60,89],[65,85],[70,80],[75,74],[78,68],[80,62],[82,55],[84,45],[86,30],[87,15],[88,0]
     ];
 
     const pxDef = qolDef.map(d => [xA(d[0]), yP(d[1])]);
@@ -986,63 +907,7 @@
     ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
   }
 
-  // === SLIDE 3: SURVIVAL PROBABILITY — TWO CURVES ===
-  {
-    const { ctx, W, H } = setupCanvas('survChart2');
-    const pad = { top: 30, right: 24, bottom: 50, left: 50 };
-    const cw = W - pad.left - pad.right;
-    const ch = H - pad.top - pad.bottom;
-    const minAge = 30, maxAge = 95;
-
-    function xA(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * cw; }
-    function yP(pct) { return pad.top + ((100 - pct) / 100) * ch; }
-
-    // US average male (same as slide 1)
-    const survDef = [
-      [30,100],[35,99],[40,98],[45,96.5],[50,94.5],[55,91],
-      [60,86],[65,79],[70,70],[75,58],[78,48],[80,40],[82,30],[85,18],[88,8],[90,3],[92,0]
-    ];
-    // Best version: top-quartile fitness + statin + proactive care
-    // ~0.5× all-cause mortality vs average (Mandsager/JAMA elite fitness data)
-    const survOpt = [
-      [30,100],[35,99.8],[40,99.5],[45,99.2],[50,98.8],[55,98],
-      [60,96],[65,93],[70,89],[75,83],[78,77],[80,72],[82,65],[85,52],[88,38],[90,26],[92,14],[95,4]
-    ];
-
-    const pxDef = survDef.map(d => [xA(d[0]), yP(d[1])]);
-    const pxOpt = survOpt.map(d => [xA(d[0]), yP(d[1])]);
-
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = '#f0f1f5'; ctx.lineWidth = 1;
-    [0, 25, 50, 75, 100].forEach(p => {
-      ctx.beginPath(); ctx.moveTo(pad.left, yP(p)); ctx.lineTo(pad.left + cw, yP(p)); ctx.stroke();
-    });
-
-    // Shaded area between curves
-    ctx.beginPath();
-    pxDef.forEach((p,i) => i===0 ? ctx.moveTo(p[0],p[1]) : ctx.lineTo(p[0],p[1]));
-    for(let i=pxOpt.length-1; i>=0; i--) ctx.lineTo(pxOpt[i][0], pxOpt[i][1]);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(17,35,75,0.08)';
-    ctx.fill();
-
-    // Default curve (grey)
-    drawCurve(ctx, pxDef, '#CBD0DB', 3);
-    // Intervention curve (navy)
-    drawCurve(ctx, pxOpt, '#0f2234', 3.5);
-
-    // Y-axis
-    ctx.font = '500 13px Inter'; ctx.textAlign = 'right'; ctx.fillStyle = '#999';
-    [0, 25, 50, 75, 100].forEach(p => ctx.fillText(p + '%', pad.left - 10, yP(p) + 4));
-
-    // X-axis
-    ctx.textAlign = 'center';
-    for(let age = 30; age <= 90; age += 10) ctx.fillText(age, xA(age), yP(0) + 20);
-    ctx.fillStyle = '#777'; ctx.font = '600 13px Inter';
-    ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
-  }
+  // survChart2 removed
 
   // === SLIDE 4: QoL with 30-year annotation ===
   {
@@ -1061,7 +926,7 @@
     ];
     const qolOpt = [
       [30,97],[35,97],[40,96],[45,95],[50,94],[55,92],
-      [60,89],[65,85],[70,80],[75,73],[78,65],[80,58],[82,50],[84,38],[86,26],[88,15],[90,6],[92,0]
+      [60,89],[65,85],[70,80],[75,74],[78,68],[80,62],[82,55],[84,45],[86,30],[87,15],[88,0]
     ];
 
     const pxDef = qolDef.map(d => [xA(d[0]), yP(d[1])]);
