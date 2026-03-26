@@ -3,25 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>The Meridian Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #11234B;
-    --teal: #0D8086;
-    --mint: #A5EAD1;
-    --bg: #F5F9FF;
-    --text: #2A2D35;
-    --text-muted: #54566B;
-    --card: #FFFFFF;
-    --border: #E8EBF0;
+    --navy: #0f2234;
+    --teal: #37c0a5;
+    --mint: #37c0a5;
+    --accent: #2a63ff;
+    --bg: #f7fafc;
+    --bg-warm: #eef3f7;
+    --bg-cool: #edf2f8;
+    --text: #0f2234;
+    --text-muted: #5d7488;
+    --card: rgba(255, 255, 255, 0.84);
+    --card-solid: #ffffff;
+    --border: rgba(16, 32, 48, 0.08);
+    --border-strong: rgba(16, 32, 48, 0.12);
+    --shadow-sm: 0 10px 30px rgba(16, 32, 48, 0.04);
+    --shadow-lg: 0 28px 70px rgba(16, 32, 48, 0.06);
+    --ce-atmo-blue: rgba(49, 116, 255, 0.13);
+    --radius: 20px;
+    --radius-sm: 12px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg);
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, var(--ce-atmo-blue), transparent 30%),
+      linear-gradient(180deg, var(--bg-warm) 0%, var(--bg) 58%, var(--bg-cool) 100%);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* SLIDE LAYOUT */
@@ -36,21 +49,21 @@
   }
 
   .slide-headline {
-    font-family: 'Bricolage Grotesque', serif;
-    font-size: 52px;
-    font-weight: 800;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 48px;
+    font-weight: 700;
     color: var(--navy);
     text-align: center;
-    letter-spacing: -2px;
-    line-height: 1.15;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
     margin-bottom: 48px;
     max-width: 900px;
   }
-  .slide-headline span { color: var(--teal); }
+  .slide-headline span { color: var(--accent); }
 
   .charts-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 40px;
     width: 100%;
     max-width: 1200px;
@@ -58,16 +71,17 @@
 
   .chart-card {
     background: var(--card);
-    border-radius: 16px;
+    border-radius: var(--radius);
     padding: 32px;
     border: 1px solid var(--border);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    box-shadow: var(--shadow-sm);
   }
 
   .chart-label {
-    font-family: 'Bricolage Grotesque', serif;
-    font-size: 22px;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 20px;
     font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--navy);
     margin-bottom: 6px;
   }
@@ -134,7 +148,7 @@
 <!-- SLIDE 1 -->
 <div class="slide">
   <div class="slide-headline">
-    The story of your future is written<br>on top of <span>two curves.</span>
+    The story of your future is written<br>on top of <span>one curve.</span>
   </div>
 
   <div class="charts-row">
@@ -145,24 +159,12 @@
       <canvas id="qolChart" height="320"></canvas>
       <div class="chart-legend">
         <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--teal);"></div>
+          <div class="chart-legend-line" style="background:var(--accent);"></div>
           <div class="chart-legend-label">Average American</div>
         </div>
       </div>
     </div>
 
-    <!-- Survival Probability -->
-    <div class="chart-card">
-      <div class="chart-label">Probability of survival</div>
-      <div class="chart-desc">Your likelihood of being alive at each age, based on your health profile.</div>
-      <canvas id="survChart" height="320"></canvas>
-      <div class="chart-legend">
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--navy);"></div>
-          <div class="chart-legend-label">Survival probability (%)</div>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="slide-num">01</div>
 </div>
@@ -170,33 +172,33 @@
 
 
 <div class="slide-brand">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 100" height="44" style="display:block;"><style>.s1-bt{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.s1-m{font-weight:700;fill:#0F4C75}.s1-h{font-weight:400;fill:#99D5D3}</style><text x="10" y="75" class="s1-bt"><tspan class="s1-m">meridian</tspan> <tspan class="s1-h">health</tspan></text></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 100" height="44" style="display:block;"><style>.s1-bt{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.s1-m{font-weight:700;fill:#0f2234}.s1-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="s1-bt"><tspan class="s1-m">The Meridian Project</tspan></text></svg>
 </div>
 
 <!-- SLIDE 2 -->
 <div class="slide" style="background:var(--navy);">
   <div class="slide-headline" style="color:#ECF2FD;">
-    Those curves are shaped by<br>your <span style="color:var(--mint);">blood</span>, <span style="color:var(--mint);">behavior</span>,<br>and <span style="color:var(--mint);">DNA.</span>
+    That curve is shaped by your <span style="color:var(--mint);">blood</span>,<br><span style="color:var(--mint);">behavior</span>, and <span style="color:var(--mint);">DNA.</span>
   </div>
 
   <div style="display:flex;justify-content:center;gap:48px;max-width:960px;">
     <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:16px;padding:36px 32px;min-width:240px;border:1px solid rgba(255,255,255,0.08);">
       <div style="font-size:64px;margin-bottom:16px;">🩸</div>
-      <div style="font-family:'Bricolage Grotesque',serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">Blood</div>
+      <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">Blood</div>
       <div style="font-size:15px;color:rgba(236,242,253,0.6);line-height:1.6;max-width:240px;">
         Cholesterol, inflammation, metabolic markers — the signals your body is sending right now.
       </div>
     </div>
     <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:16px;padding:36px 32px;min-width:240px;border:1px solid rgba(255,255,255,0.08);">
       <div style="font-size:64px;margin-bottom:16px;">🏃</div>
-      <div style="font-family:'Bricolage Grotesque',serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">Behavior</div>
+      <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">Behavior</div>
       <div style="font-size:15px;color:rgba(236,242,253,0.6);line-height:1.6;max-width:240px;">
         Fitness, sleep, training consistency — the daily choices that bend your curve up or down.
       </div>
     </div>
     <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:16px;padding:36px 32px;min-width:240px;border:1px solid rgba(255,255,255,0.08);">
       <div style="font-size:64px;margin-bottom:16px;">🧬</div>
-      <div style="font-family:'Bricolage Grotesque',serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">DNA</div>
+      <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:24px;font-weight:700;color:var(--mint);margin-bottom:8px;">DNA</div>
       <div style="font-size:15px;color:rgba(236,242,253,0.6);line-height:1.6;max-width:240px;">
         Genetic variants that set your baseline risk — some you can offset, some you can't.
       </div>
@@ -208,7 +210,7 @@
 <!-- SLIDE 3 -->
 <div class="slide">
   <div class="slide-headline">
-    If you know what to do,<br>you can <span>bend the curves.</span>
+    If you know what to do,<br>you can <span>shift and bend the curve.</span>
   </div>
 
   <div class="charts-row">
@@ -223,28 +225,12 @@
           <div class="chart-legend-label">Average American</div>
         </div>
         <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--teal);"></div>
+          <div class="chart-legend-line" style="background:var(--accent);"></div>
           <div class="chart-legend-label">Best possible</div>
         </div>
       </div>
     </div>
 
-    <!-- Survival Probability — with intervention -->
-    <div class="chart-card">
-      <div class="chart-label">Probability of survival</div>
-      <div class="chart-desc">The gap between the lines is what knowing — and acting — buys you.</div>
-      <canvas id="survChart2" height="320"></canvas>
-      <div class="chart-legend">
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:#CBD0DB;"></div>
-          <div class="chart-legend-label">Average American</div>
-        </div>
-        <div class="chart-legend-item">
-          <div class="chart-legend-line" style="background:var(--navy);"></div>
-          <div class="chart-legend-label">Best possible</div>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="slide-num">03</div>
 </div>
@@ -254,8 +240,8 @@
   <div style="display:flex;align-items:center;gap:80px;max-width:1200px;width:100%;">
     <!-- Left: the number -->
     <div style="flex-shrink:0;text-align:center;">
-      <div style="font-family:'Bricolage Grotesque',serif;font-size:160px;font-weight:800;color:var(--mint);letter-spacing:-6px;line-height:1;">30</div>
-      <div style="font-family:'Bricolage Grotesque',serif;font-size:36px;font-weight:700;color:rgba(236,242,253,0.8);margin-top:-4px;">more years</div>
+      <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:160px;font-weight:800;color:var(--mint);letter-spacing:-6px;line-height:1;">30</div>
+      <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:36px;font-weight:700;color:rgba(236,242,253,0.8);margin-top:-4px;">more years</div>
       <div style="font-size:15px;color:rgba(236,242,253,0.4);margin-top:12px;line-height:1.6;max-width:280px;">
         of doing anything you want.<br>That's the gap between average<br>and optimal.
       </div>
@@ -269,7 +255,7 @@
           <span style="font-size:13px;font-weight:600;color:rgba(236,242,253,0.5);">Average American</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:28px;height:3px;background:var(--mint);border-radius:2px;"></div>
+          <div style="width:28px;height:3px;background:var(--accent);border-radius:2px;"></div>
           <span style="font-size:13px;font-weight:600;color:rgba(236,242,253,0.5);">Best possible</span>
         </div>
       </div>
@@ -281,7 +267,7 @@
 <!-- SLIDE 4b: THE ROI — WHAT CLARITY BUYS YOU -->
 <div class="slide" style="background:#F5F9FF;">
   <div style="max-width:1100px;width:100%;text-align:center;">
-    <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:var(--navy);letter-spacing:-2px;line-height:1.15;">
+    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:var(--navy);letter-spacing:-2px;line-height:1.15;">
       One more session. <span style="color:var(--teal);">Two pills.</span>
     </div>
     <div style="font-size:17px;color:#54566B;margin-top:12px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.6;">
@@ -293,8 +279,8 @@
       <!-- LEFT: The Investment -->
       <div style="flex:1;background:var(--navy);border-radius:20px 0 0 20px;padding:48px 40px;text-align:center;display:flex;flex-direction:column;justify-content:center;">
         <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(165,234,209,0.6);margin-bottom:20px;">You invest</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:120px;font-weight:800;color:var(--mint);letter-spacing:-4px;line-height:1;">1</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:32px;font-weight:700;color:rgba(236,242,253,0.85);margin-top:-4px;">more hour / week</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:120px;font-weight:800;color:var(--mint);letter-spacing:-4px;line-height:1;">1</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:32px;font-weight:700;color:rgba(236,242,253,0.85);margin-top:-4px;">more hour / week</div>
         <div style="font-size:14px;color:rgba(236,242,253,0.4);margin-top:16px;line-height:1.6;">
           One extra session. Two pills.<br>One screening. That's it.
         </div>
@@ -314,9 +300,9 @@
         
         <!-- Good years -->
         <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
-          <div style="font-family:'Bricolage Grotesque',serif;font-size:72px;font-weight:800;color:var(--navy);letter-spacing:-3px;line-height:1;">+6</div>
+          <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:72px;font-weight:800;color:var(--navy);letter-spacing:-3px;line-height:1;">+6</div>
           <div>
-            <div style="font-family:'Bricolage Grotesque',serif;font-size:22px;font-weight:700;color:var(--navy);">more years</div>
+            <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:22px;font-weight:700;color:var(--navy);">more years</div>
             <div style="font-size:15px;color:var(--text-muted);line-height:1.5;">of mountain biking, snowboarding, keeping up<br>with your daughter — on your terms, full send.</div>
           </div>
         </div>
@@ -325,9 +311,9 @@
 
         <!-- Bad years -->
         <div style="display:flex;align-items:baseline;gap:16px;">
-          <div style="font-family:'Bricolage Grotesque',serif;font-size:72px;font-weight:800;color:#D94F4F;letter-spacing:-3px;line-height:1;">−3</div>
+          <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:72px;font-weight:800;color:#D94F4F;letter-spacing:-3px;line-height:1;">−3</div>
           <div>
-            <div style="font-family:'Bricolage Grotesque',serif;font-size:22px;font-weight:700;color:var(--navy);">fewer years</div>
+            <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:22px;font-weight:700;color:var(--navy);">fewer years</div>
             <div style="font-size:15px;color:var(--text-muted);line-height:1.5;">of decline — needing help, losing independence,<br>watching from the sideline instead of riding.</div>
           </div>
         </div>
@@ -340,7 +326,7 @@
 <!-- SLIDE 4c: THE START IS JUST THE START -->
 <div class="slide" style="background:var(--navy);">
   <div style="max-width:1100px;width:100%;text-align:center;">
-    <div style="font-family:'Bricolage Grotesque',serif;font-size:52px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.15;">
+    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:52px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.15;">
       The start is <span style="color:var(--mint);">just the start.</span>
     </div>
     <div style="font-size:17px;color:rgba(236,242,253,0.5);margin-top:14px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">
@@ -356,7 +342,7 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Continuous biometric monitoring</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Continuous biometric monitoring</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.45);line-height:1.6;">Sleep, HRV, resting heart rate, activity — tracked and analyzed over time. We catch the signal before you feel the symptom.</div>
       </div>
 
@@ -370,7 +356,7 @@
             <path d="M8 14h8"></path>
           </svg>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Labs retested every 6 months</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Labs retested every 6 months</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.45);line-height:1.6;">Blood work twice a year to track what's changing — ApoB, glucose, inflammation markers. Proof that what you're doing is working.</div>
       </div>
 
@@ -382,7 +368,7 @@
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Emerging research, applied to you</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Emerging research, applied to you</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.45);line-height:1.6;">We scan clinical studies and match them to your genetics, labs, and history. When something matters for <em>you</em>, you'll know.</div>
       </div>
 
@@ -394,7 +380,7 @@
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Priorities that evolve with you</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Priorities that evolve with you</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.45);line-height:1.6;">Your action plan isn't static. As new data comes in — from your body, your labs, or the literature — your priorities dynamically adjust.</div>
       </div>
 
@@ -407,7 +393,7 @@
             <circle cx="20" cy="10" r="2"></circle>
           </svg>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Unlimited physician access</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:#ECF2FD;margin-bottom:8px;">Unlimited physician access</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.45);line-height:1.6;">24/7 telemedicine with a physician who has your full picture — your data, your genetics, your history. No repeating yourself.</div>
       </div>
 
@@ -424,7 +410,7 @@
           </div>
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(165,234,209,0.4);">Optional add-on</div>
         </div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:700;color:rgba(236,242,253,0.7);margin-bottom:8px;">Behavioral change coaching</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:700;color:rgba(236,242,253,0.7);margin-bottom:8px;">Behavioral change coaching</div>
         <div style="font-size:13px;color:rgba(236,242,253,0.35);line-height:1.6;">For members who want support turning insights into habits — identity-based coaching that helps you become the person who does this naturally.</div>
       </div>
 
@@ -526,7 +512,7 @@
 <!-- SLIDE 5: SOCIAL PROOF / TESTIMONIALS -->
 <div class="slide" style="background:var(--navy);">
   <div style="max-width:900px;width:100%;text-align:center;">
-    <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.15;">
+    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.15;">
       Don't take our word <span style="color:var(--mint);">for it.</span>
     </div>
     <div style="font-size:16px;color:rgba(236,242,253,0.45);margin-top:12px;margin-bottom:56px;">First reactions from industry leaders who've seen Meridian.</div>
@@ -536,7 +522,7 @@
       <!-- Quote 1: Lorin Westlund -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now. No-brainer.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -551,7 +537,7 @@
       <!-- Quote 2: Heather Garbers -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -566,7 +552,7 @@
       <!-- Quote 3: Trevor Garbers -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           This is exactly what the executive health market wants right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -581,7 +567,7 @@
       <!-- Quote 4: Ian Reilly -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -596,7 +582,7 @@
       <!-- Quote 5: Ruby Lopez -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -613,7 +599,7 @@
       <!-- Quote 6: Ken Tsui -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -628,7 +614,7 @@
       <!-- Quote 7: Brandon Felkins -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -643,7 +629,7 @@
       <!-- Quote 8: Timothy Craft -->
       <div style="background:rgba(255,255,255,0.04);border-radius:16px;padding:24px 24px;border:1px solid rgba(255,255,255,0.08);position:relative;">
         <div style="font-size:36px;color:var(--mint);opacity:0.3;position:absolute;top:12px;left:22px;font-family:Georgia,serif;line-height:1;">"</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:18px;font-weight:600;color:#ECF2FD;line-height:1.5;margin-bottom:14px;padding-left:8px;">
           I would buy this right now.
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:8px;">
@@ -663,18 +649,18 @@
 <!-- SLIDE 6: WHAT IF? -->
 <div class="slide" style="background:#fff;">
   <div style="max-width:900px;width:100%;text-align:center;">
-    <div style="font-family:'Bricolage Grotesque',serif;font-size:96px;font-weight:800;color:var(--navy);letter-spacing:-3px;line-height:1;">What if?</div>
+    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:96px;font-weight:800;color:var(--navy);letter-spacing:-3px;line-height:1;">What if?</div>
     <div style="margin-top:56px;display:flex;align-items:stretch;justify-content:center;gap:0;">
       <!-- Meridian parent -->
       <div style="background:var(--navy);border-radius:20px 0 0 20px;padding:40px 48px 40px 64px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:340px;min-height:120px;">
         <div style="display:flex;align-items:flex-end;height:50px;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 95" height="50" style="transform:translateY(8px);"><style>.wm-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.wm-m{font-weight:700;fill:#fff}.wm-h{font-weight:400;fill:#99D5D3}</style><text x="10" y="75" class="wm-text"><tspan class="wm-m">meridian</tspan> <tspan class="wm-h">health</tspan></text></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 95" height="50" style="transform:translateY(8px);"><style>.wm-text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:68px;letter-spacing:-1px}.wm-m{font-weight:700;fill:#fff}.wm-h{font-weight:400;fill:#37c0a5}</style><text x="10" y="75" class="wm-text"><tspan class="wm-m">The Meridian Project</tspan></text></svg>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-transform:uppercase;font-weight:600;margin-top:14px;">Health Intelligence</div>
       </div>
       <!-- × connector -->
       <div style="background:linear-gradient(135deg, var(--navy), #092C48);display:flex;align-items:center;justify-content:center;padding:0 24px;">
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:rgba(255,255,255,0.6);">×</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:rgba(255,255,255,0.6);">×</div>
       </div>
       <!-- Colonial Life parent -->
       <div style="background:#092C48;border-radius:0 20px 20px 0;padding:40px 64px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:300px;min-height:120px;">
@@ -686,7 +672,7 @@
 
       <!-- = Executive CI -->
       <div style="display:flex;align-items:center;justify-content:center;padding:0 40px;">
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:40px;font-weight:700;color:var(--navy);letter-spacing:-1px;white-space:nowrap;">= Executive CI</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:40px;font-weight:700;color:var(--navy);letter-spacing:-1px;white-space:nowrap;">= Executive CI</div>
       </div>
     </div>
     <div style="margin-top:16px;font-size:17px;color:#54566B;line-height:1.7;max-width:900px;margin-left:auto;margin-right:auto;white-space:nowrap;">
@@ -699,13 +685,13 @@
 <!-- SLIDE 7: WHAT IT COULD MEAN -->
 <div class="slide" style="background:var(--navy);">
   <div style="max-width:1000px;width:100%;text-align:center;">
-    <div style="font-family:'Bricolage Grotesque',serif;font-size:52px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.1;">What it could <span style="color:var(--mint);">mean.</span></div>
+    <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:52px;font-weight:800;color:#ECF2FD;letter-spacing:-2px;line-height:1.1;">What it could <span style="color:var(--mint);">mean.</span></div>
     <div style="margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:left;">
 
       <!-- Broker commissions -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;">
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">2–3×</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Broker commissions</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">2–3×</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Broker commissions</div>
         <div style="font-size:15px;color:rgba(236,242,253,0.5);margin-top:12px;line-height:1.6;">
           Meridian layer on top of base CI gives brokers a reason to sell — and earn 2–3× the commission of the base product alone.
         </div>
@@ -713,8 +699,8 @@
 
       <!-- Market share -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;">
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">Take share</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Displace the incumbent</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">Take share</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Displace the incumbent</div>
         <div style="font-size:15px;color:rgba(236,242,253,0.5);margin-top:12px;line-height:1.6;">
           A differentiated product gives brokers a reason to re-open every account. New story, new sale.
         </div>
@@ -722,8 +708,8 @@
 
       <!-- Claims reduction -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;">
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">↓ Claims</div>
-        <div style="font-family:'Bricolage Grotesque',serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Increased margins</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:48px;font-weight:800;color:var(--mint);letter-spacing:-2px;">↓ Claims</div>
+        <div style="font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:20px;font-weight:700;color:#ECF2FD;margin-top:8px;">Increased margins</div>
         <div style="font-size:15px;color:rgba(236,242,253,0.5);margin-top:12px;line-height:1.6;">
           If Meridian catches disease earlier and members act on it, the carrier's loss ratio improves. Better outcomes, lower claims, aligned incentives.
         </div>
@@ -772,6 +758,7 @@
 
   function setupCanvas(id) {
     const c = document.getElementById(id);
+    if (!c) return { ctx: null, W: 0, H: 0 };
     const parent = c.parentElement;
     const ps = getComputedStyle(parent);
     const W = parent.clientWidth - (parseFloat(ps.paddingLeft)||0) - (parseFloat(ps.paddingRight)||0);
@@ -805,8 +792,8 @@
 
     // Category bands
     const bands = [
-      { from: 75, to: 100, color: 'rgba(13,128,134,0.06)', label: 'Do anything', labelColor: '#0D8086' },
-      { from: 50, to: 75, color: 'rgba(13,128,134,0.03)', label: 'Active & independent', labelColor: '#0D8086' },
+      { from: 75, to: 100, color: 'rgba(13,128,134,0.06)', label: 'Do anything', labelColor: '#2a63ff' },
+      { from: 50, to: 75, color: 'rgba(13,128,134,0.03)', label: 'Active & independent', labelColor: '#2a63ff' },
       { from: 25, to: 50, color: 'rgba(229,161,0,0.04)', label: 'Slowing down', labelColor: '#B8930A' },
       { from: 0, to: 25, color: 'rgba(232,97,77,0.04)', label: 'Need help', labelColor: '#D4564A' }
     ];
@@ -832,7 +819,7 @@
     ctx.fillStyle = 'rgba(13,128,134,0.08)';
     ctx.fill();
 
-    drawCurve(ctx, px, '#0D8086', 3.5);
+    drawCurve(ctx, px, '#2a63ff', 3.5);
 
     // Y-axis: category labels instead of percentages
     ctx.font = '600 11px Inter'; ctx.textAlign = 'right';
@@ -849,61 +836,7 @@
     ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
   }
 
-  // === SURVIVAL PROBABILITY CHART ===
-  {
-    const { ctx, W, H } = setupCanvas('survChart');
-    const pad = { top: 30, right: 24, bottom: 50, left: 50 };
-    const cw = W - pad.left - pad.right;
-    const ch = H - pad.top - pad.bottom;
-    const minAge = 30, maxAge = 95;
-
-    function xA(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * cw; }
-    function yP(pct) { return pad.top + ((100 - pct) / 100) * ch; }
-
-    // Average American male: life expectancy ~76-78 from age 30
-    // Sources: Social Security Actuarial Tables, CDC NVSS
-    const surv = [
-      [30,100],[35,99],[40,98],[45,96.5],[50,94.5],[55,91],
-      [60,86],[65,79],[70,70],[75,58],[78,48],[80,40],[82,30],[85,18],[88,8],[90,3],[92,0]
-    ];
-    const px = surv.map(d => [xA(d[0]), yP(d[1])]);
-
-    // Background
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-
-    // Subtle grid
-    ctx.strokeStyle = '#f0f1f5'; ctx.lineWidth = 1;
-    [0, 25, 50, 75, 100].forEach(p => {
-      ctx.beginPath(); ctx.moveTo(pad.left, yP(p)); ctx.lineTo(pad.left + cw, yP(p)); ctx.stroke();
-    });
-
-    // Shaded area under curve
-    ctx.beginPath();
-    ctx.moveTo(px[0][0], px[0][1]);
-    const m = monoTangents(px);
-    for(let i=0; i<px.length-1; i++) {
-      const dx = px[i+1][0] - px[i][0];
-      ctx.bezierCurveTo(px[i][0]+dx/3, px[i][1]+m[i]*dx/3, px[i+1][0]-dx/3, px[i+1][1]-m[i+1]*dx/3, px[i+1][0], px[i+1][1]);
-    }
-    ctx.lineTo(px[px.length-1][0], yP(0));
-    ctx.lineTo(px[0][0], yP(0));
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(17,35,75,0.06)';
-    ctx.fill();
-
-    // Draw curve
-    drawCurve(ctx, px, '#11234B', 3.5);
-
-    // Y-axis
-    ctx.font = '500 13px Inter'; ctx.textAlign = 'right'; ctx.fillStyle = '#999';
-    [0, 25, 50, 75, 100].forEach(p => ctx.fillText(p + '%', pad.left - 10, yP(p) + 4));
-
-    // X-axis
-    ctx.textAlign = 'center';
-    for(let age = 30; age <= 90; age += 10) ctx.fillText(age, xA(age), yP(0) + 20);
-    ctx.fillStyle = '#777'; ctx.font = '600 13px Inter';
-    ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
-  }
+  // survChart removed
 
   // === SLIDE 3: QUALITY OF LIFE — TWO CURVES ===
   {
@@ -924,7 +857,7 @@
     // Best version: elite fitness, optimal lipids, proactive screening, good sleep
     const qolOpt = [
       [30,97],[35,97],[40,96],[45,95],[50,94],[55,92],
-      [60,89],[65,85],[70,80],[75,73],[78,65],[80,58],[82,50],[84,38],[86,26],[88,15],[90,6],[92,0]
+      [60,89],[65,85],[70,80],[75,74],[78,68],[80,62],[82,55],[84,45],[86,30],[87,15],[88,0]
     ];
 
     const pxDef = qolDef.map(d => [xA(d[0]), yP(d[1])]);
@@ -934,8 +867,8 @@
 
     // Category bands
     const bands = [
-      { from: 75, to: 100, color: 'rgba(13,128,134,0.06)', label: 'Do anything', labelColor: '#0D8086' },
-      { from: 50, to: 75, color: 'rgba(13,128,134,0.03)', label: 'Active & independent', labelColor: '#0D8086' },
+      { from: 75, to: 100, color: 'rgba(13,128,134,0.06)', label: 'Do anything', labelColor: '#2a63ff' },
+      { from: 50, to: 75, color: 'rgba(13,128,134,0.03)', label: 'Active & independent', labelColor: '#2a63ff' },
       { from: 25, to: 50, color: 'rgba(229,161,0,0.04)', label: 'Slowing down', labelColor: '#B8930A' },
       { from: 0, to: 25, color: 'rgba(232,97,77,0.04)', label: 'Need help', labelColor: '#D4564A' }
     ];
@@ -955,7 +888,7 @@
     ctx.fill();
 
     drawCurve(ctx, pxDef, '#CBD0DB', 3);
-    drawCurve(ctx, pxOpt, '#0D8086', 3.5);
+    drawCurve(ctx, pxOpt, '#2a63ff', 3.5);
 
     // Y-axis: category labels
     ctx.font = '600 11px Inter'; ctx.textAlign = 'right';
@@ -972,63 +905,7 @@
     ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
   }
 
-  // === SLIDE 3: SURVIVAL PROBABILITY — TWO CURVES ===
-  {
-    const { ctx, W, H } = setupCanvas('survChart2');
-    const pad = { top: 30, right: 24, bottom: 50, left: 50 };
-    const cw = W - pad.left - pad.right;
-    const ch = H - pad.top - pad.bottom;
-    const minAge = 30, maxAge = 95;
-
-    function xA(age) { return pad.left + ((age - minAge) / (maxAge - minAge)) * cw; }
-    function yP(pct) { return pad.top + ((100 - pct) / 100) * ch; }
-
-    // US average male (same as slide 1)
-    const survDef = [
-      [30,100],[35,99],[40,98],[45,96.5],[50,94.5],[55,91],
-      [60,86],[65,79],[70,70],[75,58],[78,48],[80,40],[82,30],[85,18],[88,8],[90,3],[92,0]
-    ];
-    // Best version: top-quartile fitness + statin + proactive care
-    // ~0.5× all-cause mortality vs average (Mandsager/JAMA elite fitness data)
-    const survOpt = [
-      [30,100],[35,99.8],[40,99.5],[45,99.2],[50,98.8],[55,98],
-      [60,96],[65,93],[70,89],[75,83],[78,77],[80,72],[82,65],[85,52],[88,38],[90,26],[92,14],[95,4]
-    ];
-
-    const pxDef = survDef.map(d => [xA(d[0]), yP(d[1])]);
-    const pxOpt = survOpt.map(d => [xA(d[0]), yP(d[1])]);
-
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = '#f0f1f5'; ctx.lineWidth = 1;
-    [0, 25, 50, 75, 100].forEach(p => {
-      ctx.beginPath(); ctx.moveTo(pad.left, yP(p)); ctx.lineTo(pad.left + cw, yP(p)); ctx.stroke();
-    });
-
-    // Shaded area between curves
-    ctx.beginPath();
-    pxDef.forEach((p,i) => i===0 ? ctx.moveTo(p[0],p[1]) : ctx.lineTo(p[0],p[1]));
-    for(let i=pxOpt.length-1; i>=0; i--) ctx.lineTo(pxOpt[i][0], pxOpt[i][1]);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(17,35,75,0.08)';
-    ctx.fill();
-
-    // Default curve (grey)
-    drawCurve(ctx, pxDef, '#CBD0DB', 3);
-    // Intervention curve (navy)
-    drawCurve(ctx, pxOpt, '#11234B', 3.5);
-
-    // Y-axis
-    ctx.font = '500 13px Inter'; ctx.textAlign = 'right'; ctx.fillStyle = '#999';
-    [0, 25, 50, 75, 100].forEach(p => ctx.fillText(p + '%', pad.left - 10, yP(p) + 4));
-
-    // X-axis
-    ctx.textAlign = 'center';
-    for(let age = 30; age <= 90; age += 10) ctx.fillText(age, xA(age), yP(0) + 20);
-    ctx.fillStyle = '#777'; ctx.font = '600 13px Inter';
-    ctx.fillText('Age', pad.left + cw / 2, yP(0) + 40);
-  }
+  // survChart2 removed
 
   // === SLIDE 4: QoL with 30-year annotation ===
   {
@@ -1047,7 +924,7 @@
     ];
     const qolOpt = [
       [30,97],[35,97],[40,96],[45,95],[50,94],[55,92],
-      [60,89],[65,85],[70,80],[75,73],[78,65],[80,58],[82,50],[84,38],[86,26],[88,15],[90,6],[92,0]
+      [60,89],[65,85],[70,80],[75,74],[78,68],[80,62],[82,55],[84,45],[86,30],[87,15],[88,0]
     ];
 
     const pxDef = qolDef.map(d => [xA(d[0]), yP(d[1])]);
@@ -1116,7 +993,7 @@
     const gapY = arrY + 22;
     ctx.fillStyle = '#A5EAD1';
     ctx.beginPath(); ctx.roundRect(gapX - gapW/2 - 12, gapY - 12, gapW + 24, 24, 12); ctx.fill();
-    ctx.fillStyle = '#11234B';
+    ctx.fillStyle = '#0f2234';
     ctx.textAlign = 'center';
     ctx.fillText(gapLabel, gapX, gapY + 5);
 
